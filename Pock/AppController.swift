@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import AppCenterAnalytics
 import Magnet
 import PockKit
 
@@ -417,8 +416,6 @@ extension AppController {
         windowController.showWindow(self)
         window.delegate = self
         window.orderFrontRegardless()
-        // Track event
-        Analytics.trackEvent("AppController.showDebugConsole()")
     }
 }
 // swiftlint:enable file_length

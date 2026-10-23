@@ -1,0 +1,48 @@
+PODS:
+  - Magnet (3.4.0):
+    - Sauce (~> 2.4.0)
+  - PockKit (0.3.1):
+    - PockKit/3rd (= 0.3.1)
+    - PockKit/Sources (= 0.3.1)
+    - TinyConstraints
+  - PockKit/3rd (0.3.1):
+    - TinyConstraints
+  - PockKit/Sources (0.3.1):
+    - PockKit/3rd
+    - TinyConstraints
+  - Sauce (2.4.1)
+  - TinyConstraints (4.0.2)
+  - Zip (2.1.2)
+
+DEPENDENCIES:
+  - Magnet (= 3.4.0)
+  - PockKit (from `https://github.com/pock/pockkit.git`, commit `335bc4c0edb4c9ad1beabe294f70cd39300dc577`)
+  - Zip (= 2.1.2)
+
+SPEC REPOS:
+  trunk:
+    - Magnet
+    - Sauce
+    - TinyConstraints
+    - Zip
+
+EXTERNAL SOURCES:
+  PockKit:
+    :commit: 335bc4c0edb4c9ad1beabe294f70cd39300dc577
+    :git: https://github.com/pock/pockkit.git
+
+CHECKOUT OPTIONS:
+  PockKit:
+    :commit: 335bc4c0edb4c9ad1beabe294f70cd39300dc577
+    :git: https://github.com/pock/pockkit.git
+
+SPEC CHECKSUMS:
+  Magnet: d9212b3bb4fc0be22676279960185eeda6823b91
+  PockKit: e600e0dd0deb9830c5df837c7b56838df1667f34
+  Sauce: e4ffcf0332a298a0cb2f29b4200119bedbac23c5
+  TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
+
+PODFILE CHECKSUM: 870906965cebf3036b7ec2368619815f19da021f
+
+COCOAPODS: 1.16.2

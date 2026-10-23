@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AppCenterAnalytics
 import PockKit
 
 /// Customization identifier

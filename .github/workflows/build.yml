@@ -1,0 +1,19 @@
+name: macOS build
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install locked dependencies
+        run: pod install --deployment
+      - name: Test downloads
+        run: python3 Tests/run.py
+      - name: Build Release
+        run: bash scripts/build.sh Release
+      - name: Build Debug
+        run: bash scripts/build.sh Debug

@@ -32,7 +32,19 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 	private let progress: (Double) -> Void
 	private let completion: (URL?, DownloaderError?) -> Void
 	
-	private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+	private var session: URLSession!
+    private var didComplete = false
+
+    // URLSession serializes delegate calls. Deliver one result and break its
+    // strong reference to this delegate on success and failure alike.
+    private func finish(_ location: URL?, _ error: DownloaderError?) {
+        guard !didComplete else { return }
+        didComplete = true
+        completion(location, error)
+        session.finishTasksAndInvalidate()
+        downloadTask = nil
+        session = nil
+    }
 	private var downloadTask: URLSessionDownloadTask!
 	
 	@discardableResult
@@ -40,6 +52,10 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 		self.progress = progress
 		self.completion = completion
 		super.init()
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 120
+        self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
 		self.downloadTask = session.downloadTask(with: url)
 		self.downloadTask.resume()
 	}
@@ -53,9 +69,9 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 		totalBytesWritten: Int64,
 		totalBytesExpectedToWrite: Int64
 	) {
-		if downloadTask == self.downloadTask {
+		if downloadTask == self.downloadTask, totalBytesExpectedToWrite > 0 {
 			let calculatedProgress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-			progress(calculatedProgress)
+			progress(min(1, max(0, calculatedProgress)))
 		}
 	}
 	
@@ -63,35 +79,35 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 	
 	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
 		guard let response = downloadTask.response as? HTTPURLResponse else {
-			completion(nil, .responseError(reason: nil))
+			finish(nil, .responseError(reason: nil))
 			return
 		}
 		switch response.statusCode {
 		case 200...299:
 			break
 		case 404:
-			completion(nil, .invalidFileURL)
+			finish(nil, .invalidFileURL)
 			return
 		default:
-			completion(nil, .responseError(reason: response.statusCode.description))
+			finish(nil, .responseError(reason: response.statusCode.description))
 			return
 		}
 		guard FileManager.default.createFolderIfNeeded(at: kWidgetsTempPathURL.path) else {
-			completion(nil, .fileSystemError(reason: "error.missing-widgets-temp-folder".localized))
+			finish(nil, .fileSystemError(reason: "error.missing-widgets-temp-folder".localized))
 			return
 		}
 		do {
 			let destinationURL = kWidgetsTempPathURL.appendingPathComponent(location.lastPathComponent)
 			try FileManager.default.moveItem(at: location, to: destinationURL)
-			completion(destinationURL, nil)
+			finish(destinationURL, nil)
 		} catch {
-			completion(nil, .downloadError(reason: error.localizedDescription))
+			finish(nil, .downloadError(reason: error.localizedDescription))
 		}
 	}
 	
 	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
 		if let error = error {
-			completion(nil, .downloadError(reason: error.localizedDescription))
+			finish(nil, .downloadError(reason: error.localizedDescription))
 		}
 	}
 	
@@ -101,11 +117,8 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 
 internal class DefaultWidgetsDownloader {
 	
-	#if DEBUG
-	private let defaultWidgetsURLString: String = "https://stage.pock.app/api/defaults.php"
-	#else
-	private let defaultWidgetsURLString: String = "https://pock.app/api/defaults.php"
-	#endif
+    // Debug builds use the same maintained catalog as release builds.
+    private let defaultWidgetsURLString = "https://pock.app/api/defaults.php"
 	
 	// MARK: Fetch default widgets list
 	

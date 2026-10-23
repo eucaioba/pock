@@ -1,3 +1,4 @@
+#include <stdint.h>
 //
 //  KeySenderHelper.h
 //  Pock

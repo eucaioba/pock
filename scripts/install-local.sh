@@ -26,4 +26,20 @@ if [[ -e /Applications/Pock.app ]]; then
 fi
 ditto --noextattr --norsrc "$signed_app" /Applications/Pock.app
 codesign --verify --deep --strict /Applications/Pock.app
+# Install the matching default widgets as well as the host application.
+widget_stage=".build/LocalInstall/Widgets-$(date +%Y%m%d-%H%M%S)"
+widget_destination="$HOME/Library/Application Support/Pock/Widgets"
+mkdir -p "$widget_stage" "$widget_destination"
+for archive in "$signed_app"/Contents/Resources/DefaultWidgets/*.pkarchive; do
+  ditto -xk --noextattr --norsrc "$archive" "$widget_stage"
+done
+for widget in "$widget_stage"/*.pock; do
+  codesign --verify --deep --strict "$widget"
+  widget_name="$(basename "$widget")"
+  if [[ -e "$widget_destination/$widget_name" ]]; then
+    mkdir -p "$widget_stage/Previous"
+    mv "$widget_destination/$widget_name" "$widget_stage/Previous/$widget_name"
+  fi
+  ditto --noextattr --norsrc "$widget" "$widget_destination/$widget_name"
+done
 open /Applications/Pock.app

@@ -16,7 +16,7 @@ bash scripts/test-widgets.sh Release
 ```
 
 The app is written to `.build/DerivedData/Build/Products/Release/Pock.app`.
-Building never terminates running apps or installs to Applications. To install locally, quit Pock and run `bash scripts/install-local.sh`. It stages an ad hoc signed copy, preserves any previous installation as a timestamped backup, installs to `/Applications/Pock.app`, and opens it. A distributed release needs a Developer ID and notarization.
+Building never terminates running apps or installs to Applications. To install locally, quit Pock and run `bash scripts/install-local.sh`. It stages an ad hoc signed copy, preserves any previous installation as a timestamped backup, installs to `/Applications/Pock.app`, installs the matching bundled widgets, and opens it. Existing widget bundles with matching filenames are preserved in the staging directory before replacement. A distributed release needs a Developer ID and notarization.
 
 ## Maintenance changes
 

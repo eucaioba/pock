@@ -30,7 +30,7 @@
 "oTc-dK-63V.title" = "Show Volume Toggle Item";
 
 /* Class = "NSButtonCell"; title = "Show Brightness Toggle Item"; ObjectID = "po1-9a-abU"; */
-"po1-9a-abU.title" = "Show Brightness Toggle Item"
+"po1-9a-abU.title" = "Show Brightness Toggle Item";
 
 /* Class = "NSButtonCell"; title = "Show Brightness Up Item"; ObjectID = "zlO-nx-U7P"; */
 "zlO-nx-U7P.title" = "Mostra pulsante luminosità su";

@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 platform :osx, '10.15'
+workspace 'Pock'
 
 target 'Pock' do
 
@@ -13,6 +14,26 @@ target 'Pock' do
   pod 'Magnet', '3.4.0'
   pod 'Zip', '2.1.2'
 
+end
+
+# Build the default widgets with the same toolchain and shared ABI as the host.
+abstract_target 'DefaultWidgets' do
+  use_frameworks!
+  pod 'PockKit', :git => 'https://github.com/pock/pockkit.git', :commit => '335bc4c0edb4c9ad1beabe294f70cd39300dc577'
+
+  {
+    'Esc' => 'esc-widget',
+    'Dock' => 'dock-widget',
+    'NowPlaying' => 'now-playing-widget',
+    'Status' => 'status-widget',
+    'Weather' => 'weather-widget',
+    'ControlCenter' => 'control-center-widget'
+  }.each do |name, repository|
+    target name do
+      project "Vendor/Widgets/#{repository}/#{name}.xcodeproj"
+      pod 'Defaults', '4.1.0' if name == 'ControlCenter'
+    end
+  end
 end
 
 # Older podspecs still target macOS 10.9. Align them with the host app so

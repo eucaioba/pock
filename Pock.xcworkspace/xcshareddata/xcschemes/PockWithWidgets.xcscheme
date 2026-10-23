@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Scheme LastUpgradeVersion="1320" version="2.0">
+   <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
+      <BuildActionEntries>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34564DB725F81E520093E5E0" BuildableName="Pock.app" BlueprintName="Pock" ReferencedContainer="container:Pock.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34691B7C23D37C73008EB808" BuildableName="ControlCenter.pock" BlueprintName="ControlCenter" ReferencedContainer="container:Vendor/Widgets/control-center-widget/ControlCenter.xcodeproj" />
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34AFC98C246DC8E00068B3B6" BuildableName="Dock.pock" BlueprintName="Dock" ReferencedContainer="container:Vendor/Widgets/dock-widget/Dock.xcodeproj" />
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="349F9C4123C3B903002CEC1E" BuildableName="Esc.pock" BlueprintName="Esc" ReferencedContainer="container:Vendor/Widgets/esc-widget/Esc.xcodeproj" />
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34A0227323C6632D00A24DA5" BuildableName="NowPlaying.pock" BlueprintName="NowPlaying" ReferencedContainer="container:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj" />
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="3401772623D3231D00369905" BuildableName="Status.pock" BlueprintName="Status" ReferencedContainer="container:Vendor/Widgets/status-widget/Status.xcodeproj" />
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34DF1783229347A400D00D61" BuildableName="Weather.pock" BlueprintName="Weather" ReferencedContainer="container:Vendor/Widgets/weather-widget/Weather.xcodeproj" />
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction buildConfiguration="Release" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES" disableMainThreadChecker="YES" codeCoverageEnabled="YES">
+      <Testables>
+      </Testables>
+   </TestAction>
+   <LaunchAction buildConfiguration="Release" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" enableASanStackUseAfterReturn="YES" disableMainThreadChecker="YES" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="NO" debugXPCServices="NO" debugServiceExtension="internal" enableGPUFrameCaptureMode="3" enableGPUValidationMode="1" allowLocationSimulation="NO" viewDebuggingEnabled="No" queueDebuggingEnabled="No" GPUProfilerEnabled="No">
+      <BuildableProductRunnable runnableDebuggingMode="0">
+         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34564DB725F81E520093E5E0" BuildableName="Pock.app" BlueprintName="Pock" ReferencedContainer="container:Pock.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ProfileAction buildConfiguration="Release" shouldUseLaunchSchemeArgsEnv="YES" savedToolIdentifier="" useCustomWorkingDirectory="NO" debugDocumentVersioning="NO" enableTestabilityWhenProfilingTests="No">
+      <BuildableProductRunnable runnableDebuggingMode="0">
+         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34564DB725F81E520093E5E0" BuildableName="Pock.app" BlueprintName="Pock" ReferencedContainer="container:Pock.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction buildConfiguration="Release">
+   </AnalyzeAction>
+   <ArchiveAction buildConfiguration="Release" revealArchiveInOrganizer="YES">
+   </ArchiveAction>
+</Scheme>

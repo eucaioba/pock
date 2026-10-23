@@ -12,6 +12,7 @@ bundle install
 bundle exec pod install --deployment
 python3 Tests/run.py
 bash scripts/build.sh Release
+bash scripts/test-widgets.sh Release
 ```
 
 The app is written to `.build/DerivedData/Build/Products/Release/Pock.app`.
@@ -24,7 +25,10 @@ Building never terminates running apps or installs to Applications. To install l
 - Inherit CocoaPods' Swift runtime embedding setting and align dependency deployment targets with macOS 10.15.
 - Separate compilation from installation; remove the build phase that killed Pock and copied partial build products.
 - Restore mouse scrolling forwarding using the protocol actually exposed by the pinned PockKit.
-- Use the production widget catalog for both Debug and Release.
+- Vendor the six MIT-licensed default widget sources, build them in the shared workspace, and package them with the host. Default installation works offline and avoids incompatible historical Swift runtime symbols.
+- Keep locally rebuilt default widgets out of upstream binary update suggestions.
+- Extract archives in the temporary widgets directory, including bundled archives, without writing into the signed app.
+- Preserve dynamic loader diagnostics for widgets that cannot load.
 - Bound download request/resource timeouts, ignore unknown content lengths in progress, clamp progress, finish only once, and invalidate download sessions.
 - Add local HTTP regression coverage and macOS build CI.
 
@@ -32,4 +36,4 @@ Building never terminates running apps or installs to Applications. To install l
 
 Pock uses private macOS Touch Bar APIs. Compilation does not establish that every third party widget works on every macOS release. Verify the Dock, media controls, brightness, volume, sleep/wake, and Accessibility permission on the target Mac.
 
-The default widgets remain upstream binary bundles downloaded from pock.app. This pass does not rewrite or audit their implementations. The app's update catalog also still belongs to upstream; fork releases should be installed from this repository until a fork-specific update service is implemented. No new telemetry service is added.
+The default widgets are compiled from the upstream sources imported at the commits documented in Vendor/Widgets/README.md. Their existing private macOS APIs and weather service still need behavioral validation; recompilation does not modernize every service. The app's core update catalog and third party widget catalog still belong to upstream; fork releases should be installed from this repository until a fork-specific update service is implemented. Bundled defaults are excluded from upstream update suggestions. No new telemetry service is added.

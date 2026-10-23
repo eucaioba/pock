@@ -8,7 +8,6 @@ Pods
 clear_pock_environment
 Pock.xcodeproj/xcuserdata
 Pock.xcworkspace/xcuserdata
-Pock.xcworkspace/contents.xcworkspacedata
 
 ## Hide Secrets
 Secrets.plist
@@ -16,4 +15,4 @@ Secrets.plist
 # Local builds and dependency caches
 .build/
 .bundle/
-vendor/
+vendor/bundle/

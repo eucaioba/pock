@@ -116,6 +116,13 @@ internal class Downloader: NSObject, URLSessionTaskDelegate, URLSessionDownloadD
 // MARK: Default widgets downloader
 
 internal class DefaultWidgetsDownloader {
+
+    static var bundledWidgets: [String: URL] {
+        guard let catalog = Bundle.main.url(forResource: "catalog", withExtension: "json", subdirectory: "DefaultWidgets"),
+              let data = try? Data(contentsOf: catalog),
+              let filenames = try? JSONDecoder().decode([String: String].self, from: data) else { return [:] }
+        return filenames.mapValues { catalog.deletingLastPathComponent().appendingPathComponent($0) }
+    }
 	
     // Debug builds use the same maintained catalog as release builds.
     private let defaultWidgetsURLString = "https://pock.app/api/defaults.php"
@@ -123,6 +130,14 @@ internal class DefaultWidgetsDownloader {
 	// MARK: Fetch default widgets list
 	
 	internal func fetchDefaultWidgets(_ completion: @escaping ([String: URL], DownloaderError?) -> Void) {
+        // Ship widgets compiled with the host toolchain. Upstream's historical
+        // binaries can reference Swift compatibility symbols that no longer exist.
+        let local = Self.bundledWidgets
+        if !local.isEmpty {
+            DispatchQueue.global(qos: .userInitiated).async { completion(local, nil) }
+            return
+        }
+
 		guard let url = URL(string: defaultWidgetsURLString + "?core=\(Updater.fullAppVersion)") else {
 			completion([:], .invalidFileURL)
 			return

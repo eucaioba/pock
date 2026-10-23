@@ -79,8 +79,8 @@
 		34E6A27125586557002693EA /* CoreDisplay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreDisplay.framework; path = ../../../../../../../../../../System/Library/Frameworks/CoreDisplay.framework; sourceTree = "<group>"; };
 		34F764912501637700310698 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		7747FFA703E2BF22E50F1EBA /* Pods-DefaultWidgets-ControlCenter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-ControlCenter.release.xcconfig"; path = "../../../../Pods/Target Support Files/Pods-DefaultWidgets-ControlCenter/Pods-DefaultWidgets-ControlCenter.release.xcconfig"; sourceTree = "<group>"; };
-		7B7B7DC0E978C0681A327EDD /* Pods-ControlCenter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ControlCenter.debug.xcconfig"; path = "Target Support Files/Pods-ControlCenter/Pods-ControlCenter.debug.xcconfig"; sourceTree = "<group>"; };
-		B9BF9DCC436C1E2CCEA4225D /* Pods-ControlCenter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ControlCenter.release.xcconfig"; path = "Target Support Files/Pods-ControlCenter/Pods-ControlCenter.release.xcconfig"; sourceTree = "<group>"; };
+		7B7B7DC0E978C0681A327EDD /* Pods-DefaultWidgets-ControlCenter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-ControlCenter.debug.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-ControlCenter/Pods-DefaultWidgets-ControlCenter.debug.xcconfig"; sourceTree = "<group>"; };
+		B9BF9DCC436C1E2CCEA4225D /* Pods-DefaultWidgets-ControlCenter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-ControlCenter.release.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-ControlCenter/Pods-DefaultWidgets-ControlCenter.release.xcconfig"; sourceTree = "<group>"; };
 		DED10CDF142DA4DEE3861990 /* Pods_DefaultWidgets_ControlCenter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DefaultWidgets_ControlCenter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63D6B6B62CFB22FC81E5417 /* Pods-DefaultWidgets-ControlCenter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-ControlCenter.debug.xcconfig"; path = "../../../../Pods/Target Support Files/Pods-DefaultWidgets-ControlCenter/Pods-DefaultWidgets-ControlCenter.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -265,8 +265,8 @@
 		A3E0D81C8AEC7CD3AB32E398 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7B7B7DC0E978C0681A327EDD /* Pods-ControlCenter.debug.xcconfig */,
-				B9BF9DCC436C1E2CCEA4225D /* Pods-ControlCenter.release.xcconfig */,
+				7B7B7DC0E978C0681A327EDD /* Pods-DefaultWidgets-ControlCenter.debug.xcconfig */,
+				B9BF9DCC436C1E2CCEA4225D /* Pods-DefaultWidgets-ControlCenter.release.xcconfig */,
 				F63D6B6B62CFB22FC81E5417 /* Pods-DefaultWidgets-ControlCenter.debug.xcconfig */,
 				7747FFA703E2BF22E50F1EBA /* Pods-DefaultWidgets-ControlCenter.release.xcconfig */,
 			);

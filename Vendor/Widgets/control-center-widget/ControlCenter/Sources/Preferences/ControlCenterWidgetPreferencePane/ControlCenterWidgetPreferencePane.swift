@@ -28,6 +28,19 @@ class ControlCenterWidgetPreferencePane: NSViewController, PKWidgetPreference {
     
     /// Preferenceable
     static var nibName: NSNib.Name = "ControlCenterWidgetPreferencePane"
+
+    func reset() {
+        Defaults.reset(
+            .shouldShowSleepItem, .shouldShowLockItem, .shouldShowScreensaverItem,
+            .shouldShowDoNotDisturbItem, .isDoNotDisturb, .shouldShowBrightnessItem,
+            .shouldShowVolumeItem, .shouldShowBrightnessDownItem, .shouldShowBrightnessUpItem,
+            .shouldShowBrightnessToggleItem, .shouldShowVolumeDownItem, .shouldShowVolumeUpItem,
+            .shouldShowVolumeMuteItem, .isVolumeMute, .shouldShowVolumeToggleItem
+        )
+        if isViewLoaded { loadCheckboxState() }
+        NSWorkspace.shared.notificationCenter.post(name: .shouldReloadControlCenterWidget, object: nil)
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

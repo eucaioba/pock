@@ -39,8 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D0E790B706AC130DEB3A405 /* Pods-Dock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dock.release.xcconfig"; path = "Target Support Files/Pods-Dock/Pods-Dock.release.xcconfig"; sourceTree = "<group>"; };
-		1177E54C6982D8AD0A82259D /* Pods-Dock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dock.debug.xcconfig"; path = "Target Support Files/Pods-Dock/Pods-Dock.debug.xcconfig"; sourceTree = "<group>"; };
+		0D0E790B706AC130DEB3A405 /* Pods-DefaultWidgets-Dock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-Dock.release.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-Dock/Pods-DefaultWidgets-Dock.release.xcconfig"; sourceTree = "<group>"; };
+		1177E54C6982D8AD0A82259D /* Pods-DefaultWidgets-Dock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-Dock.debug.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-Dock/Pods-DefaultWidgets-Dock.debug.xcconfig"; sourceTree = "<group>"; };
 		340C03B1259A54F600DD9173 /* DockHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockHelper.swift; sourceTree = "<group>"; };
 		340C03B6259A556500DD9173 /* DockTiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockTiles.swift; sourceTree = "<group>"; };
 		34291B61263DFE1000768B08 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -298,8 +298,8 @@
 		C06F4B4CB02532011247AF5A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1177E54C6982D8AD0A82259D /* Pods-Dock.debug.xcconfig */,
-				0D0E790B706AC130DEB3A405 /* Pods-Dock.release.xcconfig */,
+				1177E54C6982D8AD0A82259D /* Pods-DefaultWidgets-Dock.debug.xcconfig */,
+				0D0E790B706AC130DEB3A405 /* Pods-DefaultWidgets-Dock.release.xcconfig */,
 				E9DB2B383D93D88A77F18FCA /* Pods-DefaultWidgets-Dock.debug.xcconfig */,
 				D7FFF1355B5C53B1CA37B264 /* Pods-DefaultWidgets-Dock.release.xcconfig */,
 			);
@@ -413,7 +413,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dock/Pods-Dock-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DefaultWidgets-Dock/Pods-DefaultWidgets-Dock-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Defaults/Defaults.framework",
 				"${BUILT_PRODUCTS_DIR}/PockKit/PockKit.framework",
 				"${BUILT_PRODUCTS_DIR}/AXSwift/AXSwift.framework",
@@ -428,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dock/Pods-Dock-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DefaultWidgets-Dock/Pods-DefaultWidgets-Dock-frameworks.sh\"\n";
 		};
 		C44FAF037AD2D66BDB3B25EE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

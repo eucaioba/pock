@@ -12,7 +12,7 @@ import PockKit
 
 class ControlCenterWidget: PKWidget {
     
-    var identifier: NSTouchBarItem.Identifier = NSTouchBarItem.Identifier(rawValue: "ControlCenterWidget")
+    static var identifier: String = "ControlCenterWidget"
     var customizationLabel: String = "ControlCenter"
     var view: NSView!
     

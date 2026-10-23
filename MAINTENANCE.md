@@ -22,6 +22,7 @@ Building never terminates running apps or installs to Applications. To install l
 - Pin PockKit to an immutable commit, fetch over HTTPS, pin direct pods, and commit Podfile.lock.
 - Inherit CocoaPods' Swift runtime embedding setting and align dependency deployment targets with macOS 10.15.
 - Separate compilation from installation; remove the build phase that killed Pock and copied partial build products.
+- Restore mouse scrolling forwarding using the protocol actually exposed by the pinned PockKit.
 - Use the production widget catalog for both Debug and Release.
 - Bound download request/resource timeouts, ignore unknown content lengths in progress, clamp progress, finish only once, and invalidate download sessions.
 - Add local HTTP regression coverage and macOS build CI.

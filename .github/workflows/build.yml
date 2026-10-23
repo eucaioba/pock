@@ -9,8 +9,13 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Install CocoaPods
+        run: gem install cocoapods -v 1.16.2 --no-document
       - name: Install locked dependencies
-        run: pod install --deployment
+        run: pod _1.16.2_ install --deployment
       - name: Test downloads
         run: python3 Tests/run.py
       - name: Build Release

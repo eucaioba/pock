@@ -16,12 +16,14 @@ mkdir -p .build/LocalInstall
 if [[ -e "$signed_app" ]]; then
   mv "$signed_app" ".build/LocalInstall/Pock-$(date +%Y%m%d-%H%M%S).app"
 fi
-ditto "$source_app" "$signed_app"
+ditto --noextattr --norsrc "$source_app" "$signed_app"
+# Local build folders can inherit Finder metadata that codesign rejects.
+xattr -cr "$signed_app"
 codesign --force --deep --sign - "$signed_app"
 codesign --verify --deep --strict "$signed_app"
 if [[ -e /Applications/Pock.app ]]; then
   mv /Applications/Pock.app "/Applications/Pock-backup-$(date +%Y%m%d-%H%M%S).app"
 fi
-ditto "$signed_app" /Applications/Pock.app
+ditto --noextattr --norsrc "$signed_app" /Applications/Pock.app
 codesign --verify --deep --strict /Applications/Pock.app
 open /Applications/Pock.app

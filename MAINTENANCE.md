@@ -4,11 +4,12 @@ This fork starts from pock/pock commit `127aac1` (June 2022). The first maintena
 
 ## Build and test
 
-Requirements: full Xcode selected with `xcode-select`, CocoaPods 1.16.2, Python 3.
+Requirements: full Xcode selected with `xcode-select`, Ruby 3.4.4, Bundler, Python 3. CocoaPods and JSON serialization versions are locked in Gemfile.lock.
 Run Xcode's first launch setup if prompted, then:
 
 ```sh
-pod install --deployment
+bundle install
+bundle exec pod install --deployment
 python3 Tests/run.py
 bash scripts/build.sh Release
 ```

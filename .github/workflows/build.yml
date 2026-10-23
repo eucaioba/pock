@@ -11,11 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
-      - name: Install CocoaPods
-        run: gem install cocoapods -v 1.16.2 --no-document
+          ruby-version: '3.4.4'
+          bundler-cache: true
       - name: Install locked dependencies
-        run: pod _1.16.2_ install --deployment
+        run: bundle exec pod install --deployment
       - name: Test downloads
         run: python3 Tests/run.py
       - name: Build Release

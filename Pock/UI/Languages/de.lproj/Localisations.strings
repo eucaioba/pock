@@ -249,3 +249,14 @@
 "preferences.status.battery-percentage" = "Batterie in Prozent";
 "preferences.status.clock" = "Datum und Uhrzeit";
 "preferences.status.clock-format" = "Datumsformat:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Zeigt die im System-Dock angehefteten Apps und weitere laufende Apps mit Laufanzeige und Hinweis-Badges (Badges benötigen Bedienungshilfen). Tippe auf eine App, um sie zu öffnen oder nach vorn zu holen.";
+"preferences.dock.hide-finder" = "Finder ausblenden";
+"preferences.dock.only-running" = "Nur laufende Apps";
+"preferences.dock.hide-indicator" = "Laufanzeige ausblenden";
+"preferences.dock.hide-badges" = "Badges ausblenden";
+"preferences.dock.hide-folders" = "Ordner ausblenden";
+"preferences.dock.hide-trash" = "Papierkorb ausblenden";
+"Trash" = "Papierkorb";

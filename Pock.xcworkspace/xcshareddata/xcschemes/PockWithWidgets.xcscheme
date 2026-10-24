@@ -7,9 +7,6 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34AFC98C246DC8E00068B3B6" BuildableName="Dock.pock" BlueprintName="Dock" ReferencedContainer="container:Vendor/Widgets/dock-widget/Dock.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
             <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="349F9C4123C3B903002CEC1E" BuildableName="Esc.pock" BlueprintName="Esc" ReferencedContainer="container:Vendor/Widgets/esc-widget/Esc.xcodeproj" />
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">

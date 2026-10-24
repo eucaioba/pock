@@ -14,3 +14,7 @@ xcrun swiftc -module-cache-path .build/tests/ModuleCache \
   Pock/UI/TouchBar/BuiltInWidgets/StatusLogic.swift \
   Tests/StatusLogicTests.swift -o .build/tests/StatusLogicTests
 .build/tests/StatusLogicTests
+xcrun swiftc -module-cache-path .build/tests/ModuleCache \
+  Pock/UI/TouchBar/BuiltInWidgets/DockLogic.swift \
+  Tests/DockLogicTests.swift -o .build/tests/DockLogicTests
+.build/tests/DockLogicTests

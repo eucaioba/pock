@@ -250,3 +250,14 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "preferences.status.battery-percentage" = "Battery percentage";
 "preferences.status.clock" = "Date and time";
 "preferences.status.clock-format" = "Date format:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Shows the apps pinned in your system Dock plus any other running app, with running indicators and notification badges (badges need Accessibility). Tap an app to open it or bring it forward.";
+"preferences.dock.hide-finder" = "Hide Finder";
+"preferences.dock.only-running" = "Only running apps";
+"preferences.dock.hide-indicator" = "Hide running indicator";
+"preferences.dock.hide-badges" = "Hide badges";
+"preferences.dock.hide-folders" = "Hide folders";
+"preferences.dock.hide-trash" = "Hide Trash";
+"Trash" = "Trash";

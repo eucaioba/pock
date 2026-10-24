@@ -57,6 +57,14 @@ internal struct Preferences {
 		case shouldShowBatteryPercentage
 		case shouldShowDateItem
 		case timeFormatTextField
+		/// Dock item. Raw values match the retired Dock widget so its settings carry over.
+		case hideFinder
+		case showOnlyRunningApps
+		case hideRunningIndicator
+		case hideTrash
+		case hidePersistentItems
+		case hideBadges
+		case itemSpacing
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -105,6 +113,10 @@ internal struct Preferences {
                     return true as! T
                 case .timeFormatTextField:
                     return "EE dd MMM HH:mm" as! T
+                case .hideFinder, .showOnlyRunningApps, .hideRunningIndicator, .hideTrash, .hidePersistentItems, .hideBadges:
+                    return false as! T
+                case .itemSpacing:
+                    return CGFloat(8) as! T
                 }
             }
             return value

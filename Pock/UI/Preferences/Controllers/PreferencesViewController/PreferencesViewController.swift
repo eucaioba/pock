@@ -433,6 +433,60 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addDockSection(to: column, at: index + 2)
+	}
+
+	// MARK: Dock
+
+	private static let dockOptions: [(Preferences.Keys, String)] = [
+		(.hideFinder, "preferences.dock.hide-finder"),
+		(.showOnlyRunningApps, "preferences.dock.only-running"),
+		(.hideRunningIndicator, "preferences.dock.hide-indicator"),
+		(.hideBadges, "preferences.dock.hide-badges"),
+		(.hidePersistentItems, "preferences.dock.hide-folders"),
+		(.hideTrash, "preferences.dock.hide-trash")
+	]
+
+	private func addDockSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.dock.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.dock.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let checkboxes: [NSView] = PreferencesViewController.dockOptions.map { key, label in
+			let checkbox = NSButton(checkboxWithTitle: label.localized, target: self, action: #selector(didChangeDockOption(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(key.rawValue)
+			checkbox.state = Preferences[key] == true ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		let section = NSStackView(views: [title, description, grid])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeDockOption(_ checkbox: NSButton) {
+		guard let raw = checkbox.identifier?.rawValue, let key = Preferences.Keys(rawValue: raw) else {
+			return
+		}
+		Preferences[key] = checkbox.state == .on
+		NotificationCenter.default.post(name: .dockDidChange, object: nil)
 	}
 
 	@objc private func didChangeStatusOption(_ checkbox: NSButton) {

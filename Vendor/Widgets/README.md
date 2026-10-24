@@ -4,7 +4,6 @@ Vendored MIT-licensed sources from the upstream Pock organization. License files
 
 | Source | Repository | Imported commit |
 |---|---|---|
-| dock-widget | https://github.com/pock/dock-widget | `fd5250e6291e886abdeaf018406dd2d4b6d2160a` |
 | esc-widget | https://github.com/pock/esc-widget | `811ccdf3df56cc67fc94644727ebe2f74c3346c6` |
 | now-playing-widget | https://github.com/pock/now-playing-widget | `156276f31daead703d033704157b70be65f44ea8` |
 | weather-widget | https://github.com/pock/weather-widget | `0b31d04667963d971957d542a4554c83ac9e95c0` |
@@ -12,3 +11,5 @@ Vendored MIT-licensed sources from the upstream Pock organization. License files
 `control-center-widget` was removed: its features are built into Pock as the `Controls` item (`Pock/UI/TouchBar/BuiltInWidgets`), and installed `ControlCenter.pock` copies are deleted on launch.
 
 `status-widget` was removed: it is built into Pock as the `Status` item (`StatusTouchBarItem`), reading the same preference keys, and installed `Status.pock` copies are deleted on launch.
+
+`dock-widget` was removed: it is built into Pock as the `Dock` item (`DockTouchBarItem`), keeping the widget's display preference keys, and installed `Dock.pock` copies are deleted on launch.

@@ -86,3 +86,7 @@ Default widgets are being rewritten as items compiled into Pock (`Pock/UI/TouchB
 
 `Status` replaces the Status widget and reads the same preference keys, so existing choices carry over. Battery updates from `IOPSNotificationCreateRunLoopSource` instead of a 1 s poll, the clock fires on minute (or second) boundaries, the input source follows the TIS change notification and cycles on tap, and Wi-Fi signal comes from CoreWLAN RSSI (no Location permission; the SSID is not shown). The retired widget never showed its clock: assigning `Preferences[...]` straight to `DateFormatter.dateFormat` (`String!`) inferred an optional type and returned nil instead of the default format.
 
+
+`Dock` replaces the Dock widget (3,100 lines) with a scrubber of the apps pinned in the system Dock's own plist plus any other running app, running indicators, a highlight on the frontmost app, notification badges, the Dock's folders and the Trash. Display options keep the widget's preference keys. Badges are read from the Dock process through Accessibility in one pass off the main thread every 10 s. Tapping an app uses `NSWorkspace.openApplication`, which matches a Dock click (unhide, reopen a window, or launch).
+
+Dropped on purpose: window previews (`CGWindowListCreateImage` is obsolete and needs Screen Recording), the in-bar Finder browser, hiding the system Dock through `CoreDock`, and drag and drop onto icons. Folders open in Finder. `scripts/test-modifier-bars.sh` covers plist parsing, ordering and badge text.

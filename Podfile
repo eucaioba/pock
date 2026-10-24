@@ -23,7 +23,6 @@ abstract_target 'DefaultWidgets' do
 
   {
     'Esc' => 'esc-widget',
-    'Dock' => 'dock-widget',
     'NowPlaying' => 'now-playing-widget',
     'Weather' => 'weather-widget'
   }.each do |name, repository|

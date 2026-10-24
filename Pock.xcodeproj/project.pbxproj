@@ -75,11 +75,13 @@
 		34E7B98C263C65590072FE54 /* WidgetsManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34E7B98A263C65590072FE54 /* WidgetsManagerViewController.xib */; };
 		3F9C425F193CBC78D2C70F25 /* ModifierTouchBarMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9019B431A84DFDFA4C2990 /* ModifierTouchBarMonitor.swift */; };
 		53254B1ED49A4F61603DC85D /* ModifierTouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */; };
+		59AD37DE4AD0F001F298C345 /* DockLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241368C6C75C77FBC89DED21 /* DockLogic.swift */; };
 		80F6ED9E941CB99A898BECF2 /* Pods_Pock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE9B256A4CB4701408B60C0 /* Pods_Pock.framework */; };
 		B99B9D8DAD643A80A23CC58E /* AppControlsTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCED10632A52C09F4E11F030 /* AppControlsTouchBarItem.swift */; };
 		BED19479FEDB82DD3E5F1B1A /* ControlsTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737613D829A333D6802A5CF6 /* ControlsTouchBarItem.swift */; };
 		CB382E126520B06B36CAC77F /* StatusTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5072521E91B82FB88FC69 /* StatusTouchBarItem.swift */; };
 		D9AF52E032BC4BC88B8545DE /* BuiltInWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AE6BAF03FC5D8D841F468 /* BuiltInWidgets.swift */; };
+		F667550AFB3D65D24E59FC6E /* DockTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE268A609533C02E5726983E /* DockTouchBarItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +126,7 @@
 
 /* Begin PBXFileReference section */
 		1F9019B431A84DFDFA4C2990 /* ModifierTouchBarMonitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarMonitor.swift; sourceTree = "<group>"; };
+		241368C6C75C77FBC89DED21 /* DockLogic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DockLogic.swift; sourceTree = "<group>"; };
 		3400F92C264EBBC8003B2B4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		340D5BA72687038C001D73F8 /* DebugConsoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugConsoleViewController.swift; sourceTree = "<group>"; };
 		340D5BA82687038C001D73F8 /* DebugConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugConsoleViewController.xib; sourceTree = "<group>"; };
@@ -211,6 +214,7 @@
 		C6EACD4F97CFAAB5AB662B75 /* StatusLogic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatusLogic.swift; sourceTree = "<group>"; };
 		D64AE6BAF03FC5D8D841F468 /* BuiltInWidgets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BuiltInWidgets.swift; sourceTree = "<group>"; };
 		DCED10632A52C09F4E11F030 /* AppControlsTouchBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppControlsTouchBarItem.swift; sourceTree = "<group>"; };
+		FE268A609533C02E5726983E /* DockTouchBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DockTouchBarItem.swift; sourceTree = "<group>"; };
 		FFD5072521E91B82FB88FC69 /* StatusTouchBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatusTouchBarItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -692,6 +696,8 @@
 				737613D829A333D6802A5CF6 /* ControlsTouchBarItem.swift */,
 				C6EACD4F97CFAAB5AB662B75 /* StatusLogic.swift */,
 				FFD5072521E91B82FB88FC69 /* StatusTouchBarItem.swift */,
+				241368C6C75C77FBC89DED21 /* DockLogic.swift */,
+				FE268A609533C02E5726983E /* DockTouchBarItem.swift */,
 			);
 			name = BuiltInWidgets;
 			path = BuiltInWidgets;
@@ -955,6 +961,8 @@
 				BED19479FEDB82DD3E5F1B1A /* ControlsTouchBarItem.swift in Sources */,
 				1E675FD137A3E20998266428 /* StatusLogic.swift in Sources */,
 				CB382E126520B06B36CAC77F /* StatusTouchBarItem.swift in Sources */,
+				59AD37DE4AD0F001F298C345 /* DockLogic.swift in Sources */,
+				F667550AFB3D65D24E59FC6E /* DockTouchBarItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

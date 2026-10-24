@@ -249,3 +249,14 @@
 "preferences.status.battery-percentage" = "Percentuale batteria";
 "preferences.status.clock" = "Data e ora";
 "preferences.status.clock-format" = "Formato data:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Mostra le app nel Dock di sistema e le altre app aperte, con indicatori e badge di notifica (i badge richiedono Accessibilità). Tocca un’app per aprirla o portarla in primo piano.";
+"preferences.dock.hide-finder" = "Nascondi Finder";
+"preferences.dock.only-running" = "Solo app aperte";
+"preferences.dock.hide-indicator" = "Nascondi indicatore di apertura";
+"preferences.dock.hide-badges" = "Nascondi badge";
+"preferences.dock.hide-folders" = "Nascondi cartelle";
+"preferences.dock.hide-trash" = "Nascondi Cestino";
+"Trash" = "Cestino";

@@ -10,7 +10,11 @@ import Foundation
 import Defaults
 
 class CCDoNotDisturbItem: ControlCenterItem {
-    override var enabled: Bool { return Defaults[.shouldShowDoNotDisturbItem] }
+    /// The legacy `com.apple.notificationcenterui` preferences stopped controlling Do Not Disturb when Focus replaced it in macOS 12.
+    override var enabled: Bool {
+        if #available(macOS 12.0, *) { return false }
+        return Defaults[.shouldShowDoNotDisturbItem]
+    }
     
     override var title: String { return "do-not-disturb" }
     

@@ -43,6 +43,8 @@ internal class SPowerItem: StatusItem {
     }
     
     func didLoad() {
+        // Without a layer the fill colour below is never applied and the battery looks empty.
+        bodyView.wantsLayer = true
         bodyView.layer?.cornerRadius = 1
         configureValueLabel()
         configureStackView()

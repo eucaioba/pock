@@ -125,6 +125,31 @@ void SafeCFRelease(CFTypeRef cf) {
     return statusLabel;
 }
 
+/// Reads every Dock item's badge in one pass instead of walking the Dock for each item.
+- (NSDictionary<NSString *, NSString *> *)getBadgeCountsByItemName {
+    NSMutableDictionary<NSString *, NSString *> *result = [NSMutableDictionary dictionary];
+    NSArray *dockApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.dock"];
+    if (dockApps.count == 0) {
+        return result;
+    }
+    AXUIElementRef dock = AXUIElementCreateApplication([dockApps.firstObject processIdentifier]);
+    AXUIElementRef list = [self copyAXUIElementFrom:dock role:@"AXList" atIndex:0];
+    if (list != NULL) {
+        NSArray *children = (NSArray *)CFBridgingRelease([self getValueForKey:kAXChildrenAttribute in:list]);
+        for (id child in children) {
+            AXUIElementRef element = (__bridge AXUIElementRef)child;
+            NSString *title = (NSString *)CFBridgingRelease([self getValueForKey:kAXTitleAttribute in:element]);
+            NSString *badge = (NSString *)CFBridgingRelease([self getValueForKey:kAXStatusLabelAttribute in:element]);
+            if (title != nil && badge != nil) {
+                result[title] = badge;
+            }
+        }
+        SafeCFRelease(list);
+    }
+    SafeCFRelease(dock);
+    return result;
+}
+
 // MARK: CGWindowID
 
 - (NSArray *)getWindowsOfApp:(pid_t)pid {

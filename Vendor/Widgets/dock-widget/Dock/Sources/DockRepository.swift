@@ -380,8 +380,9 @@ extension DockRepository {
 		guard shouldShowNotificationBadge, let delegate = self.dockDelegate else {
 			return
 		}
+		let badges = PockDockHelper().getBadgeCountsByItemName() ?? [:]
 		for item in dockItems {
-			item.badge = PockDockHelper().getBadgeCountForItem(withName: item.name)
+			item.badge = item.name.flatMap { badges[$0] }
 		}
 		delegate.didUpdateBadge(for: self.dockItems)
 	}

@@ -27,6 +27,7 @@ extern AXError _AXUIElementGetWindow(AXUIElementRef window, CGWindowID *windowID
 @property (nonatomic, retain) NSDictionary *dockItems;
 
 - (NSString *)getBadgeCountForItemWithName:(NSString *)name;
+- (NSDictionary<NSString *, NSString *> *)getBadgeCountsByItemName;
 - (NSArray *)getWindowsOfApp:(pid_t)pid;
 - (BOOL)windowIsFrontmost:(CGWindowID)wid forApp:(NSRunningApplication *)app;
 - (void)minimizeWindowItem:(CGWindowItem *)item;

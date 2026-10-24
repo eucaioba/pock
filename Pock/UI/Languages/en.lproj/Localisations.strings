@@ -240,3 +240,13 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "controls.sleepDisplay" = "Sleep Display";
 "controls.screenSaver" = "Screen Saver";
 "controls.focus" = "Focus";
+
+/// Status
+"preferences.status.title" = "Status";
+"preferences.status.input-source" = "Input source";
+"preferences.status.wifi" = "Wi-Fi";
+"preferences.status.battery" = "Battery";
+"preferences.status.battery-icon" = "Battery icon";
+"preferences.status.battery-percentage" = "Battery percentage";
+"preferences.status.clock" = "Date and time";
+"preferences.status.clock-format" = "Date format:";

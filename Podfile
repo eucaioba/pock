@@ -25,7 +25,6 @@ abstract_target 'DefaultWidgets' do
     'Esc' => 'esc-widget',
     'Dock' => 'dock-widget',
     'NowPlaying' => 'now-playing-widget',
-    'Status' => 'status-widget',
     'Weather' => 'weather-widget'
   }.each do |name, repository|
     target name do

@@ -383,6 +383,70 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addStatusSection(to: column, at: index + 2)
+	}
+
+	// MARK: Status
+
+	private let statusFormatField = NSTextField()
+	private static let statusOptions: [(Preferences.Keys, String)] = [
+		(.shouldShowLangItem, "preferences.status.input-source"),
+		(.shouldShowWifiItem, "preferences.status.wifi"),
+		(.shouldShowPowerItem, "preferences.status.battery"),
+		(.shouldShowBatteryIcon, "preferences.status.battery-icon"),
+		(.shouldShowBatteryPercentage, "preferences.status.battery-percentage"),
+		(.shouldShowDateItem, "preferences.status.clock")
+	]
+
+	private func addStatusSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.status.title".localized)
+		let checkboxes: [NSView] = PreferencesViewController.statusOptions.map { key, label in
+			let checkbox = NSButton(checkboxWithTitle: label.localized, target: self, action: #selector(didChangeStatusOption(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(key.rawValue)
+			checkbox.state = Preferences[key] == true ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		statusFormatField.stringValue = Preferences[.timeFormatTextField]
+		statusFormatField.placeholderString = "EE dd MMM HH:mm"
+		statusFormatField.target = self
+		statusFormatField.action = #selector(didChangeStatusFormat(_:))
+		statusFormatField.widthAnchor.constraint(equalToConstant: 180).isActive = true
+		let formatRow = NSStackView(views: [NSTextField(labelWithString: "preferences.status.clock-format".localized), statusFormatField])
+		formatRow.spacing = 8
+		let section = NSStackView(views: [title, grid, formatRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeStatusOption(_ checkbox: NSButton) {
+		guard let raw = checkbox.identifier?.rawValue, let key = Preferences.Keys(rawValue: raw) else {
+			return
+		}
+		Preferences[key] = checkbox.state == .on
+		NotificationCenter.default.post(name: .statusDidChange, object: nil)
+	}
+
+	@objc private func didChangeStatusFormat(_ field: NSTextField) {
+		let format = field.stringValue.trimmingCharacters(in: .whitespaces)
+		Preferences[.timeFormatTextField] = format.isEmpty ? "EE dd MMM HH:mm" : format
+		NotificationCenter.default.post(name: .statusDidChange, object: nil)
 	}
 
 	@objc private func didChangeControlsButton(_ checkbox: NSButton) {

@@ -49,6 +49,14 @@ internal struct Preferences {
 		case nativeTouchBarApps
 		case controlsButtons
 		case focusShortcutName
+		/// Status item. Raw values match the retired Status widget so its settings carry over.
+		case shouldShowLangItem
+		case shouldShowWifiItem
+		case shouldShowPowerItem
+		case shouldShowBatteryIcon
+		case shouldShowBatteryPercentage
+		case shouldShowDateItem
+		case timeFormatTextField
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -91,6 +99,12 @@ internal struct Preferences {
                     return ControlsButton.defaultEnabled.map(\.rawValue) as! T
                 case .focusShortcutName:
                     return "Toggle Focus" as! T
+                case .shouldShowLangItem, .shouldShowBatteryPercentage:
+                    return false as! T
+                case .shouldShowWifiItem, .shouldShowPowerItem, .shouldShowBatteryIcon, .shouldShowDateItem:
+                    return true as! T
+                case .timeFormatTextField:
+                    return "EE dd MMM HH:mm" as! T
                 }
             }
             return value

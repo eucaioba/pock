@@ -26,12 +26,12 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	private var emptyTouchBarController: EmptyTouchBarController?
 	
 	internal var allowedCustomizationIdentifiers: [NSTouchBarItem.Identifier] {
-		return Array(widgets.keys) + [.appControls, .controls, .flexibleSpace]
+		return Array(widgets.keys) + BuiltInWidgets.identifiers + [.flexibleSpace]
 	}
 
     /// Provide a usable first-run layout; AppKit keeps any saved customization.
     internal var defaultItemIdentifiers: [NSTouchBarItem.Identifier] {
-        let defaults = ["Esc", "Dock", "AppControls", "NowPlaying", "Status", "Controls"]
+        let defaults = ["Esc", "Dock", "AppControls", "NowPlaying", "StatusItem", "Controls"]
             .map { NSTouchBarItem.Identifier("com.pigigaldi.pock.\($0)") }
             .filter { widgets[$0] != nil || BuiltInWidgets.identifiers.contains($0) }
         return defaults.isEmpty ? widgets.keys.sorted { $0.rawValue < $1.rawValue } : defaults

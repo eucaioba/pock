@@ -239,3 +239,13 @@
 "controls.sleepDisplay" = "Spegni schermo";
 "controls.screenSaver" = "Salvaschermo";
 "controls.focus" = "Full immersion";
+
+/// Status
+"preferences.status.title" = "Stato";
+"preferences.status.input-source" = "Sorgente di input";
+"preferences.status.wifi" = "Wi-Fi";
+"preferences.status.battery" = "Batteria";
+"preferences.status.battery-icon" = "Icona batteria";
+"preferences.status.battery-percentage" = "Percentuale batteria";
+"preferences.status.clock" = "Data e ora";
+"preferences.status.clock-format" = "Formato data:";

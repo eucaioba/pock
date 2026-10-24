@@ -9,15 +9,16 @@ import AppKit
 
 internal enum BuiltInWidgets {
 
-	static let identifiers: [NSTouchBarItem.Identifier] = [.appControls, .controls]
+	static let identifiers: [NSTouchBarItem.Identifier] = [.appControls, .controls, .status]
 
 	/// Default widget bundles replaced by a built-in item.
 	static let replacements: [String: NSTouchBarItem.Identifier] = [
-		"com.pigigaldi.pock.ControlCenter": .controls
+		"com.pigigaldi.pock.ControlCenter": .controls,
+		"com.pigigaldi.pock.Status": .status
 	]
 
 	/// Bundle file names removed from the widgets folder once replaced.
-	static let retiredWidgetBundles = ["ControlCenter.pock"]
+	static let retiredWidgetBundles = ["ControlCenter.pock", "Status.pock"]
 
 	static func makeItem(for identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
 		switch identifier {
@@ -25,6 +26,8 @@ internal enum BuiltInWidgets {
 			return AppControlsTouchBarItem(identifier: identifier)
 		case .controls:
 			return ControlsTouchBarItem(identifier: identifier)
+		case .status:
+			return StatusTouchBarItem(identifier: identifier)
 		default:
 			return nil
 		}

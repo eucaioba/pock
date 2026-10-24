@@ -17,7 +17,7 @@ jobs:
         run: bundle exec pod install --deployment
       - name: Test media routing and application automation
         run: bash scripts/test-media.sh
-      - name: Test modifier Touch Bars and App Controls
+      - name: Test modifier Touch Bars, App Controls and built-in widgets
         run: bash scripts/test-modifier-bars.sh
       - name: Test downloads
         run: python3 Tests/run.py

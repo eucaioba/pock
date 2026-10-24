@@ -239,3 +239,13 @@
 "controls.sleepDisplay" = "Display ausschalten";
 "controls.screenSaver" = "Bildschirmschoner";
 "controls.focus" = "Fokus";
+
+/// Status
+"preferences.status.title" = "Status";
+"preferences.status.input-source" = "Eingabequelle";
+"preferences.status.wifi" = "WLAN";
+"preferences.status.battery" = "Batterie";
+"preferences.status.battery-icon" = "Batteriesymbol";
+"preferences.status.battery-percentage" = "Batterie in Prozent";
+"preferences.status.clock" = "Datum und Uhrzeit";
+"preferences.status.clock-format" = "Datumsformat:";

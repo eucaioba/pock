@@ -16,3 +16,6 @@ Secrets.plist
 .build/
 .bundle/
 vendor/bundle/
+
+# Runtime coverage data from loaded development bundles
+*.profraw

@@ -57,6 +57,7 @@ class PreferencesViewController: NSViewController {
 		super.viewDidLoad()
 		configureUIElements()
 		localizeUIElements()
+		addModifierTouchBarSection()
 		if AppController.shared.isVisible == false {
 			AppController.shared.reload(shouldFetchLatestVersions: false)
 		}
@@ -227,6 +228,50 @@ class PreferencesViewController: NSViewController {
 		}
 	}
 	
+	// MARK: Modifier Touch Bars
+
+	/// Built in code and inserted after the double `⌃ Control` section of the right column.
+	private func addModifierTouchBarSection() {
+		guard let doubleControlSection = doubleControlTitleLabel.superview?.superview,
+			  let column = doubleControlSection.superview as? NSStackView,
+			  let index = column.arrangedSubviews.firstIndex(of: doubleControlSection) else {
+			return
+		}
+		let title = NSTextField(labelWithString: "preferences.modifier-bars.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.modifier-bars.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let checkboxes: [NSView] = ModifierTouchBarMode.allCases.enumerated().map { index, mode in
+			let checkbox = NSButton(checkboxWithTitle: "preferences.modifier-bars.\(mode.modifierName)".localized,
+									target: self, action: #selector(didChangeModifierTouchBarOption(_:)))
+			checkbox.tag = index
+			checkbox.state = Preferences[mode.preferenceKey] == true ? .on : .off
+			return checkbox
+		}
+		let section = NSStackView(views: [title, description] + checkboxes)
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index + 1)
+		column.insertArrangedSubview(section, at: index + 2)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeModifierTouchBarOption(_ checkbox: NSButton) {
+		guard ModifierTouchBarMode.allCases.indices.contains(checkbox.tag) else {
+			return
+		}
+		let mode = ModifierTouchBarMode.allCases[checkbox.tag]
+		Preferences[mode.preferenceKey] = checkbox.state == .on
+		if mode == .windowLayout, checkbox.state == .on, !WindowManager.isTrusted {
+			WindowManager.requestAccess()
+		}
+	}
+
 	// MARK: Core-update stuff
 	
 	private func shouldAskToupdate(_ completion: @escaping (Version?) -> Void) {

@@ -189,3 +189,30 @@
 "debug.console.show-on-launch" = "Mostrar no momento do arranque";
 "debug.console.scroll-automatically" = "Rolar automaticamente";
 "debug.console.clear-console" = "Limpar a consola";
+
+/// Modifier Touch Bars
+"preferences.modifier-bars.title" = "Segurar teclas modificadoras";
+"preferences.modifier-bars.desc" = "Segure uma tecla sozinha para mostrar uma Touch Bar dedicada. Ela fecha ao soltar a tecla ou digitar um atalho.";
+"preferences.modifier-bars.command" = "⌘ Command: alternar entre apps abertos";
+"preferences.modifier-bars.option" = "⌥ Option: brilho, volume e controles do sistema";
+"preferences.modifier-bars.control" = "⌃ Control: organizar a janela da frente (requer Acessibilidade)";
+"modifier-bar.mute" = "Silenciar";
+"modifier-bar.muted" = "Mudo";
+"modifier-bar.brightness-down" = "Diminuir brilho";
+"modifier-bar.brightness-up" = "Aumentar brilho";
+"modifier-bar.volume-down" = "Diminuir volume";
+"modifier-bar.volume-up" = "Aumentar volume";
+"modifier-bar.applications" = "Apps";
+"modifier-bar.sleep-display" = "Repousar ecrã";
+"modifier-bar.allow-accessibility" = "Permitir…";
+"modifier-bar.accessibility-required" = "Organizar janelas requer permissão de Acessibilidade";
+"modifier-bar.window.leftHalf" = "Metade esquerda";
+"modifier-bar.window.rightHalf" = "Metade direita";
+"modifier-bar.window.topHalf" = "Metade superior";
+"modifier-bar.window.bottomHalf" = "Metade inferior";
+"modifier-bar.window.leftThird" = "Terço esquerdo";
+"modifier-bar.window.centerThird" = "Terço central";
+"modifier-bar.window.rightThird" = "Terço direito";
+"modifier-bar.window.center" = "Centralizar";
+"modifier-bar.window.maximize" = "Preencher ecrã";
+"modifier-bar.window.nextDisplay" = "Próximo monitor";

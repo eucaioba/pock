@@ -17,7 +17,7 @@ bash scripts/test-touchbar-lifecycle.sh
 ```
 
 The app is written to `.build/DerivedData/Build/Products/Release/Pock.app`.
-Building never terminates running apps or installs to Applications. To install locally, quit Pock and run `bash scripts/install-local.sh`. It stages an ad hoc signed copy, preserves any previous installation as a timestamped backup, installs to `/Applications/Pock.app`, installs the matching bundled widgets, and opens it. Existing widget bundles with matching filenames are preserved in the staging directory before replacement. A distributed release needs a Developer ID and notarization.
+Building never terminates running apps or installs to Applications. To install locally, quit Pock and run `bash scripts/install-local.sh`. Run `bash scripts/create-local-signing-identity.sh` once first: it adds a self-signed "Pock Local Signing" certificate to the login keychain, and installs signed with it keep a stable designated requirement, so Accessibility and Automation grants survive rebuilds. Without it, installs fall back to ad hoc signing, whose cdhash-based identity invalidates those grants on every build. It stages an ad hoc signed copy, preserves any previous installation as a timestamped backup, installs to `/Applications/Pock.app`, installs the matching bundled widgets, and opens it. Existing widget bundles with matching filenames are preserved in the staging directory before replacement. A distributed release needs a Developer ID and notarization.
 
 ## Maintenance changes
 
@@ -46,6 +46,17 @@ The default widgets are compiled from the upstream sources imported at the commi
 
 The media widget uses explicit application automation for Spotify, Music, and Safari YouTube tabs. It does not use a scripting interpreter to access restricted global MediaRemote metadata. The host declares its Apple Events usage and macOS prompts for Automation permission. Safari additionally requires “Allow JavaScript from Apple Events”; the user must authorize enabling that option. Safari scripts check an HTTPS YouTube hostname and the exact tab URL before controlling playback.
 
-Hold the media widget, or tap its controls icon, to open a Touch Bar with source selection, playback controls, and a seek slider. Safari's previous/next controls seek backward/forward 10 seconds. Source pinning prevents other apps from receiving commands. Automatic mode prefers playing sessions, the foreground player, then the current session. Polling is serialized off the main thread, skips overlap, times out, and resumes after wake. Pending seeks are cancelled when changing source. Artwork comes from the player/page rather than an iTunes search.
+Hold the media widget to open a Touch Bar with playback controls and a seek slider. Source pinning lives only in the widget preferences; the Touch Bar always follows the selected source. Safari's previous/next controls seek backward/forward 10 seconds. Source pinning prevents other apps from receiving commands. Automatic mode prefers playing sessions, the foreground player, then the current session. Polling is serialized off the main thread, skips overlap, times out, and resumes after wake. Pending seeks are cancelled when changing source. Artwork comes from the player/page rather than an iTunes search.
 
 Run `bash scripts/test-media.sh` for source-selection and scripted Spotify/Safari fixtures, including YouTube host isolation, tab revalidation, seeking bounds, and denied permission handling. Live Automation permissions and physical Touch Bar behavior require on-device validation.
+
+## Modifier Touch Bars
+
+Holding `⌘`, `⌥` or `⌃` alone for 0.45 s pushes a dedicated Touch Bar on top of Pock; releasing the key, adding another modifier, or typing any key closes it. Input event counters (`CGEventSource.counterForEventType`) cancel the bar when the modifier was used for a shortcut or click, so no keyboard monitoring permission is needed beyond the existing `flagsChanged` monitor. Double `⌃` still toggles the system Touch Bar.
+
+- `⌘`: running regular apps in most-recently-used order; tapping opens the app the way the Dock does.
+- `⌥`: built-in display brightness (DisplayServices), output volume and mute (CoreAudio), Mission Control, Apps/Launchpad, and display sleep. Values are set directly because posting media keys while `⌥` is held opens System Settings.
+- `⌃`: halves, thirds, center, fill, and next display for the frontmost window through the Accessibility API. Without Accessibility trust the bar offers the system prompt.
+
+Each bar can be disabled in Pock Preferences. Run `bash scripts/test-modifier-bars.sh` for modifier detection, window geometry, and app ordering.
+

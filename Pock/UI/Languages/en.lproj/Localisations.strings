@@ -190,3 +190,30 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "debug.console.show-on-launch" = "Show on launch";
 "debug.console.scroll-automatically" = "Scroll automatically";
 "debug.console.clear-console" = "Clear console";
+
+/// Modifier Touch Bars
+"preferences.modifier-bars.title" = "Hold modifier keys";
+"preferences.modifier-bars.desc" = "Hold a key on its own to show a dedicated Touch Bar. It closes when you release the key or type a shortcut.";
+"preferences.modifier-bars.command" = "⌘ Command: switch between open apps";
+"preferences.modifier-bars.option" = "⌥ Option: brightness, volume and system controls";
+"preferences.modifier-bars.control" = "⌃ Control: arrange the front window (requires Accessibility)";
+"modifier-bar.mute" = "Mute";
+"modifier-bar.muted" = "Muted";
+"modifier-bar.brightness-down" = "Decrease brightness";
+"modifier-bar.brightness-up" = "Increase brightness";
+"modifier-bar.volume-down" = "Decrease volume";
+"modifier-bar.volume-up" = "Increase volume";
+"modifier-bar.applications" = "Apps";
+"modifier-bar.sleep-display" = "Sleep display";
+"modifier-bar.allow-accessibility" = "Allow…";
+"modifier-bar.accessibility-required" = "Window layout needs Accessibility permission";
+"modifier-bar.window.leftHalf" = "Left half";
+"modifier-bar.window.rightHalf" = "Right half";
+"modifier-bar.window.topHalf" = "Top half";
+"modifier-bar.window.bottomHalf" = "Bottom half";
+"modifier-bar.window.leftThird" = "Left third";
+"modifier-bar.window.centerThird" = "Center third";
+"modifier-bar.window.rightThird" = "Right third";
+"modifier-bar.window.center" = "Center";
+"modifier-bar.window.maximize" = "Fill screen";
+"modifier-bar.window.nextDisplay" = "Next display";

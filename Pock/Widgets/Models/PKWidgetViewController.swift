@@ -27,24 +27,38 @@ internal class PKWidgetViewController: NSViewController {
 	}
 	
 	/// Overrides
+	///
+	/// The Touch Bar shows and hides items from inside its own layout pass, e.g. when items no longer fit.
+	/// Widgets rebuild their views in these callbacks, and changing constraints during layout throws,
+	/// so callbacks are forwarded on the next run loop iteration, in order.
+	/// The widget is captured now so a disappearing item still receives its cleanup callbacks.
+	private func forward(_ callback: @escaping (PKWidget) -> Void) {
+		guard let widget = widgetItem?.widget else {
+			return
+		}
+		DispatchQueue.main.async {
+			callback(widget)
+		}
+	}
+
 	override func viewWillAppear() {
 		super.viewWillAppear()
-		widgetItem?.widget?.viewWillAppear?()
+		forward { $0.viewWillAppear?() }
 	}
-	
+
 	override func viewDidAppear() {
 		super.viewDidAppear()
-		widgetItem?.widget?.viewDidAppear?()
+		forward { $0.viewDidAppear?() }
 	}
-	
+
 	override func viewWillDisappear() {
 		super.viewWillDisappear()
-		widgetItem?.widget?.viewWillDisappear?()
+		forward { $0.viewWillDisappear?() }
 	}
-	
+
 	override func viewDidDisappear() {
 		super.viewDidDisappear()
-		widgetItem?.widget?.viewDidDisappear?()
+		forward { $0.viewDidDisappear?() }
 	}
-	
+
 }

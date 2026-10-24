@@ -28,6 +28,14 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	internal var allowedCustomizationIdentifiers: [NSTouchBarItem.Identifier] {
 		return Array(widgets.keys) + [.flexibleSpace]
 	}
+
+    /// Provide a usable first-run layout; AppKit keeps any saved customization.
+    internal var defaultItemIdentifiers: [NSTouchBarItem.Identifier] {
+        let defaults = ["Esc", "Dock", "NowPlaying", "Status", "ControlCenter"]
+            .map { NSTouchBarItem.Identifier("com.pigigaldi.pock.\($0)") }
+            .filter { widgets[$0] != nil }
+        return defaults.isEmpty ? widgets.keys.sorted { $0.rawValue < $1.rawValue } : defaults
+    }
 	
 	// MARK: Mouse Support
 	private var touchBarView: NSView? {
@@ -110,6 +118,7 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 		touchBar.delegate = self
 		touchBar.customizationIdentifier = .pockTouchBarController
 		touchBar.customizationAllowedItemIdentifiers = allowedCustomizationIdentifiers
+        touchBar.defaultItemIdentifiers = defaultItemIdentifiers
 		for key in widgets.keys {
 			Roger.info("[\(key.rawValue)] - Allowed for customization")
 		}

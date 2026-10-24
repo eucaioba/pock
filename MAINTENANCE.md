@@ -29,6 +29,7 @@ Building never terminates running apps or installs to Applications. To install l
 - Vendor the six MIT-licensed default widget sources, build them in the shared workspace, and package them with the host. Default installation works offline and avoids incompatible historical Swift runtime symbols.
 - Keep locally rebuilt default widgets out of upstream binary update suggestions.
 - Extract archives in the temporary widgets directory, including bundled archives, without writing into the signed app.
+- Provide a deterministic first-run widget layout on both the main Touch Bar and its customization palette, preserving saved user customization.
 - Guard missing cursor locations and backing views when dismissing the empty Touch Bar during customization; add a regression harness for repeated dismissal.
 - Preserve dynamic loader diagnostics for widgets that cannot load.
 - Bound download request/resource timeouts, ignore unknown content lengths in progress, clamp progress, finish only once, and invalidate download sessions.

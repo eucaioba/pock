@@ -318,6 +318,7 @@ extension AppController: NSTouchBarDelegate {
 		touchBar.delegate = self
 		touchBar.customizationIdentifier = .pockTouchBarController
 		touchBar.customizationAllowedItemIdentifiers = controller.allowedCustomizationIdentifiers
+        touchBar.defaultItemIdentifiers = controller.defaultItemIdentifiers
 		return touchBar
 	}
 	

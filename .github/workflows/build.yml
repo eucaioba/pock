@@ -19,6 +19,8 @@ jobs:
         run: python3 Tests/run.py
       - name: Build Release
         run: bash scripts/build.sh Release
+      - name: Test Touch Bar dismissal
+        run: bash scripts/test-touchbar-lifecycle.sh
       - name: Verify rebuilt widgets load
         run: bash scripts/test-widgets.sh Release
       - name: Build Debug

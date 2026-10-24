@@ -12,9 +12,6 @@
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
             <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34A0227323C6632D00A24DA5" BuildableName="NowPlaying.pock" BlueprintName="NowPlaying" ReferencedContainer="container:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj" />
          </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34DF1783229347A400D00D61" BuildableName="Weather.pock" BlueprintName="Weather" ReferencedContainer="container:Vendor/Widgets/weather-widget/Weather.xcodeproj" />
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction buildConfiguration="Release" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES" disableMainThreadChecker="YES" codeCoverageEnabled="YES">

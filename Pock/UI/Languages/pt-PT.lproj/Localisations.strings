@@ -260,3 +260,25 @@
 "preferences.dock.hide-folders" = "Ocultar pastas";
 "preferences.dock.hide-trash" = "Ocultar Reciclagem";
 "Trash" = "Reciclagem";
+
+/// Weather
+"preferences.weather.title" = "Meteorologia";
+"preferences.weather.city" = "Cidade:";
+"preferences.weather.city-placeholder" = "Escreva uma cidade e prima Return";
+"preferences.weather.automatic" = "A usar a cidade do seu fuso horário até escolher uma.";
+"preferences.weather.searching" = "A procurar…";
+"preferences.weather.not-found" = "Nenhuma cidade encontrada.";
+"preferences.weather.description" = "Mostrar condições";
+"weather.feels-like" = "sensação de %@";
+"weather.rain-chance" = "chuva %d%%";
+"weather.clear" = "Limpo";
+"weather.mainly-clear" = "Pouco nublado";
+"weather.partly-cloudy" = "Parcialmente nublado";
+"weather.overcast" = "Nublado";
+"weather.fog" = "Nevoeiro";
+"weather.drizzle" = "Chuvisco";
+"weather.rain" = "Chuva";
+"weather.showers" = "Aguaceiros";
+"weather.snow" = "Neve";
+"weather.thunderstorm" = "Trovoada";
+"weather.unknown" = "Desconhecido";

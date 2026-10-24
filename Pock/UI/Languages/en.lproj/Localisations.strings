@@ -261,3 +261,25 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "preferences.dock.hide-folders" = "Hide folders";
 "preferences.dock.hide-trash" = "Hide Trash";
 "Trash" = "Trash";
+
+/// Weather
+"preferences.weather.title" = "Weather";
+"preferences.weather.city" = "City:";
+"preferences.weather.city-placeholder" = "Type a city and press Return";
+"preferences.weather.automatic" = "Using the city of your time zone until you choose one.";
+"preferences.weather.searching" = "Searching…";
+"preferences.weather.not-found" = "No city found.";
+"preferences.weather.description" = "Show conditions";
+"weather.feels-like" = "feels like %@";
+"weather.rain-chance" = "rain %d%%";
+"weather.clear" = "Clear";
+"weather.mainly-clear" = "Mostly clear";
+"weather.partly-cloudy" = "Partly cloudy";
+"weather.overcast" = "Overcast";
+"weather.fog" = "Fog";
+"weather.drizzle" = "Drizzle";
+"weather.rain" = "Rain";
+"weather.showers" = "Showers";
+"weather.snow" = "Snow";
+"weather.thunderstorm" = "Thunderstorm";
+"weather.unknown" = "Unknown";

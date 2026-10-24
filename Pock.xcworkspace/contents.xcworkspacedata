@@ -13,7 +13,4 @@
    <FileRef
       location = "group:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Vendor/Widgets/weather-widget/Weather.xcodeproj">
-   </FileRef>
 </Workspace>

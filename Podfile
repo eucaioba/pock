@@ -23,8 +23,7 @@ abstract_target 'DefaultWidgets' do
 
   {
     'Esc' => 'esc-widget',
-    'NowPlaying' => 'now-playing-widget',
-    'Weather' => 'weather-widget'
+    'NowPlaying' => 'now-playing-widget'
   }.each do |name, repository|
     target name do
       project "Vendor/Widgets/#{repository}/#{name}.xcodeproj"

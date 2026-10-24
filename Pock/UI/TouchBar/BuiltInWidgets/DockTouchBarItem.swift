@@ -124,7 +124,7 @@ internal final class DockTouchBarItem: NSCustomTouchBarItem, NSScrubberDataSourc
 	private var reloadPending = false
 	private static let itemIdentifier = NSUserInterfaceItemIdentifier("DockItemView")
 	/// Widest the app list grows before it scrolls, so the other items keep their room.
-	private static let maxScrubberWidth: CGFloat = 400
+	private static let maxScrubberWidth: CGFloat = 340
 
 	override init(identifier: NSTouchBarItem.Identifier) {
 		super.init(identifier: identifier)

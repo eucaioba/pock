@@ -65,6 +65,13 @@ internal struct Preferences {
 		case hidePersistentItems
 		case hideBadges
 		case itemSpacing
+		/// Weather item. Raw values match the retired Weather widget so its settings carry over.
+		case weatherCity = "city_name"
+		case weatherCountry = "country_name"
+		case weatherLatitude = "lat"
+		case weatherLongitude = "lng"
+		case weatherUnits = "units"
+		case weatherShowDescription = "show_description"
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -117,6 +124,14 @@ internal struct Preferences {
                     return false as! T
                 case .itemSpacing:
                     return CGFloat(8) as! T
+                case .weatherCity, .weatherCountry:
+                    return "" as! T
+                case .weatherLatitude, .weatherLongitude:
+                    return Double(0) as! T
+                case .weatherUnits:
+                    return "celsius" as! T
+                case .weatherShowDescription:
+                    return true as! T
                 }
             }
             return value

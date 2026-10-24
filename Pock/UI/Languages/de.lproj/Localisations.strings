@@ -260,3 +260,25 @@
 "preferences.dock.hide-folders" = "Ordner ausblenden";
 "preferences.dock.hide-trash" = "Papierkorb ausblenden";
 "Trash" = "Papierkorb";
+
+/// Weather
+"preferences.weather.title" = "Wetter";
+"preferences.weather.city" = "Stadt:";
+"preferences.weather.city-placeholder" = "Stadt eingeben und Return drücken";
+"preferences.weather.automatic" = "Es wird die Stadt deiner Zeitzone verwendet, bis du eine wählst.";
+"preferences.weather.searching" = "Suche…";
+"preferences.weather.not-found" = "Keine Stadt gefunden.";
+"preferences.weather.description" = "Bedingungen anzeigen";
+"weather.feels-like" = "gefühlt %@";
+"weather.rain-chance" = "Regen %d%%";
+"weather.clear" = "Klar";
+"weather.mainly-clear" = "Überwiegend klar";
+"weather.partly-cloudy" = "Teils bewölkt";
+"weather.overcast" = "Bedeckt";
+"weather.fog" = "Nebel";
+"weather.drizzle" = "Nieselregen";
+"weather.rain" = "Regen";
+"weather.showers" = "Schauer";
+"weather.snow" = "Schnee";
+"weather.thunderstorm" = "Gewitter";
+"weather.unknown" = "Unbekannt";

@@ -479,6 +479,93 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addWeatherSection(to: column, at: index + 2)
+	}
+
+	// MARK: Weather
+
+	private let weatherCityField = NSTextField()
+	private let weatherResultsPopUp = NSPopUpButton()
+	private let weatherStatusLabel = NSTextField(labelWithString: "")
+	private var weatherResults: [WeatherPlace] = []
+
+	private func addWeatherSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.weather.title".localized)
+		weatherCityField.placeholderString = "preferences.weather.city-placeholder".localized
+		weatherCityField.stringValue = Preferences[.weatherCity]
+		weatherCityField.target = self
+		weatherCityField.action = #selector(searchWeatherCity(_:))
+		weatherCityField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+		weatherResultsPopUp.target = self
+		weatherResultsPopUp.action = #selector(didPickWeatherPlace(_:))
+		weatherResultsPopUp.isHidden = true
+		let cityRow = NSStackView(views: [NSTextField(labelWithString: "preferences.weather.city".localized), weatherCityField, weatherResultsPopUp])
+		cityRow.spacing = 8
+		weatherStatusLabel.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		weatherStatusLabel.textColor = .secondaryLabelColor
+		let current: String = Preferences[.weatherCity]
+		weatherStatusLabel.stringValue = current.isEmpty ? "preferences.weather.automatic".localized : (WeatherStore.place?.displayName ?? current)
+		let units = NSSegmentedControl(labels: ["°C", "°F"], trackingMode: .selectOne, target: self, action: #selector(didChangeWeatherUnits(_:)))
+		units.selectedSegment = WeatherStore.usesFahrenheit ? 1 : 0
+		let description = NSButton(checkboxWithTitle: "preferences.weather.description".localized, target: self, action: #selector(didChangeWeatherDescription(_:)))
+		description.state = Preferences[.weatherShowDescription] == true ? .on : .off
+		let optionsRow = NSStackView(views: [units, description])
+		optionsRow.spacing = 12
+		let section = NSStackView(views: [title, cityRow, weatherStatusLabel, optionsRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func searchWeatherCity(_ field: NSTextField) {
+		let query = field.stringValue.trimmingCharacters(in: .whitespaces)
+		guard !query.isEmpty else {
+			return
+		}
+		weatherStatusLabel.stringValue = "preferences.weather.searching".localized
+		WeatherStore.search(query) { [weak self] places in
+			guard let self = self else {
+				return
+			}
+			self.weatherResults = places
+			self.weatherResultsPopUp.removeAllItems()
+			self.weatherResultsPopUp.addItems(withTitles: places.map(\.displayName))
+			self.weatherResultsPopUp.isHidden = places.count < 2
+			if places.isEmpty {
+				self.weatherStatusLabel.stringValue = "preferences.weather.not-found".localized
+			} else {
+				self.applyWeatherPlace(places[0])
+			}
+		}
+	}
+
+	@objc private func didPickWeatherPlace(_ popUp: NSPopUpButton) {
+		guard weatherResults.indices.contains(popUp.indexOfSelectedItem) else {
+			return
+		}
+		applyWeatherPlace(weatherResults[popUp.indexOfSelectedItem])
+	}
+
+	private func applyWeatherPlace(_ place: WeatherPlace) {
+		WeatherStore.place = place
+		weatherCityField.stringValue = place.name
+		weatherStatusLabel.stringValue = place.displayName
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
+	}
+
+	@objc private func didChangeWeatherUnits(_ control: NSSegmentedControl) {
+		Preferences[.weatherUnits] = control.selectedSegment == 1 ? "fahrenheit" : "celsius"
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
+	}
+
+	@objc private func didChangeWeatherDescription(_ checkbox: NSButton) {
+		Preferences[.weatherShowDescription] = checkbox.state == .on
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
 	}
 
 	@objc private func didChangeDockOption(_ checkbox: NSButton) {

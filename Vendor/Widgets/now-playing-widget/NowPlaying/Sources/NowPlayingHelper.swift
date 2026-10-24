@@ -74,15 +74,6 @@ final class NowPlayingHelper: NSObject {
         }
     }
 
-    func selectSource(_ source: MediaSource) {
-        invalidateCommands()
-        Preferences[.preferredMediaSource] = source.rawValue
-        snapshot = nil
-        status = "Conectando a \(source.title)…"
-        publish()
-        refresh()
-    }
-
     private func publish() {
         let item = currentNowPlayingItem
         let active = snapshot?.source ?? source

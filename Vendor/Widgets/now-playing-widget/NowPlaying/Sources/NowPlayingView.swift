@@ -40,12 +40,6 @@ class NowPlayingView: PKView {
 		return NSButton.build(image: nextIcon, target: self, action: #selector(skipToNextItem))
     }
     
-    private var controlsButton: NSButton {
-        let button = NSButton.build(image: NSImage(named: NSImage.actionTemplateName)!, target: self, action: #selector(openControls))
-        button.toolTip = "Fontes, progresso e controles"
-        button.setAccessibilityLabel("Fontes e controles de mídia")
-        return button
-    }
     @objc private func openControls() {
         guard let helper = helper else { return }
         NowPlayingControlsController(helper: helper).pushOnMainNavigationController()
@@ -138,13 +132,13 @@ class NowPlayingView: PKView {
         let views: [NSView]
         switch style {
         case .default:
-            views = [previousButton, itemView!, nextButton, controlsButton]
+            views = [previousButton, itemView!, nextButton]
 			stackView.spacing = 8
         case .onlyInfo:
-            views = [itemView!, controlsButton]
+            views = [itemView!]
 			stackView.spacing = 0
         case .playPause:
-            views = [previousButton, playPauseButton!, nextButton, controlsButton]
+            views = [previousButton, playPauseButton!, nextButton]
 			stackView.spacing = 22
         }
         for view in views {

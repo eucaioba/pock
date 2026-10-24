@@ -26,14 +26,14 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	private var emptyTouchBarController: EmptyTouchBarController?
 	
 	internal var allowedCustomizationIdentifiers: [NSTouchBarItem.Identifier] {
-		return Array(widgets.keys) + [.flexibleSpace]
+		return Array(widgets.keys) + [.appControls, .flexibleSpace]
 	}
 
     /// Provide a usable first-run layout; AppKit keeps any saved customization.
     internal var defaultItemIdentifiers: [NSTouchBarItem.Identifier] {
-        let defaults = ["Esc", "Dock", "NowPlaying", "Status", "ControlCenter"]
+        let defaults = ["Esc", "Dock", "AppControls", "NowPlaying", "Status", "ControlCenter"]
             .map { NSTouchBarItem.Identifier("com.pigigaldi.pock.\($0)") }
-            .filter { widgets[$0] != nil }
+            .filter { widgets[$0] != nil || $0 == .appControls }
         return defaults.isEmpty ? widgets.keys.sorted { $0.rawValue < $1.rawValue } : defaults
     }
 	
@@ -114,6 +114,7 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 
 	/// Setup Touch Bar
 	override func makeTouchBar() -> NSTouchBar? {
+		AppControlsTouchBarItem.insertIntoSavedLayoutIfNeeded()
 		let touchBar = NSTouchBar()
 		touchBar.delegate = self
 		touchBar.customizationIdentifier = .pockTouchBarController
@@ -129,6 +130,11 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
 		if let item = cachedItems[identifier] {
 			Roger.info("[\(identifier.rawValue)][item] - cached")
+			return item
+		}
+		if identifier == .appControls {
+			let item = AppControlsTouchBarItem(identifier: identifier)
+			cachedItems[identifier] = item
 			return item
 		}
 		guard let widget = widgets[identifier] else {

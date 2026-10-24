@@ -217,3 +217,8 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "modifier-bar.window.center" = "Center";
 "modifier-bar.window.maximize" = "Fill screen";
 "modifier-bar.window.nextDisplay" = "Next display";
+
+/// App Controls
+"preferences.app-controls.title" = "App Controls";
+"preferences.app-controls.desc" = "Add “App Controls” to the Touch Bar to get buttons for the frontmost app. Buttons send keyboard shortcuts and require Accessibility permission. Custom profiles in AppProfiles.json override the built-in ones; changes apply after reloading Pock.";
+"preferences.app-controls.customize" = "Edit custom profiles…";

@@ -216,3 +216,8 @@
 "modifier-bar.window.center" = "Centra";
 "modifier-bar.window.maximize" = "Riempi schermo";
 "modifier-bar.window.nextDisplay" = "Schermo successivo";
+
+/// App Controls
+"preferences.app-controls.title" = "Controlli per app";
+"preferences.app-controls.desc" = "Aggiungi “App Controls” alla Touch Bar per avere pulsanti per l’app in primo piano. I pulsanti inviano scorciatoie da tastiera e richiedono il permesso di Accessibilità. I profili in AppProfiles.json sostituiscono quelli inclusi; le modifiche si applicano ricaricando Pock.";
+"preferences.app-controls.customize" = "Modifica profili personalizzati…";

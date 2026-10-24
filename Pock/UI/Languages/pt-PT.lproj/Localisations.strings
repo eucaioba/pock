@@ -216,3 +216,8 @@
 "modifier-bar.window.center" = "Centralizar";
 "modifier-bar.window.maximize" = "Preencher ecrã";
 "modifier-bar.window.nextDisplay" = "Próximo monitor";
+
+/// App Controls
+"preferences.app-controls.title" = "Controlos por app";
+"preferences.app-controls.desc" = "Adicione “App Controls” à Touch Bar para ter botões da app em primeiro plano. Os botões enviam atalhos de teclado e requerem permissão de Acessibilidade. Perfis em AppProfiles.json substituem os incluídos; alterações aplicam-se ao recarregar o Pock.";
+"preferences.app-controls.customize" = "Editar perfis personalizados…";

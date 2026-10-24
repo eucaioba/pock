@@ -60,3 +60,13 @@ Holding `⌘`, `⌥` or `⌃` alone for 0.45 s pushes a dedicated Touch Bar on t
 
 Each bar can be disabled in Pock Preferences. Run `bash scripts/test-modifier-bars.sh` for modifier detection, window geometry, and app ordering.
 
+
+## App Controls
+
+`App Controls` is a built-in Touch Bar item (not a widget bundle) whose buttons follow the frontmost app: browsers, terminals, VS Code/Cursor, Xcode, Finder, Zoom and Teams ship as profiles in `AppProfile.builtIn`. Buttons post keyboard shortcuts to the app with `CGEvent.postToPid`, which needs Accessibility trust. Characters are mapped to key codes through the current keyboard layout (`UCKeyTranslate`), so shortcuts such as `cmd+[` work on ABNT2 and other non-US layouts.
+
+Profiles can be disabled in Preferences. `~/Library/Application Support/Pock/AppProfiles.json` holds custom profiles (`id`, `name`, `apps` with optional trailing `*` prefix match, `actions` with `title`, optional SF Symbol `symbol`, and `shortcut` like `cmd+shift+]`); they are matched before built-ins and load when Pock reloads. Existing saved layouts get the item inserted once after the Dock. `scripts/test-modifier-bars.sh` also covers shortcut parsing and profile matching.
+
+## Default widget fixes (review)
+
+Weather uses Open-Meteo because weather.navalia.app stopped responding. The Dock reads all notification badges in one Accessibility pass. Badges and window previews depend on Accessibility, which ad hoc builds lost on every reinstall before the stable signing identity. The legacy Do Not Disturb item is hidden on macOS 12+.

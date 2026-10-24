@@ -216,3 +216,8 @@
 "modifier-bar.window.center" = "Zentrieren";
 "modifier-bar.window.maximize" = "Bildschirm füllen";
 "modifier-bar.window.nextDisplay" = "Nächster Bildschirm";
+
+/// App Controls
+"preferences.app-controls.title" = "App-Steuerung";
+"preferences.app-controls.desc" = "Füge „App Controls“ zur Touch Bar hinzu, um Tasten für die vordere App zu erhalten. Die Tasten senden Tastaturkurzbefehle und erfordern Bedienungshilfen. Eigene Profile in AppProfiles.json ersetzen die integrierten; Änderungen gelten nach dem Neuladen von Pock.";
+"preferences.app-controls.customize" = "Eigene Profile bearbeiten…";

@@ -259,6 +259,81 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index + 1)
 		column.insertArrangedSubview(section, at: index + 2)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addAppControlsSection(to: column, at: index + 3)
+	}
+
+	// MARK: App Controls
+
+	private func addAppControlsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.app-controls.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.app-controls.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let disabled = AppControlsTouchBarItem.disabledProfiles
+		var seen = Set<String>()
+		let profiles = AppControlsTouchBarItem.allProfiles.filter { seen.insert($0.id).inserted }
+		let checkboxes: [NSView] = profiles.map { profile in
+			let checkbox = NSButton(checkboxWithTitle: profile.name, target: self, action: #selector(didChangeAppProfile(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(profile.id)
+			checkbox.state = disabled.contains(profile.id) ? .off : .on
+			checkbox.toolTip = profile.actions.map(\.title).joined(separator: ", ")
+			return checkbox
+		}
+		let grid = NSStackView(views: [
+			NSStackView(views: Array(checkboxes.prefix((checkboxes.count + 1) / 2))),
+			NSStackView(views: Array(checkboxes.dropFirst((checkboxes.count + 1) / 2)))
+		])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		let customize = NSButton(title: "preferences.app-controls.customize".localized, target: self, action: #selector(openCustomAppProfiles))
+		customize.bezelStyle = .rounded
+		let section = NSStackView(views: [title, description, grid, customize])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeAppProfile(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		var disabled = AppControlsTouchBarItem.disabledProfiles
+		if checkbox.state == .on {
+			disabled.remove(id)
+		} else {
+			disabled.insert(id)
+		}
+		AppControlsTouchBarItem.disabledProfiles = disabled
+	}
+
+	/// Creates the custom profiles file with an example on first use, then reveals it.
+	@objc private func openCustomAppProfiles() {
+		let url = AppControlsTouchBarItem.customProfilesURL
+		if !FileManager.default.fileExists(atPath: url.path) {
+			let example = [AppProfile(id: "example", name: "Example (TextEdit)", apps: ["com.apple.TextEdit"], actions: [
+				AppAction(title: "Bold", symbol: "bold", shortcut: "cmd+b"),
+				AppAction(title: "Italic", symbol: "italic", shortcut: "cmd+i")
+			])]
+			let encoder = JSONEncoder()
+			encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+			try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+			try? encoder.encode(example).write(to: url)
+		}
+		NSWorkspace.shared.activateFileViewerSelecting([url])
 	}
 
 	@objc private func didChangeModifierTouchBarOption(_ checkbox: NSButton) {

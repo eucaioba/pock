@@ -39,6 +39,30 @@ internal enum BuiltInWidgets {
 		}
 	}
 
+	/// Static snapshot of a live item for the customization palette, falling back to its label.
+	static func previewView(for item: NSTouchBarItem) -> NSView {
+		let label = item.customizationLabel ?? "Item"
+		if let live = (item as? NSCustomTouchBarItem)?.view {
+			// The Touch Bar is always dark; a snapshot taken in the default appearance draws black text on black.
+			let previousAppearance = live.appearance
+			live.appearance = NSAppearance(named: .darkAqua)
+			defer {
+				live.appearance = previousAppearance
+			}
+			live.layoutSubtreeIfNeeded()
+			let width = live.frame.width > 0 ? live.frame.width : live.fittingSize.width
+			let frame = NSRect(x: 0, y: 0, width: max(width, 40), height: 30)
+			if width > 0, let image = NSImage(frame: frame, view: live) {
+				let preview = NSImageView(image: image)
+				preview.imageScaling = .scaleProportionallyDown
+				return preview
+			}
+		}
+		let text = NSTextField(labelWithString: label)
+		text.font = .systemFont(ofSize: 11, weight: .semibold)
+		return text
+	}
+
 	/// Swaps replaced widgets for their built-in items in the saved layout, keeping their position.
 	static func migrateSavedLayout() {
 		let defaults = UserDefaults.standard

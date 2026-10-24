@@ -368,14 +368,27 @@ extension AppController: NSTouchBarDelegate {
 		if pockTouchBarController == nil {
 			return
 		}
+		// Pock is an agent app and the status menu does not make it active, but AppKit only presents
+		// the customization palette for the active app; without this the bar just goes blank.
+		NSApp.setActivationPolicy(.regular)
+		activateForCustomization()
 		pockTouchBarController.minimize()
 		NSApp.touchBar = makeTouchBar()
 		addCustomizationObservers()
-		async(after: 0.375) {
+		async(after: 0.6) {
 			NSApp.toggleTouchBarCustomizationPalette(self)
 		}
 	}
 	
+	/// `NSApp.activate` is only a request on recent macOS and is refused for agent apps; asking
+	/// LaunchServices to open Pock again is honored and activates the running instance.
+	private func activateForCustomization() {
+		NSApp.activate(ignoringOtherApps: true)
+		let configuration = NSWorkspace.OpenConfiguration()
+		configuration.activates = true
+		NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration)
+	}
+
 	@objc internal func openControlStripCustomizationPalette() {
         NSApp.toggleTouchBarControlStripCustomizationPalette(nil)
 	}
@@ -396,6 +409,13 @@ extension AppController: NSTouchBarDelegate {
 		guard let item = pockTouchBarController.touchBar?.item(forIdentifier: identifier) else {
 			Roger.error("Can't find `NSTouchBarItem` for given identifier: `\(identifier)`")
 			return nil
+		}
+		if BuiltInWidgets.identifiers.contains(identifier) {
+			// The live item belongs to Pock's own bar; the palette needs its own item with a preview.
+			let paletteItem = NSCustomTouchBarItem(identifier: identifier)
+			paletteItem.customizationLabel = item.customizationLabel
+			paletteItem.view = BuiltInWidgets.previewView(for: item)
+			return paletteItem
 		}
 		guard let widget = item as? PKWidgetTouchBarItem else {
 			return item
@@ -420,8 +440,12 @@ extension AppController: NSTouchBarDelegate {
 	}
 	
 	@objc private func didExitCustomization(_ sender: Any?) {
+		removeCustomizationObservers()
 		NSApp.touchBar = nil
 		pockTouchBarController.present()
+		// Back to a menu bar only app, which also hands focus back to the app the user was in.
+		NSApp.setActivationPolicy(.accessory)
+		NSApp.deactivate()
 	}
 	
 }

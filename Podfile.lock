@@ -1,5 +1,4 @@
 PODS:
-  - Defaults (4.1.0)
   - Magnet (3.4.0):
     - Sauce (~> 2.4.0)
   - PockKit (0.3.1):
@@ -16,14 +15,12 @@ PODS:
   - Zip (2.1.2)
 
 DEPENDENCIES:
-  - Defaults (= 4.1.0)
   - Magnet (= 3.4.0)
   - PockKit (from `https://github.com/pock/pockkit.git`, commit `335bc4c0edb4c9ad1beabe294f70cd39300dc577`)
   - Zip (= 2.1.2)
 
 SPEC REPOS:
   trunk:
-    - Defaults
     - Magnet
     - Sauce
     - TinyConstraints
@@ -40,13 +37,12 @@ CHECKOUT OPTIONS:
     :git: https://github.com/pock/pockkit.git
 
 SPEC CHECKSUMS:
-  Defaults: 2198ac20a65633de273110b5e9954f0a252f275b
   Magnet: d9212b3bb4fc0be22676279960185eeda6823b91
   PockKit: e600e0dd0deb9830c5df837c7b56838df1667f34
   Sauce: e4ffcf0332a298a0cb2f29b4200119bedbac23c5
   TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: b8fc85facfac2202a6e099d98f8a36b9d9a69e74
+PODFILE CHECKSUM: 35a94346ea83ed0a51362e1c6babf62bb377079b
 
 COCOAPODS: 1.16.2

@@ -36,6 +36,12 @@ internal class AppController: NSResponder {
 
 	/// Touch Bars shown while holding `⌘`, `⌥` or `⌃`
 	private var modifierTouchBarMonitor: ModifierTouchBarMonitor?
+
+	/// Apps whose own Touch Bar (e.g. Safari tabs) is shown instead of Pock
+	private var nativeTouchBarObserver: NSObjectProtocol?
+	internal private(set) var isShowingAppTouchBar = false
+	/// Set when the user brings Pock back with double `⌃` inside such an app; cleared on the next app switch.
+	private var userKeptPockForCurrentApp = false
 	
 	/// Once (upon) a day timer
 	private var onceADayTimer: Timer?
@@ -59,8 +65,10 @@ internal class AppController: NSResponder {
 		registerForInternalNotifications()
 		registerDoubleControlHotKey()
 		registerModifierTouchBars()
+		registerNativeTouchBarApps()
 		prepareOnceADayTimer()
 		clearTemporaryWidgetsFolder()
+		BuiltInWidgets.removeRetiredWidgetBundles()
         startListeningForScreenLockNotifications()
         // Show fake badge for testing
         #if DEBUG
@@ -133,8 +141,12 @@ internal class AppController: NSResponder {
 	
 	/// Setup
 	internal func prepareTouchBar() {
+		isShowingAppTouchBar = false
 		pockTouchBarController = PockTouchBarController.load()
 		navigationController = PKTouchBarNavigationController(rootController: pockTouchBarController)
+		async(after: 0.3) { [weak self] in
+			self?.updateNativeTouchBar(for: NSWorkspace.shared.frontmostApplication)
+		}
 	}
 
 	/// Dismiss
@@ -142,6 +154,36 @@ internal class AppController: NSResponder {
 		navigationController?.dismiss()
 		pockTouchBarController = nil
 		navigationController = nil
+		isShowingAppTouchBar = false
+	}
+
+	// MARK: Native app Touch Bars
+
+	private func registerNativeTouchBarApps() {
+		nativeTouchBarObserver = NSWorkspace.shared.notificationCenter.addObserver(
+			forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main
+		) { [weak self] notification in
+			self?.userKeptPockForCurrentApp = false
+			self?.updateNativeTouchBar(for: notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication)
+		}
+	}
+
+	/// Minimizes Pock while an app listed in Preferences is frontmost, so its own Touch Bar shows.
+	internal func updateNativeTouchBar(for app: NSRunningApplication?) {
+		guard let app = app, app.processIdentifier != ProcessInfo.processInfo.processIdentifier,
+			  let controller = pockTouchBarController, navigationController != nil, !isLocked else {
+			return
+		}
+		let apps: [String] = Preferences[.nativeTouchBarApps]
+		let wantsAppTouchBar = !userKeptPockForCurrentApp && apps.contains(app.bundleIdentifier ?? "")
+		if wantsAppTouchBar, !isShowingAppTouchBar {
+			navigationController.popToRootController()
+			controller.minimize()
+			isShowingAppTouchBar = true
+		} else if !wantsAppTouchBar, isShowingAppTouchBar {
+			isShowingAppTouchBar = false
+			controller.present()
+		}
 	}
 
 	/// Reload
@@ -189,6 +231,11 @@ internal class AppController: NSResponder {
 
 	/// Toggle
 	@objc internal func toggleVisibility() {
+		if isShowingAppTouchBar {
+			userKeptPockForCurrentApp = true
+			updateNativeTouchBar(for: NSWorkspace.shared.frontmostApplication)
+			return
+		}
 		if pockTouchBarController == nil {
 			prepareTouchBar()
 		} else {
@@ -226,11 +273,18 @@ internal class AppController: NSResponder {
 	/// Register `⌘` / `⌥` / `⌃` hold Touch Bars
 	private func registerModifierTouchBars() {
 		modifierTouchBarMonitor = ModifierTouchBarMonitor { [weak self] mode in
-			guard let self = self, self.isVisible, !self.isLocked, let navigationController = self.navigationController else {
+			guard let self = self, !self.isLocked, let navigationController = self.navigationController else {
 				return nil
 			}
 			let controller = ModifierTouchBarController(mode: mode)
-			navigationController.push(controller)
+			if self.isShowingAppTouchBar {
+				// Pock is minimized; present over the app's Touch Bar and let dismissal reveal it again.
+				controller.present()
+			} else if self.isVisible {
+				navigationController.push(controller)
+			} else {
+				return nil
+			}
 			return controller
 		}
 	}
@@ -314,14 +368,26 @@ extension AppController: NSTouchBarDelegate {
 		if pockTouchBarController == nil {
 			return
 		}
+		// Pock is an agent app and the status menu does not make it active, but AppKit only presents
+		// the customization palette for the active app; without this the bar just goes blank.
+		activateForCustomization()
 		pockTouchBarController.minimize()
 		NSApp.touchBar = makeTouchBar()
 		addCustomizationObservers()
-		async(after: 0.375) {
+		async(after: 0.6) {
 			NSApp.toggleTouchBarCustomizationPalette(self)
 		}
 	}
 	
+	/// `NSApp.activate` is only a request on recent macOS and is refused for agent apps; asking
+	/// LaunchServices to open Pock again is honored and activates the running instance.
+	private func activateForCustomization() {
+		NSApp.activate(ignoringOtherApps: true)
+		let configuration = NSWorkspace.OpenConfiguration()
+		configuration.activates = true
+		NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration)
+	}
+
 	@objc internal func openControlStripCustomizationPalette() {
         NSApp.toggleTouchBarControlStripCustomizationPalette(nil)
 	}
@@ -343,11 +409,18 @@ extension AppController: NSTouchBarDelegate {
 			Roger.error("Can't find `NSTouchBarItem` for given identifier: `\(identifier)`")
 			return nil
 		}
+		if BuiltInWidgets.identifiers.contains(identifier) {
+			// The live item belongs to Pock's own bar; the palette needs its own item with a preview.
+			let paletteItem = NSCustomTouchBarItem(identifier: identifier)
+			paletteItem.customizationLabel = item.customizationLabel
+			paletteItem.view = BuiltInWidgets.previewView(for: item)
+			return paletteItem
+		}
 		guard let widget = item as? PKWidgetTouchBarItem else {
 			return item
 		}
 		let widgetItem = NSCustomTouchBarItem(identifier: identifier)
-		widgetItem.view = widget.viewForCustomizationPalette()
+		widgetItem.view = BuiltInWidgets.visiblePreview(widget.viewForCustomizationPalette(), label: widget.customizationLabel)
 		widgetItem.customizationLabel = widget.customizationLabel
 		return widgetItem
 	}
@@ -366,10 +439,19 @@ extension AppController: NSTouchBarDelegate {
 	}
 	
 	@objc private func didExitCustomization(_ sender: Any?) {
+		removeCustomizationObservers()
 		NSApp.touchBar = nil
-		pockTouchBarController.present()
+		// AppKit writes the edited layout around this notification. The main bar was created before the
+		// edit and keeps its old item list, so rebuild it once the layout is saved.
+		async(after: 0.25) { [weak self] in
+			self?.reload(shouldFetchLatestVersions: false)
+			// Give the palette time to close its windows before handing focus back to the previous app.
+			async(after: 0.5) {
+				NSApp.deactivate()
+			}
+		}
 	}
-	
+
 }
 
 // MARK: Update once (upon) a day

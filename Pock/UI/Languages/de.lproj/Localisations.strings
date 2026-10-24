@@ -221,3 +221,64 @@
 "preferences.app-controls.title" = "App-Steuerung";
 "preferences.app-controls.desc" = "Füge „App Controls“ zur Touch Bar hinzu, um Tasten für die vordere App zu erhalten. Die Tasten senden Tastaturkurzbefehle und erfordern Bedienungshilfen. Eigene Profile in AppProfiles.json ersetzen die integrierten; Änderungen gelten nach dem Neuladen von Pock.";
 "preferences.app-controls.customize" = "Eigene Profile bearbeiten…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Eigene Touch Bar der App verwenden";
+"preferences.native-apps.desc" = "Solange eine dieser Apps vorne ist, tritt Pock zurück und die eigene Touch Bar der App wird angezeigt, z. B. die Safari-Tabs. Drücke zweimal ⌃ Control, um Pock bis zum nächsten App-Wechsel zurückzuholen.";
+"preferences.native-apps.add" = "App hinzufügen…";
+"preferences.native-apps.remove" = "Abwählen zum Entfernen";
+
+/// Controls
+"preferences.controls.title" = "Steuerung";
+"preferences.controls.desc" = "Tasten des Elements „Controls“. Tippe auf Helligkeit oder Lautstärke für einen Schieberegler. Fokus führt den unten genannten Kurzbefehl aus; erstelle ihn in Kurzbefehle mit der Aktion „Fokus festlegen“.";
+"preferences.controls.focus-shortcut" = "Fokus-Kurzbefehl:";
+"controls.brightness" = "Helligkeit";
+"controls.volume" = "Lautstärke";
+"controls.mute" = "Stumm";
+"controls.lock" = "Bildschirm sperren";
+"controls.sleepDisplay" = "Display ausschalten";
+"controls.screenSaver" = "Bildschirmschoner";
+"controls.focus" = "Fokus";
+
+/// Status
+"preferences.status.title" = "Status";
+"preferences.status.input-source" = "Eingabequelle";
+"preferences.status.wifi" = "WLAN";
+"preferences.status.battery" = "Batterie";
+"preferences.status.battery-icon" = "Batteriesymbol";
+"preferences.status.battery-percentage" = "Batterie in Prozent";
+"preferences.status.clock" = "Datum und Uhrzeit";
+"preferences.status.clock-format" = "Datumsformat:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Zeigt die im System-Dock angehefteten Apps und weitere laufende Apps mit Laufanzeige und Hinweis-Badges (Badges benötigen Bedienungshilfen). Tippe auf eine App, um sie zu öffnen oder nach vorn zu holen.";
+"preferences.dock.hide-finder" = "Finder ausblenden";
+"preferences.dock.only-running" = "Nur laufende Apps";
+"preferences.dock.hide-indicator" = "Laufanzeige ausblenden";
+"preferences.dock.hide-badges" = "Badges ausblenden";
+"preferences.dock.hide-folders" = "Ordner ausblenden";
+"preferences.dock.hide-trash" = "Papierkorb ausblenden";
+"Trash" = "Papierkorb";
+
+/// Weather
+"preferences.weather.title" = "Wetter";
+"preferences.weather.city" = "Stadt:";
+"preferences.weather.city-placeholder" = "Stadt eingeben und Return drücken";
+"preferences.weather.automatic" = "Es wird die Stadt deiner Zeitzone verwendet, bis du eine wählst.";
+"preferences.weather.searching" = "Suche…";
+"preferences.weather.not-found" = "Keine Stadt gefunden.";
+"preferences.weather.description" = "Bedingungen anzeigen";
+"weather.feels-like" = "gefühlt %@";
+"weather.rain-chance" = "Regen %d%%";
+"weather.clear" = "Klar";
+"weather.mainly-clear" = "Überwiegend klar";
+"weather.partly-cloudy" = "Teils bewölkt";
+"weather.overcast" = "Bedeckt";
+"weather.fog" = "Nebel";
+"weather.drizzle" = "Nieselregen";
+"weather.rain" = "Regen";
+"weather.showers" = "Schauer";
+"weather.snow" = "Schnee";
+"weather.thunderstorm" = "Gewitter";
+"weather.unknown" = "Unbekannt";

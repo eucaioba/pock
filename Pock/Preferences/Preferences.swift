@@ -46,6 +46,32 @@ internal struct Preferences {
 		case commandTouchBarEnabled
 		case optionTouchBarEnabled
 		case controlTouchBarEnabled
+		case nativeTouchBarApps
+		case controlsButtons
+		case focusShortcutName
+		/// Status item. Raw values match the retired Status widget so its settings carry over.
+		case shouldShowLangItem
+		case shouldShowWifiItem
+		case shouldShowPowerItem
+		case shouldShowBatteryIcon
+		case shouldShowBatteryPercentage
+		case shouldShowDateItem
+		case timeFormatTextField
+		/// Dock item. Raw values match the retired Dock widget so its settings carry over.
+		case hideFinder
+		case showOnlyRunningApps
+		case hideRunningIndicator
+		case hideTrash
+		case hidePersistentItems
+		case hideBadges
+		case itemSpacing
+		/// Weather item. Raw values match the retired Weather widget so its settings carry over.
+		case weatherCity = "city_name"
+		case weatherCountry = "country_name"
+		case weatherLatitude = "lat"
+		case weatherLongitude = "lng"
+		case weatherUnits = "units"
+		case weatherShowDescription = "show_description"
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -68,7 +94,8 @@ internal struct Preferences {
                 case .layoutStyle:
                     return LayoutStyle.withControlStrip as! T
                 case .mouseSupportEnabled:
-                    return true as! T
+                    // Off by default: the cursor otherwise mirrors onto the Touch Bar whenever it nears the Dock.
+                    return false as! T
                 case .showTrackingArea:
                     return false as! T
                 case .checkForUpdatesOnceADay:
@@ -80,6 +107,30 @@ internal struct Preferences {
                 case .showDebugConsoleOnLaunch:
                     return false as! T
                 case .commandTouchBarEnabled, .optionTouchBarEnabled, .controlTouchBarEnabled:
+                    return true as! T
+                case .nativeTouchBarApps:
+                    return ["com.apple.Safari"] as! T
+                case .controlsButtons:
+                    return ControlsButton.defaultEnabled.map(\.rawValue) as! T
+                case .focusShortcutName:
+                    return "Toggle Focus" as! T
+                case .shouldShowLangItem, .shouldShowBatteryPercentage:
+                    return false as! T
+                case .shouldShowWifiItem, .shouldShowPowerItem, .shouldShowBatteryIcon, .shouldShowDateItem:
+                    return true as! T
+                case .timeFormatTextField:
+                    return "EE dd MMM HH:mm" as! T
+                case .hideFinder, .showOnlyRunningApps, .hideRunningIndicator, .hideTrash, .hidePersistentItems, .hideBadges:
+                    return false as! T
+                case .itemSpacing:
+                    return CGFloat(8) as! T
+                case .weatherCity, .weatherCountry:
+                    return "" as! T
+                case .weatherLatitude, .weatherLongitude:
+                    return Double(0) as! T
+                case .weatherUnits:
+                    return "celsius" as! T
+                case .weatherShowDescription:
                     return true as! T
                 }
             }

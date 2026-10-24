@@ -8,21 +8,9 @@
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Vendor/Widgets/control-center-widget/ControlCenter.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Vendor/Widgets/dock-widget/Dock.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Vendor/Widgets/esc-widget/Esc.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Vendor/Widgets/status-widget/Status.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Vendor/Widgets/weather-widget/Weather.xcodeproj">
    </FileRef>
 </Workspace>

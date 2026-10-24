@@ -221,3 +221,64 @@
 "preferences.app-controls.title" = "Controlli per app";
 "preferences.app-controls.desc" = "Aggiungi “App Controls” alla Touch Bar per avere pulsanti per l’app in primo piano. I pulsanti inviano scorciatoie da tastiera e richiedono il permesso di Accessibilità. I profili in AppProfiles.json sostituiscono quelli inclusi; le modifiche si applicano ricaricando Pock.";
 "preferences.app-controls.customize" = "Modifica profili personalizzati…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Usa la Touch Bar dell’app";
+"preferences.native-apps.desc" = "Quando una di queste app è in primo piano, Pock si fa da parte e mostra la Touch Bar dell’app, come i pannelli di Safari. Premi due volte ⌃ Control per riavere Pock fino al cambio di app.";
+"preferences.native-apps.add" = "Aggiungi app…";
+"preferences.native-apps.remove" = "Deseleziona per rimuovere";
+
+/// Controls
+"preferences.controls.title" = "Controlli";
+"preferences.controls.desc" = "Pulsanti mostrati dall’elemento “Controls”. Tocca luminosità o volume per un cursore. Full Immersione esegue il comando rapido indicato sotto; crealo in Comandi Rapidi con l’azione “Imposta full immersion”.";
+"preferences.controls.focus-shortcut" = "Comando full immersione:";
+"controls.brightness" = "Luminosità";
+"controls.volume" = "Volume";
+"controls.mute" = "Silenzia";
+"controls.lock" = "Blocca schermo";
+"controls.sleepDisplay" = "Spegni schermo";
+"controls.screenSaver" = "Salvaschermo";
+"controls.focus" = "Full immersion";
+
+/// Status
+"preferences.status.title" = "Stato";
+"preferences.status.input-source" = "Sorgente di input";
+"preferences.status.wifi" = "Wi-Fi";
+"preferences.status.battery" = "Batteria";
+"preferences.status.battery-icon" = "Icona batteria";
+"preferences.status.battery-percentage" = "Percentuale batteria";
+"preferences.status.clock" = "Data e ora";
+"preferences.status.clock-format" = "Formato data:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Mostra le app nel Dock di sistema e le altre app aperte, con indicatori e badge di notifica (i badge richiedono Accessibilità). Tocca un’app per aprirla o portarla in primo piano.";
+"preferences.dock.hide-finder" = "Nascondi Finder";
+"preferences.dock.only-running" = "Solo app aperte";
+"preferences.dock.hide-indicator" = "Nascondi indicatore di apertura";
+"preferences.dock.hide-badges" = "Nascondi badge";
+"preferences.dock.hide-folders" = "Nascondi cartelle";
+"preferences.dock.hide-trash" = "Nascondi Cestino";
+"Trash" = "Cestino";
+
+/// Weather
+"preferences.weather.title" = "Meteo";
+"preferences.weather.city" = "Città:";
+"preferences.weather.city-placeholder" = "Scrivi una città e premi Invio";
+"preferences.weather.automatic" = "Viene usata la città del tuo fuso orario finché non ne scegli una.";
+"preferences.weather.searching" = "Ricerca…";
+"preferences.weather.not-found" = "Nessuna città trovata.";
+"preferences.weather.description" = "Mostra condizioni";
+"weather.feels-like" = "percepita %@";
+"weather.rain-chance" = "pioggia %d%%";
+"weather.clear" = "Sereno";
+"weather.mainly-clear" = "Per lo più sereno";
+"weather.partly-cloudy" = "Parzialmente nuvoloso";
+"weather.overcast" = "Coperto";
+"weather.fog" = "Nebbia";
+"weather.drizzle" = "Pioggerella";
+"weather.rain" = "Pioggia";
+"weather.showers" = "Rovesci";
+"weather.snow" = "Neve";
+"weather.thunderstorm" = "Temporale";
+"weather.unknown" = "Sconosciuto";

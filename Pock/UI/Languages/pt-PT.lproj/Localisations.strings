@@ -221,3 +221,64 @@
 "preferences.app-controls.title" = "Controlos por app";
 "preferences.app-controls.desc" = "Adicione “App Controls” à Touch Bar para ter botões da app em primeiro plano. Os botões enviam atalhos de teclado e requerem permissão de Acessibilidade. Perfis em AppProfiles.json substituem os incluídos; alterações aplicam-se ao recarregar o Pock.";
 "preferences.app-controls.customize" = "Editar perfis personalizados…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Usar a Touch Bar da própria app";
+"preferences.native-apps.desc" = "Enquanto uma destas apps estiver em primeiro plano, o Pock recolhe-se e mostra a Touch Bar da própria app, como os separadores do Safari. Pressione ⌃ Control duas vezes para voltar ao Pock até mudar de app.";
+"preferences.native-apps.add" = "Adicionar app…";
+"preferences.native-apps.remove" = "Desmarque para remover";
+
+/// Controls
+"preferences.controls.title" = "Controlos";
+"preferences.controls.desc" = "Botões mostrados pelo item “Controls”. Toque em brilho ou volume para um slider. Foco executa o Atalho com o nome abaixo; crie-o na app Atalhos com a ação “Definir Foco”.";
+"preferences.controls.focus-shortcut" = "Atalho de Foco:";
+"controls.brightness" = "Brilho";
+"controls.volume" = "Volume";
+"controls.mute" = "Silenciar";
+"controls.lock" = "Bloquear ecrã";
+"controls.sleepDisplay" = "Repousar ecrã";
+"controls.screenSaver" = "Proteção de ecrã";
+"controls.focus" = "Foco";
+
+/// Status
+"preferences.status.title" = "Estado";
+"preferences.status.input-source" = "Fonte de entrada";
+"preferences.status.wifi" = "Wi-Fi";
+"preferences.status.battery" = "Bateria";
+"preferences.status.battery-icon" = "Ícone da bateria";
+"preferences.status.battery-percentage" = "Percentagem da bateria";
+"preferences.status.clock" = "Data e hora";
+"preferences.status.clock-format" = "Formato da data:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Mostra as apps fixadas no Dock do sistema e as outras apps abertas, com indicadores e emblemas de notificação (os emblemas requerem Acessibilidade). Toque numa app para a abrir ou trazer para a frente.";
+"preferences.dock.hide-finder" = "Ocultar Finder";
+"preferences.dock.only-running" = "Só apps abertas";
+"preferences.dock.hide-indicator" = "Ocultar indicador de abertura";
+"preferences.dock.hide-badges" = "Ocultar emblemas";
+"preferences.dock.hide-folders" = "Ocultar pastas";
+"preferences.dock.hide-trash" = "Ocultar Reciclagem";
+"Trash" = "Reciclagem";
+
+/// Weather
+"preferences.weather.title" = "Meteorologia";
+"preferences.weather.city" = "Cidade:";
+"preferences.weather.city-placeholder" = "Escreva uma cidade e prima Return";
+"preferences.weather.automatic" = "A usar a cidade do seu fuso horário até escolher uma.";
+"preferences.weather.searching" = "A procurar…";
+"preferences.weather.not-found" = "Nenhuma cidade encontrada.";
+"preferences.weather.description" = "Mostrar condições";
+"weather.feels-like" = "sensação de %@";
+"weather.rain-chance" = "chuva %d%%";
+"weather.clear" = "Limpo";
+"weather.mainly-clear" = "Pouco nublado";
+"weather.partly-cloudy" = "Parcialmente nublado";
+"weather.overcast" = "Nublado";
+"weather.fog" = "Nevoeiro";
+"weather.drizzle" = "Chuvisco";
+"weather.rain" = "Chuva";
+"weather.showers" = "Aguaceiros";
+"weather.snow" = "Neve";
+"weather.thunderstorm" = "Trovoada";
+"weather.unknown" = "Desconhecido";

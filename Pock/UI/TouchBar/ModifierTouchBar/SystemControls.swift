@@ -125,10 +125,17 @@ internal enum DisplayBrightness {
 	}
 
 	static func change(by delta: Float) {
-		guard let setter = setter, let display = builtInDisplay, let current = level else {
+		guard let current = level else {
 			return
 		}
-		_ = setter(display, min(1, max(0, ((current + delta) / step).rounded() * step)))
+		setLevel(((current + delta) / step).rounded() * step)
+	}
+
+	static func setLevel(_ level: Float) {
+		guard let setter = setter, let display = builtInDisplay else {
+			return
+		}
+		_ = setter(display, min(1, max(0, level)))
 	}
 }
 
@@ -216,5 +223,56 @@ internal enum WindowManager {
 		if let value = AXValueCreate(.cgSize, &extent) {
 			AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, value)
 		}
+	}
+}
+
+internal enum SessionControls {
+	private typealias Action = @convention(c) () -> Int32
+	private static let login = dlopen("/System/Library/PrivateFrameworks/login.framework/login", RTLD_LAZY)
+
+	private static func loginAction(_ name: String) -> Action? {
+		guard let login = login, let pointer = dlsym(login, name) else {
+			return nil
+		}
+		return unsafeBitCast(pointer, to: Action.self)
+	}
+
+	static func lockScreen() {
+		if let lock = loginAction("SACLockScreenImmediate") {
+			_ = lock()
+		} else {
+			sleepDisplay()
+		}
+	}
+
+	static func startScreenSaver() {
+		if let start = loginAction("SACScreenSaverStartNow") {
+			_ = start()
+		} else {
+			NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Library/CoreServices/ScreenSaverEngine.app"))
+		}
+	}
+
+	static func sleepDisplay() {
+		let task = Process()
+		task.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
+		task.arguments = ["displaysleepnow"]
+		try? task.run()
+	}
+
+	/// Focus has no public toggle API; a user Shortcut with "Set Focus" is the supported route.
+	/// Opens the Shortcuts app when the shortcut does not exist.
+	static func runShortcut(named name: String) {
+		let task = Process()
+		task.executableURL = URL(fileURLWithPath: "/usr/bin/shortcuts")
+		task.arguments = ["run", name]
+		task.terminationHandler = { process in
+			if process.terminationStatus != 0 {
+				DispatchQueue.main.async {
+					NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Shortcuts.app"))
+				}
+			}
+		}
+		try? task.run()
 	}
 }

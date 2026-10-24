@@ -10,3 +10,15 @@ xcrun swiftc -module-cache-path .build/tests/ModuleCache \
   Pock/UI/TouchBar/AppControls/AppProfile.swift \
   Tests/AppProfileTests.swift -o .build/tests/AppProfileTests
 .build/tests/AppProfileTests
+xcrun swiftc -module-cache-path .build/tests/ModuleCache \
+  Pock/UI/TouchBar/BuiltInWidgets/StatusLogic.swift \
+  Tests/StatusLogicTests.swift -o .build/tests/StatusLogicTests
+.build/tests/StatusLogicTests
+xcrun swiftc -module-cache-path .build/tests/ModuleCache \
+  Pock/UI/TouchBar/BuiltInWidgets/DockLogic.swift \
+  Tests/DockLogicTests.swift -o .build/tests/DockLogicTests
+.build/tests/DockLogicTests
+xcrun swiftc -module-cache-path .build/tests/ModuleCache \
+  Pock/UI/TouchBar/BuiltInWidgets/WeatherLogic.swift \
+  Tests/WeatherLogicTests.swift -o .build/tests/WeatherLogicTests
+.build/tests/WeatherLogicTests

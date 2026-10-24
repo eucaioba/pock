@@ -7,22 +7,10 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34691B7C23D37C73008EB808" BuildableName="ControlCenter.pock" BlueprintName="ControlCenter" ReferencedContainer="container:Vendor/Widgets/control-center-widget/ControlCenter.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34AFC98C246DC8E00068B3B6" BuildableName="Dock.pock" BlueprintName="Dock" ReferencedContainer="container:Vendor/Widgets/dock-widget/Dock.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
             <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="349F9C4123C3B903002CEC1E" BuildableName="Esc.pock" BlueprintName="Esc" ReferencedContainer="container:Vendor/Widgets/esc-widget/Esc.xcodeproj" />
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
             <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34A0227323C6632D00A24DA5" BuildableName="NowPlaying.pock" BlueprintName="NowPlaying" ReferencedContainer="container:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="3401772623D3231D00369905" BuildableName="Status.pock" BlueprintName="Status" ReferencedContainer="container:Vendor/Widgets/status-widget/Status.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34DF1783229347A400D00D61" BuildableName="Weather.pock" BlueprintName="Weather" ReferencedContainer="container:Vendor/Widgets/weather-widget/Weather.xcodeproj" />
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>

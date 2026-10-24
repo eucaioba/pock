@@ -23,15 +23,10 @@ abstract_target 'DefaultWidgets' do
 
   {
     'Esc' => 'esc-widget',
-    'Dock' => 'dock-widget',
-    'NowPlaying' => 'now-playing-widget',
-    'Status' => 'status-widget',
-    'Weather' => 'weather-widget',
-    'ControlCenter' => 'control-center-widget'
+    'NowPlaying' => 'now-playing-widget'
   }.each do |name, repository|
     target name do
       project "Vendor/Widgets/#{repository}/#{name}.xcodeproj"
-      pod 'Defaults', '4.1.0' if name == 'ControlCenter'
     end
   end
 end

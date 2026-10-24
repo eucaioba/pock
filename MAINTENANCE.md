@@ -70,3 +70,30 @@ Profiles can be disabled in Preferences. `~/Library/Application Support/Pock/App
 ## Default widget fixes (review)
 
 Weather uses Open-Meteo because weather.navalia.app stopped responding. The Dock reads all notification badges in one Accessibility pass. Badges and window previews depend on Accessibility, which ad hoc builds lost on every reinstall before the stable signing identity. The legacy Do Not Disturb item is hidden on macOS 12+.
+
+## Native app Touch Bars
+
+Apps listed under "Use the app's own Touch Bar" (Safari by default) make Pock minimize its system modal bar while they are frontmost, so the app's own Touch Bar (Safari tabs, media scrubbers) shows. Pock comes back on the next app switch; double `⌃` restores it for the current app. Modifier bars present directly over the app's Touch Bar in that state.
+
+Mouse support (mirroring the cursor on the Touch Bar when it nears the bottom screen edge) is now off by default, because the 10 pt tracking strip overlaps the Dock.
+
+
+## Built-in widgets
+
+Default widgets are being rewritten as items compiled into Pock (`Pock/UI/TouchBar/BuiltInWidgets`), sharing `SystemControls` with the modifier bars instead of each bundle carrying its own helpers. Third-party `.pock` bundles still load as before. `BuiltInWidgets.replacements` swaps a retired bundle's identifier for its built-in item in the saved layout, keeping its position, and `retiredWidgetBundles` are deleted from the widgets folder on launch.
+
+`Controls` replaces Control Center (and its `Defaults` pod): brightness (DisplayServices) and volume (CoreAudio) with live values and a full-width `NSSliderTouchBarItem` on tap, mute, lock screen (`SACLockScreenImmediate`), display sleep, screen saver, and Focus through a user Shortcut (`shortcuts run`), since Focus has no public toggle API. Buttons are chosen in Preferences. `scripts/build.sh` now clears stale archives so retired widgets are not repackaged.
+
+`Status` replaces the Status widget and reads the same preference keys, so existing choices carry over. Battery updates from `IOPSNotificationCreateRunLoopSource` instead of a 1 s poll, the clock fires on minute (or second) boundaries, the input source follows the TIS change notification and cycles on tap, and Wi-Fi signal comes from CoreWLAN RSSI (no Location permission; the SSID is not shown). The retired widget never showed its clock: assigning `Preferences[...]` straight to `DateFormatter.dateFormat` (`String!`) inferred an optional type and returned nil instead of the default format.
+
+
+`Dock` replaces the Dock widget (3,100 lines) with a scrubber of the apps pinned in the system Dock's own plist plus any other running app, running indicators, a highlight on the frontmost app, notification badges, the Dock's folders and the Trash. Display options keep the widget's preference keys. Badges are read from the Dock process through Accessibility in one pass off the main thread every 10 s. Tapping an app uses `NSWorkspace.openApplication`, which matches a Dock click (unhide, reopen a window, or launch).
+
+Dropped on purpose: window previews (`CGWindowListCreateImage` is obsolete and needs Screen Recording), the in-bar Finder browser, hiding the system Dock through `CoreDock`, and drag and drop onto icons. Folders open in Finder. `scripts/test-modifier-bars.sh` covers plist parsing, ordering and badge text.
+
+`Weather` replaces the Weather widget and the 560-line preference pane built on a 1 MB city CSV. Conditions come from Open-Meteo (no key); the city is searched by name through Open-Meteo geocoding in Preferences, and until one is chosen the city named by the Mac's time zone is used, so it works without setup and without Location permission. Tapping the item opens a bar with feels-like, today's range, rain chance and the next six hours. Preference keys are the widget's (`city_name`, `lat`, `lng`, `units`, `show_description`). Symbols replace the bundled PNG set.
+
+Customizing the Touch Bar (Preferences menu > Customize Pock) must not hand the live built-in items to the palette's `NSTouchBar`: AppKit items belong to one bar, so `AppController` builds a separate palette item with a dark-appearance snapshot (`BuiltInWidgets.previewView`).
+
+Customization details: the palette previews are dark-appearance snapshots capped at 170 pt wide, with a labelled chip when an item has nothing to draw (no media, no profile, no data yet), so every item in the layout can be found and dragged. When customization ends, `AppController` rebuilds the main bar with `reload`, because the bar created before the edit keeps its old item list. The bar has about 690 pt for Pock's items beside the Control Strip, so the Dock scrubber scrolls from 250 pt; items that do not fit get zero width and look missing.
+

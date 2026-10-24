@@ -222,3 +222,64 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "preferences.app-controls.title" = "App Controls";
 "preferences.app-controls.desc" = "Add “App Controls” to the Touch Bar to get buttons for the frontmost app. Buttons send keyboard shortcuts and require Accessibility permission. Custom profiles in AppProfiles.json override the built-in ones; changes apply after reloading Pock.";
 "preferences.app-controls.customize" = "Edit custom profiles…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Use the app’s own Touch Bar";
+"preferences.native-apps.desc" = "While one of these apps is in front, Pock steps aside so the app’s own Touch Bar shows, such as Safari tabs. Double press ⌃ Control to bring Pock back until you switch apps.";
+"preferences.native-apps.add" = "Add App…";
+"preferences.native-apps.remove" = "Uncheck to remove";
+
+/// Controls
+"preferences.controls.title" = "Controls";
+"preferences.controls.desc" = "Buttons shown by the “Controls” item. Tap brightness or volume for a slider. Focus runs the Shortcut named below; create it in Shortcuts with a “Set Focus” action.";
+"preferences.controls.focus-shortcut" = "Focus Shortcut:";
+"controls.brightness" = "Brightness";
+"controls.volume" = "Volume";
+"controls.mute" = "Mute";
+"controls.lock" = "Lock Screen";
+"controls.sleepDisplay" = "Sleep Display";
+"controls.screenSaver" = "Screen Saver";
+"controls.focus" = "Focus";
+
+/// Status
+"preferences.status.title" = "Status";
+"preferences.status.input-source" = "Input source";
+"preferences.status.wifi" = "Wi-Fi";
+"preferences.status.battery" = "Battery";
+"preferences.status.battery-icon" = "Battery icon";
+"preferences.status.battery-percentage" = "Battery percentage";
+"preferences.status.clock" = "Date and time";
+"preferences.status.clock-format" = "Date format:";
+
+/// Dock
+"preferences.dock.title" = "Dock";
+"preferences.dock.desc" = "Shows the apps pinned in your system Dock plus any other running app, with running indicators and notification badges (badges need Accessibility). Tap an app to open it or bring it forward.";
+"preferences.dock.hide-finder" = "Hide Finder";
+"preferences.dock.only-running" = "Only running apps";
+"preferences.dock.hide-indicator" = "Hide running indicator";
+"preferences.dock.hide-badges" = "Hide badges";
+"preferences.dock.hide-folders" = "Hide folders";
+"preferences.dock.hide-trash" = "Hide Trash";
+"Trash" = "Trash";
+
+/// Weather
+"preferences.weather.title" = "Weather";
+"preferences.weather.city" = "City:";
+"preferences.weather.city-placeholder" = "Type a city and press Return";
+"preferences.weather.automatic" = "Using the city of your time zone until you choose one.";
+"preferences.weather.searching" = "Searching…";
+"preferences.weather.not-found" = "No city found.";
+"preferences.weather.description" = "Show conditions";
+"weather.feels-like" = "feels like %@";
+"weather.rain-chance" = "rain %d%%";
+"weather.clear" = "Clear";
+"weather.mainly-clear" = "Mostly clear";
+"weather.partly-cloudy" = "Partly cloudy";
+"weather.overcast" = "Overcast";
+"weather.fog" = "Fog";
+"weather.drizzle" = "Drizzle";
+"weather.rain" = "Rain";
+"weather.showers" = "Showers";
+"weather.snow" = "Snow";
+"weather.thunderstorm" = "Thunderstorm";
+"weather.unknown" = "Unknown";

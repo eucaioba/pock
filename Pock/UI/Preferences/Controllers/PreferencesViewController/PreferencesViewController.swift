@@ -305,6 +305,361 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addNativeTouchBarAppsSection(to: column, at: index + 2)
+	}
+
+	// MARK: Native app Touch Bars
+
+	private let nativeAppsList = NSStackView()
+
+	private func addNativeTouchBarAppsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.native-apps.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.native-apps.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		nativeAppsList.orientation = .vertical
+		nativeAppsList.alignment = .leading
+		nativeAppsList.spacing = 4
+		reloadNativeAppsList()
+		let add = NSButton(title: "preferences.native-apps.add".localized, target: self, action: #selector(addNativeTouchBarApp))
+		add.bezelStyle = .rounded
+		let section = NSStackView(views: [title, description, nativeAppsList, add])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: nativeAppsList)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addControlsSection(to: column, at: index + 2)
+	}
+
+	// MARK: Controls
+
+	private let focusShortcutField = NSTextField()
+
+	private func addControlsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.controls.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.controls.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let enabled = ControlsButton.enabled
+		let checkboxes: [NSView] = ControlsButton.allCases.map { control in
+			let checkbox = NSButton(checkboxWithTitle: control.title, target: self, action: #selector(didChangeControlsButton(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(control.rawValue)
+			checkbox.state = enabled.contains(control) ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		focusShortcutField.stringValue = Preferences[.focusShortcutName]
+		focusShortcutField.placeholderString = "Toggle Focus"
+		focusShortcutField.target = self
+		focusShortcutField.action = #selector(didChangeFocusShortcut(_:))
+		focusShortcutField.widthAnchor.constraint(equalToConstant: 180).isActive = true
+		let focusRow = NSStackView(views: [NSTextField(labelWithString: "preferences.controls.focus-shortcut".localized), focusShortcutField])
+		focusRow.spacing = 8
+		let section = NSStackView(views: [title, description, grid, focusRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addStatusSection(to: column, at: index + 2)
+	}
+
+	// MARK: Status
+
+	private let statusFormatField = NSTextField()
+	private static let statusOptions: [(Preferences.Keys, String)] = [
+		(.shouldShowLangItem, "preferences.status.input-source"),
+		(.shouldShowWifiItem, "preferences.status.wifi"),
+		(.shouldShowPowerItem, "preferences.status.battery"),
+		(.shouldShowBatteryIcon, "preferences.status.battery-icon"),
+		(.shouldShowBatteryPercentage, "preferences.status.battery-percentage"),
+		(.shouldShowDateItem, "preferences.status.clock")
+	]
+
+	private func addStatusSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.status.title".localized)
+		let checkboxes: [NSView] = PreferencesViewController.statusOptions.map { key, label in
+			let checkbox = NSButton(checkboxWithTitle: label.localized, target: self, action: #selector(didChangeStatusOption(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(key.rawValue)
+			checkbox.state = Preferences[key] == true ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		statusFormatField.stringValue = Preferences[.timeFormatTextField]
+		statusFormatField.placeholderString = "EE dd MMM HH:mm"
+		statusFormatField.target = self
+		statusFormatField.action = #selector(didChangeStatusFormat(_:))
+		statusFormatField.widthAnchor.constraint(equalToConstant: 180).isActive = true
+		let formatRow = NSStackView(views: [NSTextField(labelWithString: "preferences.status.clock-format".localized), statusFormatField])
+		formatRow.spacing = 8
+		let section = NSStackView(views: [title, grid, formatRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addDockSection(to: column, at: index + 2)
+	}
+
+	// MARK: Dock
+
+	private static let dockOptions: [(Preferences.Keys, String)] = [
+		(.hideFinder, "preferences.dock.hide-finder"),
+		(.showOnlyRunningApps, "preferences.dock.only-running"),
+		(.hideRunningIndicator, "preferences.dock.hide-indicator"),
+		(.hideBadges, "preferences.dock.hide-badges"),
+		(.hidePersistentItems, "preferences.dock.hide-folders"),
+		(.hideTrash, "preferences.dock.hide-trash")
+	]
+
+	private func addDockSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.dock.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.dock.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let checkboxes: [NSView] = PreferencesViewController.dockOptions.map { key, label in
+			let checkbox = NSButton(checkboxWithTitle: label.localized, target: self, action: #selector(didChangeDockOption(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(key.rawValue)
+			checkbox.state = Preferences[key] == true ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		let section = NSStackView(views: [title, description, grid])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addWeatherSection(to: column, at: index + 2)
+	}
+
+	// MARK: Weather
+
+	private let weatherCityField = NSTextField()
+	private let weatherResultsPopUp = NSPopUpButton()
+	private let weatherStatusLabel = NSTextField(labelWithString: "")
+	private var weatherResults: [WeatherPlace] = []
+
+	private func addWeatherSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.weather.title".localized)
+		weatherCityField.placeholderString = "preferences.weather.city-placeholder".localized
+		weatherCityField.stringValue = Preferences[.weatherCity]
+		weatherCityField.target = self
+		weatherCityField.action = #selector(searchWeatherCity(_:))
+		weatherCityField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+		weatherResultsPopUp.target = self
+		weatherResultsPopUp.action = #selector(didPickWeatherPlace(_:))
+		weatherResultsPopUp.isHidden = true
+		let cityRow = NSStackView(views: [NSTextField(labelWithString: "preferences.weather.city".localized), weatherCityField, weatherResultsPopUp])
+		cityRow.spacing = 8
+		weatherStatusLabel.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		weatherStatusLabel.textColor = .secondaryLabelColor
+		let current: String = Preferences[.weatherCity]
+		weatherStatusLabel.stringValue = current.isEmpty ? "preferences.weather.automatic".localized : (WeatherStore.place?.displayName ?? current)
+		let units = NSSegmentedControl(labels: ["°C", "°F"], trackingMode: .selectOne, target: self, action: #selector(didChangeWeatherUnits(_:)))
+		units.selectedSegment = WeatherStore.usesFahrenheit ? 1 : 0
+		let description = NSButton(checkboxWithTitle: "preferences.weather.description".localized, target: self, action: #selector(didChangeWeatherDescription(_:)))
+		description.state = Preferences[.weatherShowDescription] == true ? .on : .off
+		let optionsRow = NSStackView(views: [units, description])
+		optionsRow.spacing = 12
+		let section = NSStackView(views: [title, cityRow, weatherStatusLabel, optionsRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func searchWeatherCity(_ field: NSTextField) {
+		let query = field.stringValue.trimmingCharacters(in: .whitespaces)
+		guard !query.isEmpty else {
+			return
+		}
+		weatherStatusLabel.stringValue = "preferences.weather.searching".localized
+		WeatherStore.search(query) { [weak self] places in
+			guard let self = self else {
+				return
+			}
+			self.weatherResults = places
+			self.weatherResultsPopUp.removeAllItems()
+			self.weatherResultsPopUp.addItems(withTitles: places.map(\.displayName))
+			self.weatherResultsPopUp.isHidden = places.count < 2
+			if places.isEmpty {
+				self.weatherStatusLabel.stringValue = "preferences.weather.not-found".localized
+			} else {
+				self.applyWeatherPlace(places[0])
+			}
+		}
+	}
+
+	@objc private func didPickWeatherPlace(_ popUp: NSPopUpButton) {
+		guard weatherResults.indices.contains(popUp.indexOfSelectedItem) else {
+			return
+		}
+		applyWeatherPlace(weatherResults[popUp.indexOfSelectedItem])
+	}
+
+	private func applyWeatherPlace(_ place: WeatherPlace) {
+		WeatherStore.place = place
+		weatherCityField.stringValue = place.name
+		weatherStatusLabel.stringValue = place.displayName
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
+	}
+
+	@objc private func didChangeWeatherUnits(_ control: NSSegmentedControl) {
+		Preferences[.weatherUnits] = control.selectedSegment == 1 ? "fahrenheit" : "celsius"
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
+	}
+
+	@objc private func didChangeWeatherDescription(_ checkbox: NSButton) {
+		Preferences[.weatherShowDescription] = checkbox.state == .on
+		NotificationCenter.default.post(name: .weatherDidChange, object: nil)
+	}
+
+	@objc private func didChangeDockOption(_ checkbox: NSButton) {
+		guard let raw = checkbox.identifier?.rawValue, let key = Preferences.Keys(rawValue: raw) else {
+			return
+		}
+		Preferences[key] = checkbox.state == .on
+		NotificationCenter.default.post(name: .dockDidChange, object: nil)
+	}
+
+	@objc private func didChangeStatusOption(_ checkbox: NSButton) {
+		guard let raw = checkbox.identifier?.rawValue, let key = Preferences.Keys(rawValue: raw) else {
+			return
+		}
+		Preferences[key] = checkbox.state == .on
+		NotificationCenter.default.post(name: .statusDidChange, object: nil)
+	}
+
+	@objc private func didChangeStatusFormat(_ field: NSTextField) {
+		let format = field.stringValue.trimmingCharacters(in: .whitespaces)
+		Preferences[.timeFormatTextField] = format.isEmpty ? "EE dd MMM HH:mm" : format
+		NotificationCenter.default.post(name: .statusDidChange, object: nil)
+	}
+
+	@objc private func didChangeControlsButton(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		var enabled = ControlsButton.enabled.map(\.rawValue)
+		if checkbox.state == .on {
+			enabled.append(id)
+		} else {
+			enabled.removeAll { $0 == id }
+		}
+		Preferences[.controlsButtons] = enabled
+		NotificationCenter.default.post(name: .controlsDidChange, object: nil)
+	}
+
+	@objc private func didChangeFocusShortcut(_ field: NSTextField) {
+		let name = field.stringValue.trimmingCharacters(in: .whitespaces)
+		Preferences[.focusShortcutName] = name.isEmpty ? "Toggle Focus" : name
+	}
+
+	private func reloadNativeAppsList() {
+		nativeAppsList.arrangedSubviews.forEach { $0.removeFromSuperview() }
+		let apps: [String] = Preferences[.nativeTouchBarApps]
+		for bundleIdentifier in apps {
+			let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier)
+			let name = url.map { FileManager.default.displayName(atPath: $0.path).replacingOccurrences(of: ".app", with: "") } ?? bundleIdentifier
+			let checkbox = NSButton(checkboxWithTitle: name, target: self, action: #selector(removeNativeTouchBarApp(_:)))
+			checkbox.state = .on
+			checkbox.identifier = NSUserInterfaceItemIdentifier(bundleIdentifier)
+			checkbox.toolTip = "preferences.native-apps.remove".localized
+			if let url = url {
+				let icon = NSWorkspace.shared.icon(forFile: url.path)
+				icon.size = NSSize(width: 16, height: 16)
+				checkbox.image = icon
+				checkbox.imagePosition = .imageLeft
+			}
+			nativeAppsList.addArrangedSubview(checkbox)
+		}
+	}
+
+	private func setNativeTouchBarApps(_ apps: [String]) {
+		Preferences[.nativeTouchBarApps] = apps
+		reloadNativeAppsList()
+	}
+
+	@objc private func removeNativeTouchBarApp(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		let apps: [String] = Preferences[.nativeTouchBarApps]
+		setNativeTouchBarApps(apps.filter { $0 != id })
+	}
+
+	@objc private func addNativeTouchBarApp() {
+		let panel = NSOpenPanel()
+		panel.directoryURL = URL(fileURLWithPath: "/Applications")
+		panel.allowedFileTypes = ["app"]
+		panel.allowsMultipleSelection = true
+		guard let window = view.window else {
+			return
+		}
+		panel.beginSheetModal(for: window) { [weak self] response in
+			guard response == .OK else {
+				return
+			}
+			var apps: [String] = Preferences[.nativeTouchBarApps]
+			for id in panel.urls.compactMap({ Bundle(url: $0)?.bundleIdentifier }) where !apps.contains(id) {
+				apps.append(id)
+			}
+			self?.setNativeTouchBarApps(apps)
+		}
 	}
 
 	@objc private func didChangeAppProfile(_ checkbox: NSButton) {

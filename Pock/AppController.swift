@@ -370,7 +370,6 @@ extension AppController: NSTouchBarDelegate {
 		}
 		// Pock is an agent app and the status menu does not make it active, but AppKit only presents
 		// the customization palette for the active app; without this the bar just goes blank.
-		NSApp.setActivationPolicy(.regular)
 		activateForCustomization()
 		pockTouchBarController.minimize()
 		NSApp.touchBar = makeTouchBar()
@@ -443,9 +442,10 @@ extension AppController: NSTouchBarDelegate {
 		removeCustomizationObservers()
 		NSApp.touchBar = nil
 		pockTouchBarController.present()
-		// Back to a menu bar only app, which also hands focus back to the app the user was in.
-		NSApp.setActivationPolicy(.accessory)
-		NSApp.deactivate()
+		// Give the palette time to close its windows before handing focus back to the previous app.
+		async(after: 0.5) {
+			NSApp.deactivate()
+		}
 	}
 	
 }

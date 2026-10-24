@@ -227,3 +227,15 @@
 "preferences.native-apps.desc" = "Enquanto uma destas apps estiver em primeiro plano, o Pock recolhe-se e mostra a Touch Bar da própria app, como os separadores do Safari. Pressione ⌃ Control duas vezes para voltar ao Pock até mudar de app.";
 "preferences.native-apps.add" = "Adicionar app…";
 "preferences.native-apps.remove" = "Desmarque para remover";
+
+/// Controls
+"preferences.controls.title" = "Controlos";
+"preferences.controls.desc" = "Botões mostrados pelo item “Controls”. Toque em brilho ou volume para um slider. Foco executa o Atalho com o nome abaixo; crie-o na app Atalhos com a ação “Definir Foco”.";
+"preferences.controls.focus-shortcut" = "Atalho de Foco:";
+"controls.brightness" = "Brilho";
+"controls.volume" = "Volume";
+"controls.mute" = "Silenciar";
+"controls.lock" = "Bloquear ecrã";
+"controls.sleepDisplay" = "Repousar ecrã";
+"controls.screenSaver" = "Proteção de ecrã";
+"controls.focus" = "Foco";

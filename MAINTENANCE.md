@@ -77,3 +77,9 @@ Apps listed under "Use the app's own Touch Bar" (Safari by default) make Pock mi
 
 Mouse support (mirroring the cursor on the Touch Bar when it nears the bottom screen edge) is now off by default, because the 10 pt tracking strip overlaps the Dock.
 
+
+## Built-in widgets
+
+Default widgets are being rewritten as items compiled into Pock (`Pock/UI/TouchBar/BuiltInWidgets`), sharing `SystemControls` with the modifier bars instead of each bundle carrying its own helpers. Third-party `.pock` bundles still load as before. `BuiltInWidgets.replacements` swaps a retired bundle's identifier for its built-in item in the saved layout, keeping its position, and `retiredWidgetBundles` are deleted from the widgets folder on launch.
+
+`Controls` replaces Control Center (and its `Defaults` pod): brightness (DisplayServices) and volume (CoreAudio) with live values and a full-width `NSSliderTouchBarItem` on tap, mute, lock screen (`SACLockScreenImmediate`), display sleep, screen saver, and Focus through a user Shortcut (`shortcuts run`), since Focus has no public toggle API. Buttons are chosen in Preferences. `scripts/build.sh` now clears stale archives so retired widgets are not repackaged.

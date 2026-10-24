@@ -335,6 +335,73 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addControlsSection(to: column, at: index + 2)
+	}
+
+	// MARK: Controls
+
+	private let focusShortcutField = NSTextField()
+
+	private func addControlsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.controls.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.controls.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let enabled = ControlsButton.enabled
+		let checkboxes: [NSView] = ControlsButton.allCases.map { control in
+			let checkbox = NSButton(checkboxWithTitle: control.title, target: self, action: #selector(didChangeControlsButton(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(control.rawValue)
+			checkbox.state = enabled.contains(control) ? .on : .off
+			return checkbox
+		}
+		let half = (checkboxes.count + 1) / 2
+		let grid = NSStackView(views: [NSStackView(views: Array(checkboxes.prefix(half))), NSStackView(views: Array(checkboxes.dropFirst(half)))])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		focusShortcutField.stringValue = Preferences[.focusShortcutName]
+		focusShortcutField.placeholderString = "Toggle Focus"
+		focusShortcutField.target = self
+		focusShortcutField.action = #selector(didChangeFocusShortcut(_:))
+		focusShortcutField.widthAnchor.constraint(equalToConstant: 180).isActive = true
+		let focusRow = NSStackView(views: [NSTextField(labelWithString: "preferences.controls.focus-shortcut".localized), focusShortcutField])
+		focusRow.spacing = 8
+		let section = NSStackView(views: [title, description, grid, focusRow])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeControlsButton(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		var enabled = ControlsButton.enabled.map(\.rawValue)
+		if checkbox.state == .on {
+			enabled.append(id)
+		} else {
+			enabled.removeAll { $0 == id }
+		}
+		Preferences[.controlsButtons] = enabled
+		NotificationCenter.default.post(name: .controlsDidChange, object: nil)
+	}
+
+	@objc private func didChangeFocusShortcut(_ field: NSTextField) {
+		let name = field.stringValue.trimmingCharacters(in: .whitespaces)
+		Preferences[.focusShortcutName] = name.isEmpty ? "Toggle Focus" : name
 	}
 
 	private func reloadNativeAppsList() {

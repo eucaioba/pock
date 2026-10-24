@@ -68,6 +68,7 @@ internal class AppController: NSResponder {
 		registerNativeTouchBarApps()
 		prepareOnceADayTimer()
 		clearTemporaryWidgetsFolder()
+		BuiltInWidgets.removeRetiredWidgetBundles()
         startListeningForScreenLockNotifications()
         // Show fake badge for testing
         #if DEBUG

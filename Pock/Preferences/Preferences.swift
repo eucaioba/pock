@@ -47,6 +47,8 @@ internal struct Preferences {
 		case optionTouchBarEnabled
 		case controlTouchBarEnabled
 		case nativeTouchBarApps
+		case controlsButtons
+		case focusShortcutName
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -85,6 +87,10 @@ internal struct Preferences {
                     return true as! T
                 case .nativeTouchBarApps:
                     return ["com.apple.Safari"] as! T
+                case .controlsButtons:
+                    return ControlsButton.defaultEnabled.map(\.rawValue) as! T
+                case .focusShortcutName:
+                    return "Toggle Focus" as! T
                 }
             }
             return value

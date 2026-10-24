@@ -228,3 +228,15 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "preferences.native-apps.desc" = "While one of these apps is in front, Pock steps aside so the app’s own Touch Bar shows, such as Safari tabs. Double press ⌃ Control to bring Pock back until you switch apps.";
 "preferences.native-apps.add" = "Add App…";
 "preferences.native-apps.remove" = "Uncheck to remove";
+
+/// Controls
+"preferences.controls.title" = "Controls";
+"preferences.controls.desc" = "Buttons shown by the “Controls” item. Tap brightness or volume for a slider. Focus runs the Shortcut named below; create it in Shortcuts with a “Set Focus” action.";
+"preferences.controls.focus-shortcut" = "Focus Shortcut:";
+"controls.brightness" = "Brightness";
+"controls.volume" = "Volume";
+"controls.mute" = "Mute";
+"controls.lock" = "Lock Screen";
+"controls.sleepDisplay" = "Sleep Display";
+"controls.screenSaver" = "Screen Saver";
+"controls.focus" = "Focus";

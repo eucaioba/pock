@@ -7,9 +7,6 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34691B7C23D37C73008EB808" BuildableName="ControlCenter.pock" BlueprintName="ControlCenter" ReferencedContainer="container:Vendor/Widgets/control-center-widget/ControlCenter.xcodeproj" />
-         </BuildActionEntry>
-         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
             <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="34AFC98C246DC8E00068B3B6" BuildableName="Dock.pock" BlueprintName="Dock" ReferencedContainer="container:Vendor/Widgets/dock-widget/Dock.xcodeproj" />
          </BuildActionEntry>
          <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">

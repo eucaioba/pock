@@ -227,3 +227,15 @@
 "preferences.native-apps.desc" = "Solange eine dieser Apps vorne ist, tritt Pock zurück und die eigene Touch Bar der App wird angezeigt, z. B. die Safari-Tabs. Drücke zweimal ⌃ Control, um Pock bis zum nächsten App-Wechsel zurückzuholen.";
 "preferences.native-apps.add" = "App hinzufügen…";
 "preferences.native-apps.remove" = "Abwählen zum Entfernen";
+
+/// Controls
+"preferences.controls.title" = "Steuerung";
+"preferences.controls.desc" = "Tasten des Elements „Controls“. Tippe auf Helligkeit oder Lautstärke für einen Schieberegler. Fokus führt den unten genannten Kurzbefehl aus; erstelle ihn in Kurzbefehle mit der Aktion „Fokus festlegen“.";
+"preferences.controls.focus-shortcut" = "Fokus-Kurzbefehl:";
+"controls.brightness" = "Helligkeit";
+"controls.volume" = "Lautstärke";
+"controls.mute" = "Stumm";
+"controls.lock" = "Bildschirm sperren";
+"controls.sleepDisplay" = "Display ausschalten";
+"controls.screenSaver" = "Bildschirmschoner";
+"controls.focus" = "Fokus";

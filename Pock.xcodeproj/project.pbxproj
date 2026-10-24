@@ -76,6 +76,8 @@
 		53254B1ED49A4F61603DC85D /* ModifierTouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */; };
 		80F6ED9E941CB99A898BECF2 /* Pods_Pock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE9B256A4CB4701408B60C0 /* Pods_Pock.framework */; };
 		B99B9D8DAD643A80A23CC58E /* AppControlsTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCED10632A52C09F4E11F030 /* AppControlsTouchBarItem.swift */; };
+		BED19479FEDB82DD3E5F1B1A /* ControlsTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737613D829A333D6802A5CF6 /* ControlsTouchBarItem.swift */; };
+		D9AF52E032BC4BC88B8545DE /* BuiltInWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AE6BAF03FC5D8D841F468 /* BuiltInWidgets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,11 +200,13 @@
 		42458EF7CBD8C1A887586801 /* Pods-Pock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pock.release.xcconfig"; path = "Target Support Files/Pods-Pock/Pods-Pock.release.xcconfig"; sourceTree = "<group>"; };
 		4BE8B0D11A57B8BE6E34A404 /* ModifierTouchBarLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarLayout.swift; sourceTree = "<group>"; };
 		7242E6598D645D23AFBD7089 /* KeyboardShortcutSender.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSender.swift; sourceTree = "<group>"; };
+		737613D829A333D6802A5CF6 /* ControlsTouchBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ControlsTouchBarItem.swift; sourceTree = "<group>"; };
 		7AE9B256A4CB4701408B60C0 /* Pods_Pock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DBFCE97D20ADFDF831C331 /* SystemControls.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemControls.swift; sourceTree = "<group>"; };
 		9FAB0C2306CA63DF211D8910 /* Pods-Pock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pock.debug.xcconfig"; path = "Target Support Files/Pods-Pock/Pods-Pock.debug.xcconfig"; sourceTree = "<group>"; };
 		A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarController.swift; sourceTree = "<group>"; };
 		C67D3D9A64A18F4C2143BB99 /* AppProfile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppProfile.swift; sourceTree = "<group>"; };
+		D64AE6BAF03FC5D8D841F468 /* BuiltInWidgets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BuiltInWidgets.swift; sourceTree = "<group>"; };
 		DCED10632A52C09F4E11F030 /* AppControlsTouchBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppControlsTouchBarItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -542,6 +546,7 @@
 				34291B9226455D1900768B08 /* EmptyTouchBarController */,
 				79F2BFEE431FC600F1B3AB1F /* ModifierTouchBar */,
 				3E31FD4B109A4D6A353633AC /* AppControls */,
+				9678F0B4B1DAB591AADB38E9 /* BuiltInWidgets */,
 			);
 			path = TouchBar;
 			sourceTree = "<group>";
@@ -674,6 +679,16 @@
 			);
 			name = ModifierTouchBar;
 			path = ModifierTouchBar;
+			sourceTree = "<group>";
+		};
+		9678F0B4B1DAB591AADB38E9 /* BuiltInWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				D64AE6BAF03FC5D8D841F468 /* BuiltInWidgets.swift */,
+				737613D829A333D6802A5CF6 /* ControlsTouchBarItem.swift */,
+			);
+			name = BuiltInWidgets;
+			path = BuiltInWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -930,6 +945,8 @@
 				28C47333EDDBE186640A0490 /* AppProfile.swift in Sources */,
 				29B032422BEFBDFA4B699DCE /* KeyboardShortcutSender.swift in Sources */,
 				B99B9D8DAD643A80A23CC58E /* AppControlsTouchBarItem.swift in Sources */,
+				D9AF52E032BC4BC88B8545DE /* BuiltInWidgets.swift in Sources */,
+				BED19479FEDB82DD3E5F1B1A /* ControlsTouchBarItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

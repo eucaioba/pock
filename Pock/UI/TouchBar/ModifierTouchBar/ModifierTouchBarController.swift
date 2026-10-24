@@ -212,10 +212,7 @@ internal final class ModifierTouchBarController: PKTouchBarController {
 				NSWorkspace.shared.open(url)
 			}
 		case .sleepDisplay:
-			let task = Process()
-			task.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
-			task.arguments = ["displaysleepnow"]
-			try? task.run()
+			SessionControls.sleepDisplay()
 		case .none:
 			return
 		}

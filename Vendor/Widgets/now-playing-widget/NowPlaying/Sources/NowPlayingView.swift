@@ -40,17 +40,22 @@ class NowPlayingView: PKView {
 		return NSButton.build(image: nextIcon, target: self, action: #selector(skipToNextItem))
     }
     
+    private var controlsButton: NSButton {
+        let button = NSButton.build(image: NSImage(named: NSImage.actionTemplateName)!, target: self, action: #selector(openControls))
+        button.toolTip = "Fontes, progresso e controles"
+        button.setAccessibilityLabel("Fontes e controles de mídia")
+        return button
+    }
+    @objc private func openControls() {
+        guard let helper = helper else { return }
+        NowPlayingControlsController(helper: helper).pushOnMainNavigationController()
+    }
+
     /// Core
     private var shouldHideWidget: Bool {
-        if Preferences[.hideNowPlayingIfNoMedia] {
-            guard let item = item else {
-                return true
-            }
-            return item.client == nil || (item.title == nil && item.album == nil && item.isPlaying == false)
-        }
-        return false
+        return (Preferences[.hideNowPlayingIfNoMedia] as Bool) && helper?.snapshot == nil
     }
-    
+
     /// Styles
     public var style: NowPlayingWidgetStyle {
 		return NowPlayingWidgetStyle(rawValue: Preferences[.nowPlayingWidgetStyle]) ?? .default
@@ -133,13 +138,13 @@ class NowPlayingView: PKView {
         let views: [NSView]
         switch style {
         case .default:
-            views = [previousButton, itemView!, nextButton]
+            views = [previousButton, itemView!, nextButton, controlsButton]
 			stackView.spacing = 8
         case .onlyInfo:
-            views = [itemView!]
+            views = [itemView!, controlsButton]
 			stackView.spacing = 0
         case .playPause:
-            views = [previousButton, playPauseButton!, nextButton]
+            views = [previousButton, playPauseButton!, nextButton, controlsButton]
 			stackView.spacing = 22
         }
         for view in views {
@@ -154,6 +159,7 @@ class NowPlayingView: PKView {
             itemView?.didSwipeLeft  = nil
             itemView?.didSwipeRight = nil
         case .default, .onlyInfo:
+            itemView?.didLongPress  = { [weak self] in self?.openControls() }
             itemView?.didTap        = { [unowned self] in self.togglePlayPause()    }
             itemView?.didSwipeLeft  = { [unowned self] in self.skipToPreviousItem() }
             itemView?.didSwipeRight = { [unowned self] in self.skipToNextItem()     }
@@ -182,13 +188,9 @@ class NowPlayingView: PKView {
     
     /// Handlers
     @objc private func togglePlayPause() {
-		if NSWorkspace.shared.runningApplications.compactMap({ $0.bundleIdentifier }).contains(item?.client.bundleIdentifier), item?.title != nil {
-			helper?.togglePlayingState()
-		} else {
-			didLongPressHandler()
-		}
+        helper?.togglePlayingState()
     }
-    
+
     @objc private func skipToNextItem() {
 		helper?.skipToNextTrack()
     }
@@ -198,15 +200,6 @@ class NowPlayingView: PKView {
     }
     
     override func didLongPressHandler() {
-		guard let id = item?.client?.bundleIdentifier else {
-            return
-        }
-        NSWorkspace.shared.launchApplication(
-            withBundleIdentifier: id,
-            options: [],
-            additionalEventParamDescriptor: nil,
-            launchIdentifier: nil
-        )
+        openControls()
     }
-    
 }

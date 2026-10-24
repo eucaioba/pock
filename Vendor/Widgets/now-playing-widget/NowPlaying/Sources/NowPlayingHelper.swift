@@ -1,253 +1,175 @@
-//
-//  NowPlayingHelper.swift
-//  Pock
-//
-//  Created by Pierluigi Galdi on 17/02/2019.
-//  Copyright © 2019 Pierluigi Galdi. All rights reserved.
-//
-
-import Foundation
 import AppKit
 
-class NowPlayingHelper {
-	
-	/// Data
-	public private(set) var currentNowPlayingItem: NowPlayingItem?
-	
-	/// Artwork
-	private var latestArtworkTask: URLSessionTask?
-	
-	/// Ref
-	internal weak var view: NowPlayingView?
-	
-	internal init(forView: NowPlayingView) {
-		NSLog("[NOW_PLAYING]: NowPlayingHelper - init")
-		if let _: String = Preferences[.defaultPlayer] {
-			// nothing to do here
-		} else {
-			if #available(OSX 10.15, *) {
-				Preferences[.defaultPlayer] = "com.apple.Music"
-			} else {
-				Preferences[.defaultPlayer] = "com.apple.iTunes"
-			}
-		}
-		view = forView
-		currentNowPlayingItem = NowPlayingItem()
-		registerForNotifications()
-		updateCurrentPlayingApp(nil)
-		updateMediaContent(nil)
-		updateCurrentPlayingState(nil)
-	}
-	
-	private func registerForNotifications() {
-		NSLog("[NOW_PLAYING]: NowPlayingHelper - registerForNotifications")
-		MRMediaRemoteRegisterForNowPlayingNotifications(.main)
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(updateCurrentPlayingApp),
-											   name: Notification.Name(kMRMediaRemoteNowPlayingApplicationClientStateDidChange),
-											   object: nil)
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(updateCurrentPlayingApp),
-											   name: .mrMediaRemoteNowPlayingApplicationDidChange,
-											   object: nil)
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(updateMediaContent),
-											   name: .mrNowPlayingPlaybackQueueChanged,
-											   object: nil)
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(updateMediaContent),
-											   name: .mrPlaybackQueueContentItemsChanged,
-											   object: nil)
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(updateCurrentPlayingState),
-											   name: .mrMediaRemoteNowPlayingApplicationIsPlayingDidChange,
-											   object: nil)
-	}
-	
-	private func unregisterForNotifications() {
-		NSLog("[NOW_PLAYING]: NowPlayingHelper - un-registerForNotifications")
-		MRMediaRemoteUnregisterForNowPlayingNotifications()
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name(kMRMediaRemoteNowPlayingApplicationClientStateDidChange), object: nil)
-		NotificationCenter.default.removeObserver(self, name: .mrMediaRemoteNowPlayingApplicationDidChange, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .mrNowPlayingPlaybackQueueChanged, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .mrPlaybackQueueContentItemsChanged, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .mrMediaRemoteNowPlayingApplicationIsPlayingDidChange, object: nil)
-	}
-	
-	@objc private func updateCurrentPlayingApp(_ notification: Notification?) {
-		MRMediaRemoteGetNowPlayingClient(.main) { [weak self] client in
-			guard let self = self else {
-				return
-			}
-			if client?.bundleIdentifier() == nil && client?.parentApplicationBundleIdentifier() == nil {
-				// Check custom default player
-				let customDefaultPlayerIdentifier: String = Preferences[.defaultPlayer]
-				let displayName = NSWorkspace.shared.applicationName(for: customDefaultPlayerIdentifier)
-				let icon = NSWorkspace.shared.applicationIcon(for: customDefaultPlayerIdentifier, fallbackFileType: "mp3")
-				self.currentNowPlayingItem?.client = NowPlayingItem.Client(
-					bundleIdentifier: customDefaultPlayerIdentifier,
-					parentApplicationBundleIdentifier: nil,
-					displayName: displayName,
-					icon: icon
-				)
-			} else {
-				self.currentNowPlayingItem?.client = NowPlayingItem.Client(
-					bundleIdentifier: 					client?.bundleIdentifier(),
-					parentApplicationBundleIdentifier:  client?.parentApplicationBundleIdentifier(),
-					displayName: 						client?.displayName(),
-					icon: NSWorkspace.shared.applicationIcon(for: client?.parentApplicationBundleIdentifier() ?? client?.bundleIdentifier(), fallbackFileType: "mp3")
-				)
-			}
-			self.view?.updateContentViews()
-		}
-	}
-	
-	@objc private func updateMediaContent(_ notification: Notification?) {
-		MRMediaRemoteGetNowPlayingInfo(.main) { [weak self] info in
-			guard let self = self else {
-				return
-			}
-			self.currentNowPlayingItem?.title  = info?[kMRMediaRemoteNowPlayingInfoTitle]  as? String
-			self.currentNowPlayingItem?.album  = info?[kMRMediaRemoteNowPlayingInfoAlbum]  as? String
-			self.currentNowPlayingItem?.artist = info?[kMRMediaRemoteNowPlayingInfoArtist] as? String
-			defer {
-				self.view?.updateContentViews()
-			}
-			if info == nil {
-				self.currentNowPlayingItem?.isPlaying = false
-			} else {
-				if Preferences[.showMediaArtwork] {
-					self.fetchArtwork(for: self.currentNowPlayingItem) { image in
-						self.currentNowPlayingItem?.artwork = image
-					}
-				} else {
-					self.latestArtworkTask?.cancel()
-					self.currentNowPlayingItem?.artwork = nil
-				}
-			}
-		}
-	}
-	
-	@objc private func updateCurrentPlayingState(_ notification: Notification?) {
-		MRMediaRemoteGetNowPlayingApplicationIsPlaying(.main) { [weak self] isPlaying in
-			guard let self = self else {
-				return
-			}
-			if self.currentNowPlayingItem?.client == nil {
-				self.currentNowPlayingItem?.isPlaying = false
-			} else {
-				self.currentNowPlayingItem?.isPlaying = isPlaying
-			}
-			self.view?.updateContentViews()
-		}
-	}
-	
-	deinit {
-		NSLog("[NOW_PLAYING]: NowPlayingHelper - deinit")
-		view = nil
-		currentNowPlayingItem = nil
-		unregisterForNotifications()
-	}
-	
+extension Notification.Name {
+    static let pockMediaDidUpdate = Notification.Name("PockMediaDidUpdate")
 }
 
-extension NowPlayingHelper {
-	
-	public func togglePlayingState() {
-		MRMediaRemoteSendCommand(kMRTogglePlayPause, nil)
-	}
-	
-	public func skipToNextTrack() {
-		MRMediaRemoteSendCommand(kMRNextTrack, nil)
-	}
-	
-	public func skipToPreviousTrack() {
-		MRMediaRemoteSendCommand(kMRPreviousTrack, nil)
-	}
-	
-}
+final class NowPlayingHelper: NSObject {
+    private(set) var currentNowPlayingItem = NowPlayingItem()
+    private(set) var snapshot: MediaSnapshot?
+    private(set) var status = "Aguardando mídia"
+    weak var view: NowPlayingView?
+    private let backend = AutomationMediaBackend()
+    private let worker = DispatchQueue(label: "app.pock.media-automation", qos: .utility)
+    private var timer: Timer?
+    private var polling = false
+    private var artworkTask: URLSessionDataTask?
+    private var artworkIdentity: String?
+    private var pendingSeek: DispatchWorkItem?
+    private let commandLock = NSLock()
+    private var commandGeneration = 0
+    private var lastPreference: MediaSource?
 
-/// Credit: https://github.com/musa11971/Music-Bar
-extension NowPlayingHelper {
-	/// Retrieves the artwork of the current track from Apple
-	fileprivate func fetchArtwork(for item: NowPlayingItem?, _ completion: @escaping (NSImage?) -> Void) {
-		/// Destroy tasks, if any was already busy
-		latestArtworkTask?.cancel()
-		/// Check for now playing item
-		guard let item = item, let searchTerm = item.searchTerm else {
-			completion(nil)
-			return
-		}
-		/// Start fetching artwork
-		let apiURL: String = "https://itunes.apple.com/search?term=\(searchTerm)&entity=song&limit=1"
-		latestArtworkTask = URLSession.fetchJSON(fromURL: URL(string: apiURL)!) { [weak self] (data, json, error) in
-			if error != nil {
-				print("Could not get artwork")
-				completion(nil)
-				return
-			}
-			if let json = json as? [String: Any] {
-				if let results = json["results"] as? [[String: Any]] {
-					if results.count >= 1, let imgURL = results[0]["artworkUrl100"] as? String {
-						// Create the URL
-						guard let url = URL(string: imgURL.replacingOccurrences(of: "100x100", with: "300x300")) else {
-							completion(nil)
-							return
-						}
-						// Download the artwork
-						self?.latestArtworkTask = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-							if error != nil {
-								completion(nil)
-								return
-							}
-							guard let data = data else {
-								completion(nil)
-								return
-							}
-							completion(NSImage(data: data))
-						})
-						self?.latestArtworkTask?.resume()
-					} else {
-						completion(nil)
-					}
-				}
-			}
-		}
-		latestArtworkTask?.resume()
-	}
-}
+    private func generation() -> Int {
+        commandLock.lock(); defer { commandLock.unlock() }
+        return commandGeneration
+    }
+    private func invalidateCommands() {
+        commandLock.lock(); commandGeneration += 1; commandLock.unlock()
+        pendingSeek?.cancel()
+    }
 
-extension URLSession {
-	static func fetchJSON(fromURL url: URL, completionHandler: @escaping (Data?, Any?, Error?) -> Void) -> URLSessionTask {
-		let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-			if error != nil {
-				completionHandler(nil, nil, error)
-				return
-			}
-			if data == nil {
-				completionHandler(nil, nil, NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Invalid data"]))
-				return
-			}
-			guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) else {
-				completionHandler(nil, nil, NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Invalid json"]))
-				return
-			}
-			completionHandler(data, json, nil)
-		}
-		return task
-	}
+    var source: MediaSource {
+        MediaSource(rawValue: Preferences[.preferredMediaSource] as String) ?? .automatic
+    }
+
+    init(forView: NowPlayingView) {
+        view = forView
+        super.init()
+        timer = Timer(timeInterval: 1.5, repeats: true) { [weak self] _ in self?.refresh() }
+        RunLoop.main.add(timer!, forMode: .common)
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(didChangeNowPlayingWidgetStyle), object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(refresh), name: NSWorkspace.didWakeNotification, object: nil)
+        refresh()
+    }
+
+    @objc func refresh() {
+        guard !polling else { return }
+        polling = true
+        let preference = source
+        if lastPreference != preference { invalidateCommands(); lastPreference = preference }
+        let frontmost = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        worker.async { [weak self] in
+            guard let self = self else { return }
+            let result = Result { try self.backend.execute(source: preference) }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.polling = false
+                guard self.source == preference else { self.refresh(); return }
+                switch result {
+                case .success(let poll):
+                    let selected = MediaSelection.select(poll.sessions, preference: preference, current: self.snapshot, frontmost: frontmost)
+                    self.snapshot = selected
+                    let failures = poll.errors.filter { preference == .automatic || $0.source == preference }
+                    if selected != nil { self.status = "" }
+                    else if failures.contains(where: { $0.code == -1743 }) { self.status = "Autorize o Pock em Automação" }
+                    else if failures.contains(where: { $0.source == .safari }) { self.status = "Safari: habilite JavaScript de Eventos Apple" }
+                    else { self.status = "Nenhuma mídia em reprodução" }
+                case .failure(let error):
+                    self.snapshot = nil
+                    self.status = error.localizedDescription
+                }
+                self.publish()
+            }
+        }
+    }
+
+    func selectSource(_ source: MediaSource) {
+        invalidateCommands()
+        Preferences[.preferredMediaSource] = source.rawValue
+        snapshot = nil
+        status = "Conectando a \(source.title)…"
+        publish()
+        refresh()
+    }
+
+    private func publish() {
+        let item = currentNowPlayingItem
+        let active = snapshot?.source ?? source
+        let identifier = active.bundleIdentifier
+        item.client = NowPlayingItem.Client(bundleIdentifier: identifier, parentApplicationBundleIdentifier: nil,
+                                             displayName: active == .automatic ? "Now Playing" : active.title,
+                                             icon: identifier.flatMap { NSWorkspace.shared.urlForApplication(withBundleIdentifier: $0) }.map { NSWorkspace.shared.icon(forFile: $0.path) })
+        item.title = snapshot?.title ?? status
+        item.artist = snapshot.map { $0.artist.isEmpty ? $0.source.title : "\($0.source.title) · \($0.artist)" }
+        item.album = snapshot?.album
+        item.isPlaying = snapshot?.playing ?? false
+        updateArtwork()
+        view?.updateContentViews()
+        NotificationCenter.default.post(name: .pockMediaDidUpdate, object: self)
+    }
+
+    private func updateArtwork() {
+        let identity = snapshot?.identity
+        let show: Bool = Preferences[.showMediaArtwork]
+        guard show, let snapshot = snapshot, let raw = snapshot.artwork, let url = URL(string: raw), url.scheme == "https" else {
+            artworkTask?.cancel()
+            artworkIdentity = nil
+            currentNowPlayingItem.artwork = nil
+            return
+        }
+        guard identity != artworkIdentity else { return }
+        artworkTask?.cancel()
+        artworkIdentity = identity
+        currentNowPlayingItem.artwork = nil
+        artworkTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, _ in
+            guard let data = data, data.count < 5_000_000,
+                  let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else { return }
+            DispatchQueue.main.async {
+                guard let self = self, self.snapshot?.identity == identity,
+                      (Preferences[.showMediaArtwork] as Bool) else { return }
+                self.currentNowPlayingItem.artwork = NSImage(data: data)
+                self.view?.updateContentViews()
+            }
+        }
+        artworkTask?.resume()
+    }
+
+    private func command(_ action: String, position: Double? = nil) {
+        guard let snapshot = snapshot else { return }
+        let token = generation()
+        worker.async { [weak self] in
+            guard let self = self, self.generation() == token else { return }
+            let result = try? self.backend.execute(source: snapshot.source, action: action, key: snapshot.key, position: position)
+            DispatchQueue.main.async {
+                if let failure = result?.errors.first { self.status = failure.message }
+                self.refresh()
+            }
+        }
+    }
+    func togglePlayingState() { command("toggle") }
+    func skipToNextTrack() { command("next") }
+    func skipToPreviousTrack() { command("previous") }
+    func seek(to position: Double) {
+        guard let snapshot = snapshot, snapshot.duration > 0 else { return }
+        let target = MediaSnapshot.clamped(position, duration: snapshot.duration)
+        pendingSeek?.cancel()
+        let identity = snapshot.identity
+        let token = generation()
+        let work = DispatchWorkItem { [weak self] in
+            guard let self = self, self.snapshot?.identity == identity, self.generation() == token else { return }
+            self.command("seek", position: target)
+        }
+        pendingSeek = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: work)
+    }
+    deinit {
+        timer?.invalidate()
+        pendingSeek?.cancel()
+        artworkTask?.cancel()
+        NotificationCenter.default.removeObserver(self)
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
+    }
 }
 
 extension NSWorkspace {
-	public func applicationName(for bundleIdentifier: String) -> String? {
-		self.urlForApplication(withBundleIdentifier: bundleIdentifier)?.lastPathComponent.replacingOccurrences(of: ".app", with: "")
-	}
-	public func applicationIcon(for bundleIdentifier: String?, fallbackFileType: String? = nil) -> NSImage? {
-		if let bundleIdentifier = bundleIdentifier,
-		   let path = NSWorkspace.shared.absolutePathForApplication(withBundleIdentifier: bundleIdentifier) {
-			return NSWorkspace.shared.icon(forFile: path)
-		} else {
-			return NSWorkspace.shared.icon(forFileType: fallbackFileType ?? "pock")
-		}
-	}
+    func applicationName(for identifier: String) -> String? {
+        urlForApplication(withBundleIdentifier: identifier)?.deletingPathExtension().lastPathComponent
+    }
+    func applicationIcon(for identifier: String?, fallbackFileType: String? = nil) -> NSImage? {
+        guard let identifier = identifier, let url = urlForApplication(withBundleIdentifier: identifier) else {
+            return NSImage(named: NSImage.touchBarPlayTemplateName)
+        }
+        return icon(forFile: url.path)
+    }
 }

@@ -40,3 +40,12 @@ Building never terminates running apps or installs to Applications. To install l
 Pock uses private macOS Touch Bar APIs. Compilation does not establish that every third party widget works on every macOS release. Verify the Dock, media controls, brightness, volume, sleep/wake, and Accessibility permission on the target Mac.
 
 The default widgets are compiled from the upstream sources imported at the commits documented in Vendor/Widgets/README.md. Their existing private macOS APIs and weather service still need behavioral validation; recompilation does not modernize every service. The app's core update catalog and third party widget catalog still belong to upstream; fork releases should be installed from this repository until a fork-specific update service is implemented. Bundled defaults are excluded from upstream update suggestions. No new telemetry service is added.
+
+
+## Now Playing 0.11.0
+
+The media widget uses explicit application automation for Spotify, Music, and Safari YouTube tabs. It does not use a scripting interpreter to access restricted global MediaRemote metadata. The host declares its Apple Events usage and macOS prompts for Automation permission. Safari additionally requires “Allow JavaScript from Apple Events”; the user must authorize enabling that option. Safari scripts check an HTTPS YouTube hostname and the exact tab URL before controlling playback.
+
+Hold the media widget, or tap its controls icon, to open a Touch Bar with source selection, playback controls, and a seek slider. Safari's previous/next controls seek backward/forward 10 seconds. Source pinning prevents other apps from receiving commands. Automatic mode prefers playing sessions, the foreground player, then the current session. Polling is serialized off the main thread, skips overlap, times out, and resumes after wake. Pending seeks are cancelled when changing source. Artwork comes from the player/page rather than an iTunes search.
+
+Run `bash scripts/test-media.sh` for source-selection and scripted Spotify/Safari fixtures, including YouTube host isolation, tab revalidation, seeking bounds, and denied permission handling. Live Automation permissions and physical Touch Bar behavior require on-device validation.

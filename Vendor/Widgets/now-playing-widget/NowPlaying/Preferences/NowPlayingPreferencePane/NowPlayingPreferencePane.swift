@@ -50,12 +50,12 @@ class NowPlayingPreferencePane: NSViewController, PKWidgetPreference {
         setupImageViewClickGesture()
     }
     
-	private func updateDefaultApplicationUIElements() {
-		let bundleIdentifier: String = Preferences[.defaultPlayer]
-		defaultApplicationIcon.image = NSWorkspace.shared.applicationIcon(for: bundleIdentifier)
-		defaultApplicationName.stringValue = NSWorkspace.shared.applicationName(for: bundleIdentifier) ?? ""
-	}
-	
+    private func updateDefaultApplicationUIElements() {
+        let source = MediaSource(rawValue: Preferences[.preferredMediaSource] as String) ?? .automatic
+        defaultApplicationIcon.image = NSWorkspace.shared.applicationIcon(for: source.bundleIdentifier)
+        defaultApplicationName.stringValue = source.title
+    }
+
 	private func updateButtonsState() {
 		hideWidgetIfNoMedia.state     = Preferences[.hideNowPlayingIfNoMedia] ? .on : .off
 		animateIconWhilePlaying.state = Preferences[.animateIconWhilePlaying] ? .on : .off
@@ -69,30 +69,27 @@ class NowPlayingPreferencePane: NSViewController, PKWidgetPreference {
         })
     }
 	
-	@IBAction private func didSelectChooseDefaultApplicationButton(_ control: Any?) {
-		guard let window = self.view.window else {
-			return
-		}
-		let openPanel = NSOpenPanel()
-		openPanel.directoryURL = FileManager.default.urls(for: .applicationDirectory, in: .localDomainMask).first!
-		openPanel.canChooseDirectories = false
-		openPanel.canChooseFiles = true
-		openPanel.allowsMultipleSelection = false
-		openPanel.allowedFileTypes = ["app"]
-		openPanel.beginSheetModal(for: window, completionHandler: { [weak self] result in
-			if result == NSApplication.ModalResponse.OK {
-				guard let self = self,
-						let pathUrl = openPanel.url,
-						let bundleIdentifier = Bundle(url: pathUrl)?.bundleIdentifier else {
-					return
-				}
-				Preferences[.defaultPlayer] = bundleIdentifier
-				self.updateDefaultApplicationUIElements()
-				NotificationCenter.default.post(name: .mrMediaRemoteNowPlayingApplicationDidChange, object: nil)
-			}
-		})
-	}
-    
+    @IBAction private func didSelectChooseDefaultApplicationButton(_ control: Any?) {
+        guard let button = control as? NSView else { return }
+        let selected = MediaSource(rawValue: Preferences[.preferredMediaSource] as String) ?? .automatic
+        let menu = NSMenu(title: "Fonte de mídia")
+        for source in MediaSource.allCases {
+            let item = NSMenuItem(title: source.title, action: #selector(didChooseSource(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = source.rawValue
+            item.state = source == selected ? .on : .off
+            menu.addItem(item)
+        }
+        menu.popUp(positioning: nil, at: NSPoint(x: 0, y: button.bounds.maxY), in: button)
+    }
+
+    @objc private func didChooseSource(_ sender: NSMenuItem) {
+        guard let raw = sender.representedObject as? String, let source = MediaSource(rawValue: raw) else { return }
+        Preferences[.preferredMediaSource] = source.rawValue
+        updateDefaultApplicationUIElements()
+        NotificationCenter.default.post(name: Notification.Name(didChangeNowPlayingWidgetStyle), object: nil)
+    }
+
     @IBAction private func didSelectRadioButton(_ control: AnyObject) {
         let view = (control as? NSGestureRecognizer)?.view ?? control
         switch view.tag {

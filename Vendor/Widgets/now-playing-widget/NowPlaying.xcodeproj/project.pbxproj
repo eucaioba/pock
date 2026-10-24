@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130E7354172510CFFC149F23 /* MediaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D161328A78E1CE1F2D00A /* MediaSession.swift */; };
+		1E92A2F2DADEB2861FD20C5F /* AutomationMediaBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525AF0FFD0A316B11090FAC /* AutomationMediaBackend.swift */; };
 		212C3A0F5F4C44A01BDD45B4 /* Pods_DefaultWidgets_NowPlaying.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08773EBF254F31EF2268EE05 /* Pods_DefaultWidgets_NowPlaying.framework */; };
 		342D8B7523CB6CF500372129 /* NowPlayingPreferencePane.strings in Resources */ = {isa = PBXBuildFile; fileRef = 342D8B6C23CB6CF500372129 /* NowPlayingPreferencePane.strings */; };
 		342D8B7623CB6CF500372129 /* NowPlayingPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342D8B6F23CB6CF500372129 /* NowPlayingPreferencePane.swift */; };
@@ -20,6 +22,8 @@
 		34A0228F23C66DF700A24DA5 /* NowPlayingWidgetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0228E23C66DF700A24DA5 /* NowPlayingWidgetStyle.swift */; };
 		34A0229123C66E1400A24DA5 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0229023C66E1400A24DA5 /* Preferences.swift */; };
 		34E6A28925587F21002693EA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34E6A28825587F21002693EA /* Media.xcassets */; };
+		4D3D6F7B35A9235DD50DAFBB /* MediaSession.js in Resources */ = {isa = PBXBuildFile; fileRef = 258F161146927B444E6C4FD1 /* MediaSession.js */; };
+		E56119ABB733A9497CDD3025 /* NowPlayingControlsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE61A8EC0F8539B330F05EB2 /* NowPlayingControlsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		08773EBF254F31EF2268EE05 /* Pods_DefaultWidgets_NowPlaying.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DefaultWidgets_NowPlaying.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		258F161146927B444E6C4FD1 /* MediaSession.js */ = {isa = PBXFileReference; includeInIndex = 1; name = MediaSession.js; path = Sources/MediaSession.js; sourceTree = "<group>"; };
 		342D8B6D23CB6CF500372129 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/NowPlayingPreferencePane.strings"; sourceTree = "<group>"; };
 		342D8B6E23CB6CF500372129 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NowPlayingPreferencePane.strings; sourceTree = "<group>"; };
 		342D8B6F23CB6CF500372129 /* NowPlayingPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingPreferencePane.swift; sourceTree = "<group>"; };
@@ -61,7 +66,10 @@
 		47CA05DEAD0D2675BD5519C3 /* Pods-DefaultWidgets-NowPlaying.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-NowPlaying.release.xcconfig"; path = "../../../../Pods/Target Support Files/Pods-DefaultWidgets-NowPlaying/Pods-DefaultWidgets-NowPlaying.release.xcconfig"; sourceTree = "<group>"; };
 		5643518FD30F765E4E41E3A9 /* Pods-DefaultWidgets-NowPlaying.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-NowPlaying.debug.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-NowPlaying/Pods-DefaultWidgets-NowPlaying.debug.xcconfig"; sourceTree = "<group>"; };
 		A5B829F26F673E6578A8B94C /* Pods-DefaultWidgets-NowPlaying.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-NowPlaying.release.xcconfig"; path = "Target Support Files/Pods-DefaultWidgets-NowPlaying/Pods-DefaultWidgets-NowPlaying.release.xcconfig"; sourceTree = "<group>"; };
+		D525AF0FFD0A316B11090FAC /* AutomationMediaBackend.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AutomationMediaBackend.swift; path = Sources/AutomationMediaBackend.swift; sourceTree = "<group>"; };
 		D5B5617712435C154422C51F /* Pods-DefaultWidgets-NowPlaying.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DefaultWidgets-NowPlaying.debug.xcconfig"; path = "../../../../Pods/Target Support Files/Pods-DefaultWidgets-NowPlaying/Pods-DefaultWidgets-NowPlaying.debug.xcconfig"; sourceTree = "<group>"; };
+		ED3D161328A78E1CE1F2D00A /* MediaSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MediaSession.swift; path = Sources/MediaSession.swift; sourceTree = "<group>"; };
+		FE61A8EC0F8539B330F05EB2 /* NowPlayingControlsController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NowPlayingControlsController.swift; path = Sources/NowPlayingControlsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +120,10 @@
 				34A0228923C66D2C00A24DA5 /* Private */,
 				34A0227723C6632D00A24DA5 /* Sources */,
 				34A0229223C66E1900A24DA5 /* Preferences */,
+				ED3D161328A78E1CE1F2D00A /* MediaSession.swift */,
+				D525AF0FFD0A316B11090FAC /* AutomationMediaBackend.swift */,
+				FE61A8EC0F8539B330F05EB2 /* NowPlayingControlsController.swift */,
+				258F161146927B444E6C4FD1 /* MediaSession.js */,
 			);
 			path = NowPlaying;
 			sourceTree = "<group>";
@@ -237,6 +249,7 @@
 				342D8B7723CB6CF500372129 /* NowPlayingPreferencePane.xib in Resources */,
 				34E6A28925587F21002693EA /* Media.xcassets in Resources */,
 				342D8B7523CB6CF500372129 /* NowPlayingPreferencePane.strings in Resources */,
+				4D3D6F7B35A9235DD50DAFBB /* MediaSession.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +311,9 @@
 				34A0228F23C66DF700A24DA5 /* NowPlayingWidgetStyle.swift in Sources */,
 				34A0228723C66BE200A24DA5 /* NowPlayingHelper.swift in Sources */,
 				34A0227923C6632D00A24DA5 /* NowPlayingWidget.swift in Sources */,
+				130E7354172510CFFC149F23 /* MediaSession.swift in Sources */,
+				1E92A2F2DADEB2861FD20C5F /* AutomationMediaBackend.swift in Sources */,
+				E56119ABB733A9497CDD3025 /* NowPlayingControlsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

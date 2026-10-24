@@ -16,6 +16,7 @@ internal struct Preferences {
 		case showMediaArtwork
 		case invertSwipeGesture
 		case defaultPlayer
+        case preferredMediaSource
 	}
 	static subscript<T>(_ key: Keys) -> T {
 		get {
@@ -28,10 +29,12 @@ internal struct Preferences {
 				case .animateIconWhilePlaying:
 					return true as! T
 				case .showMediaArtwork:
-					return false as! T
+					return true as! T
 				case .invertSwipeGesture:
 					return true as! T
-				case .defaultPlayer:
+				case .preferredMediaSource:
+                    return "automatic" as! T
+                case .defaultPlayer:
 					if #available(OSX 10.15, *) {
 						return "com.apple.Music" as! T
 					} else {
@@ -46,10 +49,11 @@ internal struct Preferences {
 		}
 	}
     static func reset() {
+        Preferences[.preferredMediaSource] = "automatic"
         Preferences[.nowPlayingWidgetStyle] = "onlyInfo"
         Preferences[.hideNowPlayingIfNoMedia] = false
         Preferences[.animateIconWhilePlaying] = true
-        Preferences[.showMediaArtwork] = false
+        Preferences[.showMediaArtwork] = true
         Preferences[.invertSwipeGesture] = true
         if #available(OSX 10.15, *) {
             Preferences[.defaultPlayer] = "com.apple.Music"

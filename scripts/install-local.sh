@@ -2,7 +2,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source_app=".build/DerivedData/Build/Products/Release/Pock.app"
-signed_app=".build/LocalInstall/Pock.app"
+# Stage outside Documents: file providers can reattach Finder metadata while
+# codesign is running, even immediately after xattr cleanup.
+staging_root="$(mktemp -d /private/tmp/pock-install.XXXXXX)"
+trap 'rm -rf "$staging_root"' EXIT
+signed_app="$staging_root/Pock.app"
 if [[ ! -x "$source_app/Contents/MacOS/Pock" ]]; then
   echo "Build Release first: bash scripts/build.sh Release" >&2
   exit 1
@@ -12,10 +16,6 @@ if pgrep -x Pock >/dev/null; then
   exit 1
 fi
 mkdir -p .build/LocalInstall
-# Always stage a fresh copy; the build product itself remains unsigned.
-if [[ -e "$signed_app" ]]; then
-  mv "$signed_app" ".build/LocalInstall/Pock-$(date +%Y%m%d-%H%M%S).app"
-fi
 ditto --noextattr --norsrc "$source_app" "$signed_app"
 # Local build folders can inherit Finder metadata that codesign rejects.
 xattr -cr "$signed_app"
@@ -27,7 +27,8 @@ fi
 ditto --noextattr --norsrc "$signed_app" /Applications/Pock.app
 codesign --verify --deep --strict /Applications/Pock.app
 # Install the matching default widgets as well as the host application.
-widget_stage=".build/LocalInstall/Widgets-$(date +%Y%m%d-%H%M%S)"
+widget_stage="$staging_root/Widgets"
+widget_backups=".build/LocalInstall/WidgetBackups-$(date +%Y%m%d-%H%M%S)"
 widget_destination="$HOME/Library/Application Support/Pock/Widgets"
 mkdir -p "$widget_stage" "$widget_destination"
 for archive in "$signed_app"/Contents/Resources/DefaultWidgets/*.pkarchive; do
@@ -37,8 +38,8 @@ for widget in "$widget_stage"/*.pock; do
   codesign --verify --deep --strict "$widget"
   widget_name="$(basename "$widget")"
   if [[ -e "$widget_destination/$widget_name" ]]; then
-    mkdir -p "$widget_stage/Previous"
-    mv "$widget_destination/$widget_name" "$widget_stage/Previous/$widget_name"
+    mkdir -p "$widget_backups"
+    mv "$widget_destination/$widget_name" "$widget_backups/$widget_name"
   fi
   ditto --noextattr --norsrc "$widget" "$widget_destination/$widget_name"
 done

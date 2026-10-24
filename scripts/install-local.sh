@@ -19,7 +19,15 @@ mkdir -p .build/LocalInstall
 ditto --noextattr --norsrc "$source_app" "$signed_app"
 # Local build folders can inherit Finder metadata that codesign rejects.
 xattr -cr "$signed_app"
-codesign --force --deep --sign - "$signed_app"
+# A stable identity keeps Accessibility/Automation grants across rebuilds;
+# ad hoc signatures change identity on every build. See create-local-signing-identity.sh.
+identity="${POCK_SIGN_IDENTITY:-Pock Local Signing}"
+if security find-certificate -c "$identity" >/dev/null 2>&1; then
+  codesign --force --deep --sign "$identity" "$signed_app"
+else
+  echo "warning: \"$identity\" not found, signing ad hoc. Permissions will need to be granted again after each install." >&2
+  codesign --force --deep --sign - "$signed_app"
+fi
 codesign --verify --deep --strict "$signed_app"
 if [[ -e /Applications/Pock.app ]]; then
   mv /Applications/Pock.app "/Applications/Pock-backup-$(date +%Y%m%d-%H%M%S).app"

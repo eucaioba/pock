@@ -39,7 +39,11 @@ internal enum BuiltInWidgets {
 		}
 	}
 
-	/// Static snapshot of a live item for the customization palette, falling back to its label.
+	/// Widest a palette preview grows, so wide items (the Dock) stay easy to drag.
+	private static let maxPreviewWidth: CGFloat = 170
+
+	/// Static snapshot of a live item for the customization palette, falling back to a labelled chip
+	/// when the item has nothing to draw yet (no data, no profile, zero width).
 	static func previewView(for item: NSTouchBarItem) -> NSView {
 		let label = item.customizationLabel ?? "Item"
 		if let live = (item as? NSCustomTouchBarItem)?.view {
@@ -51,16 +55,52 @@ internal enum BuiltInWidgets {
 			}
 			live.layoutSubtreeIfNeeded()
 			let width = live.frame.width > 0 ? live.frame.width : live.fittingSize.width
-			let frame = NSRect(x: 0, y: 0, width: max(width, 40), height: 30)
-			if width > 0, let image = NSImage(frame: frame, view: live) {
+			if width > 0, let image = NSImage(frame: NSRect(x: 0, y: 0, width: width, height: 30), view: live), !isBlank(image) {
 				let preview = NSImageView(image: image)
 				preview.imageScaling = .scaleProportionallyDown
+				if width > maxPreviewWidth {
+					preview.widthAnchor.constraint(equalToConstant: maxPreviewWidth).isActive = true
+				}
 				return preview
 			}
 		}
-		let text = NSTextField(labelWithString: label)
-		text.font = .systemFont(ofSize: 11, weight: .semibold)
-		return text
+		return chip(label)
+	}
+
+	/// Widget bundles hand the palette a snapshot that is blank while they have nothing to show
+	/// (e.g. Now Playing with no media), which leaves no way to find or drag them; swap in a chip.
+	static func visiblePreview(_ view: NSView, label: String?) -> NSView {
+		if let imageView = view as? NSImageView, let image = imageView.image, isBlank(image) {
+			return chip(label ?? "Item")
+		}
+		return view
+	}
+
+	private static func chip(_ text: String) -> NSView {
+		let label = NSTextField(labelWithString: text)
+		label.font = .systemFont(ofSize: 11, weight: .semibold)
+		label.textColor = .white
+		let box = NSStackView(views: [label])
+		box.edgeInsets = NSEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)
+		box.wantsLayer = true
+		box.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.18).cgColor
+		box.layer?.cornerRadius = 6
+		return box
+	}
+
+	/// True when a snapshot has no visible pixel.
+	private static func isBlank(_ image: NSImage) -> Bool {
+		guard let rep = image.representations.first as? NSBitmapImageRep else {
+			return true
+		}
+		for y in 0..<rep.pixelsHigh {
+			for x in 0..<rep.pixelsWide {
+				if let color = rep.colorAt(x: x, y: y), color.alphaComponent > 0.05 {
+					return false
+				}
+			}
+		}
+		return true
 	}
 
 	/// Swaps replaced widgets for their built-in items in the saved layout, keeping their position.

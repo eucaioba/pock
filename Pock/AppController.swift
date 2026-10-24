@@ -420,7 +420,7 @@ extension AppController: NSTouchBarDelegate {
 			return item
 		}
 		let widgetItem = NSCustomTouchBarItem(identifier: identifier)
-		widgetItem.view = widget.viewForCustomizationPalette()
+		widgetItem.view = BuiltInWidgets.visiblePreview(widget.viewForCustomizationPalette(), label: widget.customizationLabel)
 		widgetItem.customizationLabel = widget.customizationLabel
 		return widgetItem
 	}
@@ -441,13 +441,17 @@ extension AppController: NSTouchBarDelegate {
 	@objc private func didExitCustomization(_ sender: Any?) {
 		removeCustomizationObservers()
 		NSApp.touchBar = nil
-		pockTouchBarController.present()
-		// Give the palette time to close its windows before handing focus back to the previous app.
-		async(after: 0.5) {
-			NSApp.deactivate()
+		// AppKit writes the edited layout around this notification. The main bar was created before the
+		// edit and keeps its old item list, so rebuild it once the layout is saved.
+		async(after: 0.25) { [weak self] in
+			self?.reload(shouldFetchLatestVersions: false)
+			// Give the palette time to close its windows before handing focus back to the previous app.
+			async(after: 0.5) {
+				NSApp.deactivate()
+			}
 		}
 	}
-	
+
 }
 
 // MARK: Update once (upon) a day

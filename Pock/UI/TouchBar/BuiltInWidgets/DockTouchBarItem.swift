@@ -124,7 +124,7 @@ internal final class DockTouchBarItem: NSCustomTouchBarItem, NSScrubberDataSourc
 	private var reloadPending = false
 	private static let itemIdentifier = NSUserInterfaceItemIdentifier("DockItemView")
 	/// Widest the app list grows before it scrolls, so the other items keep their room.
-	private static let maxScrubberWidth: CGFloat = 340
+	private static let maxScrubberWidth: CGFloat = 250
 
 	override init(identifier: NSTouchBarItem.Identifier) {
 		super.init(identifier: identifier)
@@ -144,7 +144,12 @@ internal final class DockTouchBarItem: NSCustomTouchBarItem, NSScrubberDataSourc
 		scrubber.itemAlignment = .none
 		scrubber.translatesAutoresizingMaskIntoConstraints = false
 		scrubberWidth = scrubber.widthAnchor.constraint(equalToConstant: 200)
+		// Not required: when the bar is full the Dock shrinks (and scrolls) instead of other items disappearing.
+		scrubberWidth?.priority = NSLayoutConstraint.Priority(700)
 		scrubberWidth?.isActive = true
+		scrubber.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+		stackView.setClippingResistancePriority(.defaultLow, for: .horizontal)
+		stackView.setHuggingPriority(.defaultLow, for: .horizontal)
 		scrubber.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
 		separator.wantsLayer = true

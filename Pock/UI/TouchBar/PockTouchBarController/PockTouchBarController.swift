@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AppCenterAnalytics
 import PockKit
 
 /// Customization identifier
@@ -27,8 +26,16 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	private var emptyTouchBarController: EmptyTouchBarController?
 	
 	internal var allowedCustomizationIdentifiers: [NSTouchBarItem.Identifier] {
-		return Array(widgets.keys) + [.flexibleSpace]
+		return Array(widgets.keys) + [.appControls, .flexibleSpace]
 	}
+
+    /// Provide a usable first-run layout; AppKit keeps any saved customization.
+    internal var defaultItemIdentifiers: [NSTouchBarItem.Identifier] {
+        let defaults = ["Esc", "Dock", "AppControls", "NowPlaying", "Status", "ControlCenter"]
+            .map { NSTouchBarItem.Identifier("com.pigigaldi.pock.\($0)") }
+            .filter { widgets[$0] != nil || $0 == .appControls }
+        return defaults.isEmpty ? widgets.keys.sorted { $0.rawValue < $1.rawValue } : defaults
+    }
 	
 	// MARK: Mouse Support
 	private var touchBarView: NSView? {
@@ -107,10 +114,12 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 
 	/// Setup Touch Bar
 	override func makeTouchBar() -> NSTouchBar? {
+		AppControlsTouchBarItem.insertIntoSavedLayoutIfNeeded()
 		let touchBar = NSTouchBar()
 		touchBar.delegate = self
 		touchBar.customizationIdentifier = .pockTouchBarController
 		touchBar.customizationAllowedItemIdentifiers = allowedCustomizationIdentifiers
+        touchBar.defaultItemIdentifiers = defaultItemIdentifiers
 		for key in widgets.keys {
 			Roger.info("[\(key.rawValue)] - Allowed for customization")
 		}
@@ -121,6 +130,11 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
 		if let item = cachedItems[identifier] {
 			Roger.info("[\(identifier.rawValue)][item] - cached")
+			return item
+		}
+		if identifier == .appControls {
+			let item = AppControlsTouchBarItem(identifier: identifier)
+			cachedItems[identifier] = item
 			return item
 		}
 		guard let widget = widgets[identifier] else {
@@ -185,13 +199,13 @@ internal class PockTouchBarController: PKTouchBarMouseController {
 		})
 	}
     
-    private func screenEdgeController(_ controller: PKScreenEdgeController, mouseScrollWithDelta delta: CGFloat, atLocation location: NSPoint, in view: NSView, event: NSEvent) {
-        mouseDelegates.forEach({
-            if $0.screenEdgeController?(controller, mouseScrollWithDelta: delta, atLocation: location, in: view, event: event) == nil {
-                $0.screenEdgeController?(controller, mouseScrollWithDelta: delta, atLocation: location, in: view)
-            }
-        })
+    override func screenEdgeController(_ controller: PKScreenEdgeController, mouseScrollWithDelta delta: CGFloat, atLocation location: NSPoint, in view: NSView) {
+        super.screenEdgeController(controller, mouseScrollWithDelta: delta, atLocation: location, in: view)
+        mouseDelegates.forEach {
+            $0.screenEdgeController?(controller, mouseScrollWithDelta: delta, atLocation: location, in: view)
+        }
     }
+
 	
 	override func screenEdgeController(_ controller: PKScreenEdgeController, mouseClickAtLocation location: NSPoint, in view: NSView) {
 		super.screenEdgeController(controller, mouseClickAtLocation: location, in: view)

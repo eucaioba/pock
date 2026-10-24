@@ -43,6 +43,9 @@ internal struct Preferences {
 		case userDefinedPresentationMode
 		case didShowOnBoard
         case showDebugConsoleOnLaunch
+		case commandTouchBarEnabled
+		case optionTouchBarEnabled
+		case controlTouchBarEnabled
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -76,6 +79,8 @@ internal struct Preferences {
                     return false as! T
                 case .showDebugConsoleOnLaunch:
                     return false as! T
+                case .commandTouchBarEnabled, .optionTouchBarEnabled, .controlTouchBarEnabled:
+                    return true as! T
                 }
             }
             return value

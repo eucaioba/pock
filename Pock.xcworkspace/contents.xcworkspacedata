@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Pock.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/control-center-widget/ControlCenter.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/dock-widget/Dock.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/esc-widget/Esc.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/now-playing-widget/NowPlaying.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/status-widget/Status.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/Widgets/weather-widget/Weather.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import AppCenterAnalytics
 
 class PreferencesViewController: NSViewController {
 
@@ -58,6 +57,7 @@ class PreferencesViewController: NSViewController {
 		super.viewDidLoad()
 		configureUIElements()
 		localizeUIElements()
+		addModifierTouchBarSection()
 		if AppController.shared.isVisible == false {
 			AppController.shared.reload(shouldFetchLatestVersions: false)
 		}
@@ -177,11 +177,6 @@ class PreferencesViewController: NSViewController {
 		async(after: 0.4) {
 			NotificationCenter.default.post(name: .shouldReloadPock, object: nil)
 		}
-        // Track event
-        Analytics.trackEvent(
-            "PreferencesViewController.didChangeLayoutStyle(for:)",
-            withProperties: ["layoutStyle": style.rawValue]
-        )
 	}
 	
 	@IBAction private func didChangeDefaultTouchBarPresentationMode(_ button: NSPopUpButton) {
@@ -221,14 +216,6 @@ class PreferencesViewController: NSViewController {
 			return
 		}
 		Preferences[key] = newValue
-        // Track event
-        Analytics.trackEvent(
-            "PreferencesViewController.didChangePreferencesOption(for:)",
-            withProperties: [
-                key.rawValue: newValue.description,
-                "shouldReloadPock": shouldReloadPock.description
-            ]
-        )
 		if shouldReloadPock {
 			async {
 				NotificationCenter.default.post(name: .shouldReloadPock, object: nil)
@@ -241,6 +228,125 @@ class PreferencesViewController: NSViewController {
 		}
 	}
 	
+	// MARK: Modifier Touch Bars
+
+	/// Built in code and inserted after the double `⌃ Control` section of the right column.
+	private func addModifierTouchBarSection() {
+		guard let doubleControlSection = doubleControlTitleLabel.superview?.superview,
+			  let column = doubleControlSection.superview as? NSStackView,
+			  let index = column.arrangedSubviews.firstIndex(of: doubleControlSection) else {
+			return
+		}
+		let title = NSTextField(labelWithString: "preferences.modifier-bars.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.modifier-bars.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let checkboxes: [NSView] = ModifierTouchBarMode.allCases.enumerated().map { index, mode in
+			let checkbox = NSButton(checkboxWithTitle: "preferences.modifier-bars.\(mode.modifierName)".localized,
+									target: self, action: #selector(didChangeModifierTouchBarOption(_:)))
+			checkbox.tag = index
+			checkbox.state = Preferences[mode.preferenceKey] == true ? .on : .off
+			return checkbox
+		}
+		let section = NSStackView(views: [title, description] + checkboxes)
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index + 1)
+		column.insertArrangedSubview(section, at: index + 2)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addAppControlsSection(to: column, at: index + 3)
+	}
+
+	// MARK: App Controls
+
+	private func addAppControlsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.app-controls.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.app-controls.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		let disabled = AppControlsTouchBarItem.disabledProfiles
+		var seen = Set<String>()
+		let profiles = AppControlsTouchBarItem.allProfiles.filter { seen.insert($0.id).inserted }
+		let checkboxes: [NSView] = profiles.map { profile in
+			let checkbox = NSButton(checkboxWithTitle: profile.name, target: self, action: #selector(didChangeAppProfile(_:)))
+			checkbox.identifier = NSUserInterfaceItemIdentifier(profile.id)
+			checkbox.state = disabled.contains(profile.id) ? .off : .on
+			checkbox.toolTip = profile.actions.map(\.title).joined(separator: ", ")
+			return checkbox
+		}
+		let grid = NSStackView(views: [
+			NSStackView(views: Array(checkboxes.prefix((checkboxes.count + 1) / 2))),
+			NSStackView(views: Array(checkboxes.dropFirst((checkboxes.count + 1) / 2)))
+		])
+		grid.orientation = .horizontal
+		grid.alignment = .top
+		grid.spacing = 24
+		grid.arrangedSubviews.compactMap { $0 as? NSStackView }.forEach {
+			$0.orientation = .vertical
+			$0.alignment = .leading
+			$0.spacing = 4
+		}
+		let customize = NSButton(title: "preferences.app-controls.customize".localized, target: self, action: #selector(openCustomAppProfiles))
+		customize.bezelStyle = .rounded
+		let section = NSStackView(views: [title, description, grid, customize])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: grid)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	@objc private func didChangeAppProfile(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		var disabled = AppControlsTouchBarItem.disabledProfiles
+		if checkbox.state == .on {
+			disabled.remove(id)
+		} else {
+			disabled.insert(id)
+		}
+		AppControlsTouchBarItem.disabledProfiles = disabled
+	}
+
+	/// Creates the custom profiles file with an example on first use, then reveals it.
+	@objc private func openCustomAppProfiles() {
+		let url = AppControlsTouchBarItem.customProfilesURL
+		if !FileManager.default.fileExists(atPath: url.path) {
+			let example = [AppProfile(id: "example", name: "Example (TextEdit)", apps: ["com.apple.TextEdit"], actions: [
+				AppAction(title: "Bold", symbol: "bold", shortcut: "cmd+b"),
+				AppAction(title: "Italic", symbol: "italic", shortcut: "cmd+i")
+			])]
+			let encoder = JSONEncoder()
+			encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+			try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+			try? encoder.encode(example).write(to: url)
+		}
+		NSWorkspace.shared.activateFileViewerSelecting([url])
+	}
+
+	@objc private func didChangeModifierTouchBarOption(_ checkbox: NSButton) {
+		guard ModifierTouchBarMode.allCases.indices.contains(checkbox.tag) else {
+			return
+		}
+		let mode = ModifierTouchBarMode.allCases[checkbox.tag]
+		Preferences[mode.preferenceKey] = checkbox.state == .on
+		if mode == .windowLayout, checkbox.state == .on, !WindowManager.isTrusted {
+			WindowManager.requestAccess()
+		}
+	}
+
 	// MARK: Core-update stuff
 	
 	private func shouldAskToupdate(_ completion: @escaping (Version?) -> Void) {
@@ -271,8 +377,6 @@ class PreferencesViewController: NSViewController {
                 self.showUpdateAlert(for: newVersion)
             }
         }
-        // Track event
-        Analytics.trackEvent("PreferencesViewController.checkForUpdates(_:)")
 	}
 	
 	private func showUpdateAlert(for version: Version?) {
@@ -293,11 +397,6 @@ class PreferencesViewController: NSViewController {
 					}
 				}
 			)
-            // Track event
-            Analytics.trackEvent(
-                "PreferencesViewController.showUpdateAlert(for:)",
-                withProperties: ["newVersion": newVersion.name]
-            )
 		} else {
 			self.showAlert(
 				title: "preferences.updates.already-on-latest-version.title".localized(currentVersion),

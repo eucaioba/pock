@@ -189,3 +189,35 @@
 "debug.console.show-on-launch" = "Mostra all’avvio";
 "debug.console.scroll-automatically" = "Scorri automaticamente";
 "debug.console.clear-console" = "Pulisci console";
+
+/// Modifier Touch Bars
+"preferences.modifier-bars.title" = "Tieni premuti i tasti modificatori";
+"preferences.modifier-bars.desc" = "Tieni premuto un tasto da solo per mostrare una Touch Bar dedicata. Si chiude rilasciando il tasto o digitando una scorciatoia.";
+"preferences.modifier-bars.command" = "⌘ Comando: passa tra le app aperte";
+"preferences.modifier-bars.option" = "⌥ Opzione: luminosità, volume e controlli di sistema";
+"preferences.modifier-bars.control" = "⌃ Control: disponi la finestra in primo piano (richiede Accessibilità)";
+"modifier-bar.mute" = "Silenzia";
+"modifier-bar.muted" = "Muto";
+"modifier-bar.brightness-down" = "Riduci luminosità";
+"modifier-bar.brightness-up" = "Aumenta luminosità";
+"modifier-bar.volume-down" = "Abbassa volume";
+"modifier-bar.volume-up" = "Alza volume";
+"modifier-bar.applications" = "App";
+"modifier-bar.sleep-display" = "Spegni schermo";
+"modifier-bar.allow-accessibility" = "Consenti…";
+"modifier-bar.accessibility-required" = "Disporre le finestre richiede il permesso di Accessibilità";
+"modifier-bar.window.leftHalf" = "Metà sinistra";
+"modifier-bar.window.rightHalf" = "Metà destra";
+"modifier-bar.window.topHalf" = "Metà superiore";
+"modifier-bar.window.bottomHalf" = "Metà inferiore";
+"modifier-bar.window.leftThird" = "Terzo sinistro";
+"modifier-bar.window.centerThird" = "Terzo centrale";
+"modifier-bar.window.rightThird" = "Terzo destro";
+"modifier-bar.window.center" = "Centra";
+"modifier-bar.window.maximize" = "Riempi schermo";
+"modifier-bar.window.nextDisplay" = "Schermo successivo";
+
+/// App Controls
+"preferences.app-controls.title" = "Controlli per app";
+"preferences.app-controls.desc" = "Aggiungi “App Controls” alla Touch Bar per avere pulsanti per l’app in primo piano. I pulsanti inviano scorciatoie da tastiera e richiedono il permesso di Accessibilità. I profili in AppProfiles.json sostituiscono quelli inclusi; le modifiche si applicano ricaricando Pock.";
+"preferences.app-controls.customize" = "Modifica profili personalizzati…";

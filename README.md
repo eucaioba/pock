@@ -1,3 +1,11 @@
+# Pock — maintained fork
+
+Maintenance fork of [pock/pock](https://github.com/pock/pock). See [MAINTENANCE.md](MAINTENANCE.md) for reproducible build instructions, changes, and compatibility limits.
+
+This fork does not include AppCenter analytics or crash reporting. The original README below describes the upstream project; its downloads and update service still refer to upstream.
+
+---
+
 <p align="center"><img src="https://pock.app/_nuxt/img/pock-icon-big-sur.53a4c62.png" width="96"/></p>
 <p align="center"><b>Widgets manager for MacBook's Touch Bar</b></p>
 <p align="center">Pock is a free, open-source tool that gives you quick access to your favorite controls and services while maximizing your on-screen real estate</p>

@@ -189,3 +189,35 @@
 "debug.console.show-on-launch" = "Bei Start anzeigen";
 "debug.console.scroll-automatically" = "Automatisch blättern";
 "debug.console.clear-console" = "Konsole reinigen";
+
+/// Modifier Touch Bars
+"preferences.modifier-bars.title" = "Sondertasten halten";
+"preferences.modifier-bars.desc" = "Halte eine Taste allein gedrückt, um eine eigene Touch Bar anzuzeigen. Sie schließt sich beim Loslassen oder bei einem Kurzbefehl.";
+"preferences.modifier-bars.command" = "⌘ Befehl: zwischen offenen Apps wechseln";
+"preferences.modifier-bars.option" = "⌥ Wahl: Helligkeit, Lautstärke und Systemsteuerung";
+"preferences.modifier-bars.control" = "⌃ Control: vorderes Fenster anordnen (erfordert Bedienungshilfen)";
+"modifier-bar.mute" = "Stumm";
+"modifier-bar.muted" = "Stumm";
+"modifier-bar.brightness-down" = "Helligkeit verringern";
+"modifier-bar.brightness-up" = "Helligkeit erhöhen";
+"modifier-bar.volume-down" = "Leiser";
+"modifier-bar.volume-up" = "Lauter";
+"modifier-bar.applications" = "Apps";
+"modifier-bar.sleep-display" = "Display ausschalten";
+"modifier-bar.allow-accessibility" = "Erlauben…";
+"modifier-bar.accessibility-required" = "Fensteranordnung erfordert Bedienungshilfen";
+"modifier-bar.window.leftHalf" = "Linke Hälfte";
+"modifier-bar.window.rightHalf" = "Rechte Hälfte";
+"modifier-bar.window.topHalf" = "Obere Hälfte";
+"modifier-bar.window.bottomHalf" = "Untere Hälfte";
+"modifier-bar.window.leftThird" = "Linkes Drittel";
+"modifier-bar.window.centerThird" = "Mittleres Drittel";
+"modifier-bar.window.rightThird" = "Rechtes Drittel";
+"modifier-bar.window.center" = "Zentrieren";
+"modifier-bar.window.maximize" = "Bildschirm füllen";
+"modifier-bar.window.nextDisplay" = "Nächster Bildschirm";
+
+/// App Controls
+"preferences.app-controls.title" = "App-Steuerung";
+"preferences.app-controls.desc" = "Füge „App Controls“ zur Touch Bar hinzu, um Tasten für die vordere App zu erhalten. Die Tasten senden Tastaturkurzbefehle und erfordern Bedienungshilfen. Eigene Profile in AppProfiles.json ersetzen die integrierten; Änderungen gelten nach dem Neuladen von Pock.";
+"preferences.app-controls.customize" = "Eigene Profile bearbeiten…";

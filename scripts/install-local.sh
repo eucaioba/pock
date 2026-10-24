@@ -29,8 +29,13 @@ else
   codesign --force --deep --sign - "$signed_app"
 fi
 codesign --verify --deep --strict "$signed_app"
+# Keep backups out of /Applications so Launchpad and Spotlight only show one Pock.
+app_backups=".build/LocalInstall/AppBackups"
 if [[ -e /Applications/Pock.app ]]; then
-  mv /Applications/Pock.app "/Applications/Pock-backup-$(date +%Y%m%d-%H%M%S).app"
+  mkdir -p "$app_backups"
+  mv /Applications/Pock.app "$app_backups/Pock-$(date +%Y%m%d-%H%M%S).app"
+  # Keep the three most recent backups.
+  ls -1d "$app_backups"/Pock-*.app | sort -r | tail -n +4 | while read -r old_backup; do rm -rf "$old_backup"; done
 fi
 ditto --noextattr --norsrc "$signed_app" /Applications/Pock.app
 codesign --verify --deep --strict /Applications/Pock.app

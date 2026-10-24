@@ -155,6 +155,12 @@ internal final class WidgetsInstaller: NSDocument {
 	}
 	
 	internal func downloadWidget(at url: URL, name: String, progress: @escaping (Double) -> Void, completion: @escaping (PKWidgetInfo?, PockError?) -> Void) {
+        if url.isFileURL {
+            async { [self] in
+                extractAndInstall(name, atLocation: url, removeSource: false, completion)
+            }
+            return
+        }
 		Downloader(
 			url: url,
 			progress: progress,
@@ -228,11 +234,12 @@ internal final class WidgetsInstaller: NSDocument {
 	// MARK: Extract downloaded widget
 	
 	internal func extractAndInstall(_ widgetName: String, atLocation location: URL, removeSource: Bool, _ completion: (PKWidgetInfo?, PockError?) -> Void) {
-		let zipFileLocation = location.deletingLastPathComponent().appendingPathComponent(widgetName).appendingPathExtension("zip")
+        let zipFileLocation = kWidgetsTempPathURL.appendingPathComponent(UUID().uuidString).appendingPathExtension("zip")
 		defer {
 			clearTemporaryWidgetsFolder()
 		}
 		do {
+            try manager.createDirectory(at: kWidgetsTempPathURL, withIntermediateDirectories: true)
 			if removeSource {
 				try manager.moveItem(at: location, to: zipFileLocation)
 			} else {

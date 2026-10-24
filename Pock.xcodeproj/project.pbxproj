@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A5C1B5CC2522C8C8054B114 /* ModifierTouchBarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8B0D11A57B8BE6E34A404 /* ModifierTouchBarLayout.swift */; };
+		165A8E6197EEB9B858C17CE2 /* SystemControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DBFCE97D20ADFDF831C331 /* SystemControls.swift */; };
 		3400F92D264EBBC8003B2B4C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3400F92C264EBBC8003B2B4C /* Media.xcassets */; };
-		340D5BA326861A67001D73F8 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 340D5BA226861A67001D73F8 /* Secrets.plist */; };
 		340D5BA92687038C001D73F8 /* DebugConsoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D5BA72687038C001D73F8 /* DebugConsoleViewController.swift */; };
 		340D5BAA2687038C001D73F8 /* DebugConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 340D5BA82687038C001D73F8 /* DebugConsoleViewController.xib */; };
 		340D5BAF2687A474001D73F8 /* NSFilterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D5BAE2687A474001D73F8 /* NSFilterTextField.swift */; };
@@ -69,6 +70,8 @@
 		34E78F62264EB220001CBA4E /* PKWidgetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34291B53263C778E00768B08 /* PKWidgetInfo.swift */; };
 		34E7B98B263C65590072FE54 /* WidgetsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E7B989263C65590072FE54 /* WidgetsManagerViewController.swift */; };
 		34E7B98C263C65590072FE54 /* WidgetsManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34E7B98A263C65590072FE54 /* WidgetsManagerViewController.xib */; };
+		3F9C425F193CBC78D2C70F25 /* ModifierTouchBarMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9019B431A84DFDFA4C2990 /* ModifierTouchBarMonitor.swift */; };
+		53254B1ED49A4F61603DC85D /* ModifierTouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */; };
 		80F6ED9E941CB99A898BECF2 /* Pods_Pock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE9B256A4CB4701408B60C0 /* Pods_Pock.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,8 +116,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F9019B431A84DFDFA4C2990 /* ModifierTouchBarMonitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarMonitor.swift; sourceTree = "<group>"; };
 		3400F92C264EBBC8003B2B4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		340D5BA226861A67001D73F8 /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		340D5BA72687038C001D73F8 /* DebugConsoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugConsoleViewController.swift; sourceTree = "<group>"; };
 		340D5BA82687038C001D73F8 /* DebugConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugConsoleViewController.xib; sourceTree = "<group>"; };
 		340D5BAE2687A474001D73F8 /* NSFilterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSFilterTextField.swift; sourceTree = "<group>"; };
@@ -190,8 +193,11 @@
 		34E7B989263C65590072FE54 /* WidgetsManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsManagerViewController.swift; sourceTree = "<group>"; };
 		34E7B98A263C65590072FE54 /* WidgetsManagerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WidgetsManagerViewController.xib; sourceTree = "<group>"; };
 		42458EF7CBD8C1A887586801 /* Pods-Pock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pock.release.xcconfig"; path = "Target Support Files/Pods-Pock/Pods-Pock.release.xcconfig"; sourceTree = "<group>"; };
+		4BE8B0D11A57B8BE6E34A404 /* ModifierTouchBarLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarLayout.swift; sourceTree = "<group>"; };
 		7AE9B256A4CB4701408B60C0 /* Pods_Pock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88DBFCE97D20ADFDF831C331 /* SystemControls.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemControls.swift; sourceTree = "<group>"; };
 		9FAB0C2306CA63DF211D8910 /* Pods-Pock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pock.debug.xcconfig"; path = "Target Support Files/Pods-Pock/Pods-Pock.debug.xcconfig"; sourceTree = "<group>"; };
+		A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModifierTouchBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,7 +459,6 @@
 			children = (
 				34564DBD25F81E590093E5E0 /* Assets.xcassets */,
 				34564DC225F81E590093E5E0 /* Info.plist */,
-				340D5BA226861A67001D73F8 /* Secrets.plist */,
 				34564DC325F81E590093E5E0 /* Pock.entitlements */,
 			);
 			path = Bundle;
@@ -529,6 +534,7 @@
 			children = (
 				34564DED25F837CB0093E5E0 /* PockTouchBarController */,
 				34291B9226455D1900768B08 /* EmptyTouchBarController */,
+				79F2BFEE431FC600F1B3AB1F /* ModifierTouchBar */,
 			);
 			path = TouchBar;
 			sourceTree = "<group>";
@@ -640,6 +646,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		79F2BFEE431FC600F1B3AB1F /* ModifierTouchBar */ = {
+			isa = PBXGroup;
+			children = (
+				4BE8B0D11A57B8BE6E34A404 /* ModifierTouchBarLayout.swift */,
+				1F9019B431A84DFDFA4C2990 /* ModifierTouchBarMonitor.swift */,
+				A5E853BE97521BAF937EF398 /* ModifierTouchBarController.swift */,
+				88DBFCE97D20ADFDF831C331 /* SystemControls.swift */,
+			);
+			name = ModifierTouchBar;
+			path = ModifierTouchBar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -671,7 +689,6 @@
 				34564DB625F81E520093E5E0 /* Resources */,
 				FE26ADECFF38E70242F074EC /* [CP] Embed Pods Frameworks */,
 				34E78F5F264EB0FD001CBA4E /* Embed App Extensions */,
-				34A8BA6726CC06600070B0EC /* Close any Pock instances */,
 			);
 			buildRules = (
 			);
@@ -751,7 +768,6 @@
 			files = (
 				344C9A1E260674E5009AA07C /* Relaunch in Resources */,
 				34291B69263EDF9800768B08 /* PreferencesViewController.xib in Resources */,
-				340D5BA326861A67001D73F8 /* Secrets.plist in Resources */,
 				34564DBE25F81E590093E5E0 /* Assets.xcassets in Resources */,
 				34564DD925F826340093E5E0 /* NSMenuItemCustomView.xib in Resources */,
 				34A1A4AD25FBDAA20086500F /* Localisations.strings in Resources */,
@@ -818,24 +834,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Adds support for Apple Silicon brew directory\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\n# Run SwiftLint (if available)\nif which swiftlint; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		34A8BA6726CC06600070B0EC /* Close any Pock instances */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Close any Pock instances";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"Killing any Pock instances\"\nif pgrep Pock; then killall Pock; fi\ncp -fr $TARGET_BUILD_DIR/$PRODUCT_NAME.app /Applications/$PRODUCT_NAME.app\n";
 		};
 		FE26ADECFF38E70242F074EC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -907,6 +905,10 @@
 				34564E0025F850170093E5E0 /* HotKey.swift in Sources */,
 				34291B68263EDF9800768B08 /* PreferencesViewController.swift in Sources */,
 				34291BA1264D0B1200768B08 /* OnBoardViewController.swift in Sources */,
+				0A5C1B5CC2522C8C8054B114 /* ModifierTouchBarLayout.swift in Sources */,
+				3F9C425F193CBC78D2C70F25 /* ModifierTouchBarMonitor.swift in Sources */,
+				53254B1ED49A4F61603DC85D /* ModifierTouchBarController.swift in Sources */,
+				165A8E6197EEB9B858C17CE2 /* SystemControls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,7 +966,7 @@
 				CODE_SIGN_ENTITLEMENTS = Relaunch/Relaunch.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 788D9WZ9Z3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock.relaunch;
@@ -981,7 +983,7 @@
 				CODE_SIGN_ENTITLEMENTS = Relaunch/Relaunch.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 788D9WZ9Z3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock.relaunch;
@@ -1111,7 +1113,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9FAB0C2306CA63DF211D8910 /* Pods-Pock.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APP_IS_AGENT = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1119,7 +1121,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Pock/Bundle/Info.plist;
@@ -1128,7 +1130,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.10.0;
+				MARKETING_VERSION = 0.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1145,7 +1147,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 42458EF7CBD8C1A887586801 /* Pods-Pock.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APP_IS_AGENT = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1153,7 +1155,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Pock/Bundle/Info.plist;
@@ -1162,7 +1164,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.10.0;
+				MARKETING_VERSION = 0.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1181,7 +1183,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLPockWidget/QLPockWidget.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLPockWidget/Info.plist;
@@ -1191,7 +1193,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.10.0;
+				MARKETING_VERSION = 0.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock.QLPockWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1205,7 +1207,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLPockWidget/QLPockWidget.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLPockWidget/Info.plist;
@@ -1215,7 +1217,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.10.0;
+				MARKETING_VERSION = 0.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pigigaldi.pock.QLPockWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -52,6 +52,11 @@ public struct PKWidgetInfo: Equatable {
 	
 	/// Load widget's info for bundle at given path
 	public init(path: URL) throws {
+        // Preserve the dynamic loader's diagnostic instead of reporting every
+        // incompatible widget as a generic file copy failure.
+        if let bundle = Bundle(url: path) {
+            try bundle.loadAndReturnError()
+        }
 		guard let bundle = Bundle(path: path.path),
 			  let bundleIdentifier: String = bundle[.bundleIdentifier],
 			  let principalClass = bundle.principalClass,

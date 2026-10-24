@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import AppCenterAnalytics
 import Magnet
 import PockKit
 
@@ -34,6 +33,9 @@ internal class AppController: NSResponder {
 
 	/// Double `ctrl` hotkey
 	private var doubleCtrlHotKey: HotKey?
+
+	/// Touch Bars shown while holding `⌘`, `⌥` or `⌃`
+	private var modifierTouchBarMonitor: ModifierTouchBarMonitor?
 	
 	/// Once (upon) a day timer
 	private var onceADayTimer: Timer?
@@ -56,6 +58,7 @@ internal class AppController: NSResponder {
 		TouchBarHelper.swizzleFunctions()
 		registerForInternalNotifications()
 		registerDoubleControlHotKey()
+		registerModifierTouchBars()
 		prepareOnceADayTimer()
 		clearTemporaryWidgetsFolder()
         startListeningForScreenLockNotifications()
@@ -220,6 +223,18 @@ internal class AppController: NSResponder {
 		doubleCtrlHotKey = HotKey(key: .control, double: true, target: self, selector: #selector(toggleVisibility))
 	}
 	
+	/// Register `⌘` / `⌥` / `⌃` hold Touch Bars
+	private func registerModifierTouchBars() {
+		modifierTouchBarMonitor = ModifierTouchBarMonitor { [weak self] mode in
+			guard let self = self, self.isVisible, !self.isLocked, let navigationController = self.navigationController else {
+				return nil
+			}
+			let controller = ModifierTouchBarController(mode: mode)
+			navigationController.push(controller)
+			return controller
+		}
+	}
+
 	// MARK: Show messages panel to inform users about certain situations
 	internal func showMessagePanelWith(
 		error: Error? = nil,
@@ -319,6 +334,7 @@ extension AppController: NSTouchBarDelegate {
 		touchBar.delegate = self
 		touchBar.customizationIdentifier = .pockTouchBarController
 		touchBar.customizationAllowedItemIdentifiers = controller.allowedCustomizationIdentifiers
+        touchBar.defaultItemIdentifiers = controller.defaultItemIdentifiers
 		return touchBar
 	}
 	
@@ -417,8 +433,6 @@ extension AppController {
         windowController.showWindow(self)
         window.delegate = self
         window.orderFrontRegardless()
-        // Track event
-        Analytics.trackEvent("AppController.showDebugConsole()")
     }
 }
 // swiftlint:enable file_length

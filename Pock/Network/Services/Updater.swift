@@ -54,11 +54,7 @@ internal class Updater {
 	
 	// MARK: Netowrk core-info
 	
-	#if DEBUG
-	private let latestVersionURLString: String = "https://stage.pock.app/api/latestVersions.json"
-	#else
-	private let latestVersionURLString: String = "https://pock.app/api/latestVersions.json"
-	#endif
+    private let latestVersionURLString = "https://pock.app/api/latestVersions.json"
 	
 	// MARK: Cache (?)
 	static private(set) var cachedLatestReleases: LatestReleases?
@@ -104,6 +100,10 @@ internal class Updater {
 	// MARK: Get newest version for given widget
 	
 	static func newVersion(for widget: PKWidgetInfo) -> WidgetVersion {
+        // Do not offer historical upstream binaries over locally rebuilt widgets.
+        guard DefaultWidgetsDownloader.bundledWidgets[widget.bundleIdentifier] == nil else {
+            return (nil, nil)
+        }
 		guard let new = cachedLatestReleases?.widgets.first(where: { $0.key.lowercased() == widget.bundleIdentifier.lowercased() })?.value else {
 			return (nil, nil)
 		}

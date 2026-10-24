@@ -221,3 +221,9 @@
 "preferences.app-controls.title" = "Controlli per app";
 "preferences.app-controls.desc" = "Aggiungi “App Controls” alla Touch Bar per avere pulsanti per l’app in primo piano. I pulsanti inviano scorciatoie da tastiera e richiedono il permesso di Accessibilità. I profili in AppProfiles.json sostituiscono quelli inclusi; le modifiche si applicano ricaricando Pock.";
 "preferences.app-controls.customize" = "Modifica profili personalizzati…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Usa la Touch Bar dell’app";
+"preferences.native-apps.desc" = "Quando una di queste app è in primo piano, Pock si fa da parte e mostra la Touch Bar dell’app, come i pannelli di Safari. Premi due volte ⌃ Control per riavere Pock fino al cambio di app.";
+"preferences.native-apps.add" = "Aggiungi app…";
+"preferences.native-apps.remove" = "Deseleziona per rimuovere";

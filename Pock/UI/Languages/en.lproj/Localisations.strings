@@ -222,3 +222,9 @@ You can always configure default settings from `System Preferences > Keyboard` t
 "preferences.app-controls.title" = "App Controls";
 "preferences.app-controls.desc" = "Add “App Controls” to the Touch Bar to get buttons for the frontmost app. Buttons send keyboard shortcuts and require Accessibility permission. Custom profiles in AppProfiles.json override the built-in ones; changes apply after reloading Pock.";
 "preferences.app-controls.customize" = "Edit custom profiles…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Use the app’s own Touch Bar";
+"preferences.native-apps.desc" = "While one of these apps is in front, Pock steps aside so the app’s own Touch Bar shows, such as Safari tabs. Double press ⌃ Control to bring Pock back until you switch apps.";
+"preferences.native-apps.add" = "Add App…";
+"preferences.native-apps.remove" = "Uncheck to remove";

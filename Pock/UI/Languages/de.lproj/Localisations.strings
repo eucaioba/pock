@@ -221,3 +221,9 @@
 "preferences.app-controls.title" = "App-Steuerung";
 "preferences.app-controls.desc" = "Füge „App Controls“ zur Touch Bar hinzu, um Tasten für die vordere App zu erhalten. Die Tasten senden Tastaturkurzbefehle und erfordern Bedienungshilfen. Eigene Profile in AppProfiles.json ersetzen die integrierten; Änderungen gelten nach dem Neuladen von Pock.";
 "preferences.app-controls.customize" = "Eigene Profile bearbeiten…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Eigene Touch Bar der App verwenden";
+"preferences.native-apps.desc" = "Solange eine dieser Apps vorne ist, tritt Pock zurück und die eigene Touch Bar der App wird angezeigt, z. B. die Safari-Tabs. Drücke zweimal ⌃ Control, um Pock bis zum nächsten App-Wechsel zurückzuholen.";
+"preferences.native-apps.add" = "App hinzufügen…";
+"preferences.native-apps.remove" = "Abwählen zum Entfernen";

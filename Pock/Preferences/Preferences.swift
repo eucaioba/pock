@@ -46,6 +46,7 @@ internal struct Preferences {
 		case commandTouchBarEnabled
 		case optionTouchBarEnabled
 		case controlTouchBarEnabled
+		case nativeTouchBarApps
 	}
 	static subscript<T>(_ key: Keys) -> T {
         get {
@@ -68,7 +69,8 @@ internal struct Preferences {
                 case .layoutStyle:
                     return LayoutStyle.withControlStrip as! T
                 case .mouseSupportEnabled:
-                    return true as! T
+                    // Off by default: the cursor otherwise mirrors onto the Touch Bar whenever it nears the Dock.
+                    return false as! T
                 case .showTrackingArea:
                     return false as! T
                 case .checkForUpdatesOnceADay:
@@ -81,6 +83,8 @@ internal struct Preferences {
                     return false as! T
                 case .commandTouchBarEnabled, .optionTouchBarEnabled, .controlTouchBarEnabled:
                     return true as! T
+                case .nativeTouchBarApps:
+                    return ["com.apple.Safari"] as! T
                 }
             }
             return value

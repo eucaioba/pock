@@ -221,3 +221,9 @@
 "preferences.app-controls.title" = "Controlos por app";
 "preferences.app-controls.desc" = "Adicione “App Controls” à Touch Bar para ter botões da app em primeiro plano. Os botões enviam atalhos de teclado e requerem permissão de Acessibilidade. Perfis em AppProfiles.json substituem os incluídos; alterações aplicam-se ao recarregar o Pock.";
 "preferences.app-controls.customize" = "Editar perfis personalizados…";
+
+/// Native app Touch Bars
+"preferences.native-apps.title" = "Usar a Touch Bar da própria app";
+"preferences.native-apps.desc" = "Enquanto uma destas apps estiver em primeiro plano, o Pock recolhe-se e mostra a Touch Bar da própria app, como os separadores do Safari. Pressione ⌃ Control duas vezes para voltar ao Pock até mudar de app.";
+"preferences.native-apps.add" = "Adicionar app…";
+"preferences.native-apps.remove" = "Desmarque para remover";

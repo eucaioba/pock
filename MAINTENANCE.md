@@ -70,3 +70,10 @@ Profiles can be disabled in Preferences. `~/Library/Application Support/Pock/App
 ## Default widget fixes (review)
 
 Weather uses Open-Meteo because weather.navalia.app stopped responding. The Dock reads all notification badges in one Accessibility pass. Badges and window previews depend on Accessibility, which ad hoc builds lost on every reinstall before the stable signing identity. The legacy Do Not Disturb item is hidden on macOS 12+.
+
+## Native app Touch Bars
+
+Apps listed under "Use the app's own Touch Bar" (Safari by default) make Pock minimize its system modal bar while they are frontmost, so the app's own Touch Bar (Safari tabs, media scrubbers) shows. Pock comes back on the next app switch; double `⌃` restores it for the current app. Modifier bars present directly over the app's Touch Bar in that state.
+
+Mouse support (mirroring the cursor on the Touch Bar when it nears the bottom screen edge) is now off by default, because the 10 pt tracking strip overlaps the Dock.
+

@@ -305,6 +305,89 @@ class PreferencesViewController: NSViewController {
 		column.insertArrangedSubview(separator, at: index)
 		column.insertArrangedSubview(section, at: index + 1)
 		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+		addNativeTouchBarAppsSection(to: column, at: index + 2)
+	}
+
+	// MARK: Native app Touch Bars
+
+	private let nativeAppsList = NSStackView()
+
+	private func addNativeTouchBarAppsSection(to column: NSStackView, at index: Int) {
+		let title = NSTextField(labelWithString: "preferences.native-apps.title".localized)
+		let description = NSTextField(wrappingLabelWithString: "preferences.native-apps.desc".localized)
+		description.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+		description.textColor = .secondaryLabelColor
+		description.preferredMaxLayoutWidth = 440
+		nativeAppsList.orientation = .vertical
+		nativeAppsList.alignment = .leading
+		nativeAppsList.spacing = 4
+		reloadNativeAppsList()
+		let add = NSButton(title: "preferences.native-apps.add".localized, target: self, action: #selector(addNativeTouchBarApp))
+		add.bezelStyle = .rounded
+		let section = NSStackView(views: [title, description, nativeAppsList, add])
+		section.orientation = .vertical
+		section.alignment = .leading
+		section.spacing = 6
+		section.setCustomSpacing(10, after: description)
+		section.setCustomSpacing(10, after: nativeAppsList)
+		let separator = NSBox()
+		separator.boxType = .separator
+		column.insertArrangedSubview(separator, at: index)
+		column.insertArrangedSubview(section, at: index + 1)
+		separator.widthAnchor.constraint(equalTo: column.widthAnchor).isActive = true
+	}
+
+	private func reloadNativeAppsList() {
+		nativeAppsList.arrangedSubviews.forEach { $0.removeFromSuperview() }
+		let apps: [String] = Preferences[.nativeTouchBarApps]
+		for bundleIdentifier in apps {
+			let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier)
+			let name = url.map { FileManager.default.displayName(atPath: $0.path).replacingOccurrences(of: ".app", with: "") } ?? bundleIdentifier
+			let checkbox = NSButton(checkboxWithTitle: name, target: self, action: #selector(removeNativeTouchBarApp(_:)))
+			checkbox.state = .on
+			checkbox.identifier = NSUserInterfaceItemIdentifier(bundleIdentifier)
+			checkbox.toolTip = "preferences.native-apps.remove".localized
+			if let url = url {
+				let icon = NSWorkspace.shared.icon(forFile: url.path)
+				icon.size = NSSize(width: 16, height: 16)
+				checkbox.image = icon
+				checkbox.imagePosition = .imageLeft
+			}
+			nativeAppsList.addArrangedSubview(checkbox)
+		}
+	}
+
+	private func setNativeTouchBarApps(_ apps: [String]) {
+		Preferences[.nativeTouchBarApps] = apps
+		reloadNativeAppsList()
+	}
+
+	@objc private func removeNativeTouchBarApp(_ checkbox: NSButton) {
+		guard let id = checkbox.identifier?.rawValue else {
+			return
+		}
+		let apps: [String] = Preferences[.nativeTouchBarApps]
+		setNativeTouchBarApps(apps.filter { $0 != id })
+	}
+
+	@objc private func addNativeTouchBarApp() {
+		let panel = NSOpenPanel()
+		panel.directoryURL = URL(fileURLWithPath: "/Applications")
+		panel.allowedFileTypes = ["app"]
+		panel.allowsMultipleSelection = true
+		guard let window = view.window else {
+			return
+		}
+		panel.beginSheetModal(for: window) { [weak self] response in
+			guard response == .OK else {
+				return
+			}
+			var apps: [String] = Preferences[.nativeTouchBarApps]
+			for id in panel.urls.compactMap({ Bundle(url: $0)?.bundleIdentifier }) where !apps.contains(id) {
+				apps.append(id)
+			}
+			self?.setNativeTouchBarApps(apps)
+		}
 	}
 
 	@objc private func didChangeAppProfile(_ checkbox: NSButton) {
